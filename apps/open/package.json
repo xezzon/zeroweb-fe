@@ -1,0 +1,27 @@
+{
+  "name": "zeroweb-app-open",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "watch": "farm watch --config farm.config.server.mjs",
+    "start": "farm start",
+    "build:server": "farm build --config farm.config.server.mjs",
+    "build": "pnpm build:server && farm build",
+    "preview": "node server.js",
+    "clean": "farm clean"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.13.0"
+  },
+  "devDependencies": {
+    "@farmfe/cli": "^1.0.2",
+    "@farmfe/core": "^1.3.0",
+    "@farmfe/plugin-react": "^1.2.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "react-refresh": "^0.14.0"
+  }
+}
