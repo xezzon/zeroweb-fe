@@ -2,4 +2,7 @@ export { default as ZerowebAdminCient } from './admin'
 export type { Dict, User } from './admin'
 
 export { default as ZerowebOpenClient } from './open'
-export type { Openapi, OpenapiStatus } from './open'
+export type {
+  Openapi, OpenapiStatus,
+  ThirdPartyApp, AccessSecret,
+} from './open'
