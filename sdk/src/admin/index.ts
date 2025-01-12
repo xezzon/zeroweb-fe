@@ -1,5 +1,6 @@
 import axios from "axios"
 import { InstanceConfig } from "../types"
+import auth from "./auth"
 import dict from "./dict"
 import user from "./user"
 
@@ -11,6 +12,10 @@ export default (config: InstanceConfig) => {
      * HTTP 客户端
      */
     instance,
+    /**
+     * 认证相关接口
+     */
+    auth: auth(instance),
     /**
      * 字典相关接口
      */
