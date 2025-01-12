@@ -5,4 +5,5 @@ export { default as ZerowebOpenClient } from './open'
 export type {
   Openapi, OpenapiStatus,
   ThirdPartyApp, AccessSecret,
+  Subscription, SubscriptionStatus,
 } from './open'
