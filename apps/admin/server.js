@@ -6,17 +6,14 @@ const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 5173
 const base = process.env.BASE || '/'
 
-// Cached production assets
-const templateHtml = isProduction
-  ? await fs.readFile('./dist/client/index.html', 'utf-8')
-  : ''
-
 // Create http server
 const app = express()
 
 // Add Vite or respective production middlewares
 /** @type {import('vite').ViteDevServer | undefined} */
 let vite
+/** @type {string} */
+let template
 if (!isProduction) {
   const { createServer } = await import('vite')
   vite = await createServer({
@@ -30,6 +27,8 @@ if (!isProduction) {
   const sirv = (await import('sirv')).default
   app.use(compression())
   app.use(base, sirv('./dist/client', { extensions: [] }))
+  // Cached production assets
+  template = await fs.readFile('./dist/client/index.html', 'utf-8')
 }
 
 // Serve HTML
@@ -37,8 +36,6 @@ app.use('*all', async (req, res) => {
   try {
     const url = req.originalUrl.replace(base, '')
 
-    /** @type {string} */
-    let template
     /** @type {import('./src/entry-server.js').render} */
     let render
     if (!isProduction) {
@@ -47,11 +44,10 @@ app.use('*all', async (req, res) => {
       template = await vite.transformIndexHtml(url, template)
       render = (await vite.ssrLoadModule('/src/entry-server.jsx')).render
     } else {
-      template = templateHtml
       render = (await import('./dist/server/entry-server.js')).render
     }
 
-    const rendered = await render(url)
+    const rendered = render(url)
 
     const html = template
       .replace(`<!--app-head-->`, rendered.head ?? '')
