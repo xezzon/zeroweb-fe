@@ -1,4 +1,4 @@
-export { default as ZerowebAdminCient } from './admin'
+export { default as ZerowebAdminClient } from './admin'
 export type { Dict, User, Language, I18nMessage, Translation } from './admin'
 
 export { default as ZerowebOpenClient } from './open'
