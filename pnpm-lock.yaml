@@ -38,6 +38,9 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
       vite:
         specifier: ^6.0.1
         version: 6.0.3(@types/node@22.10.2)

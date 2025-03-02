@@ -15,6 +15,11 @@ let vite
 /** @type {string} */
 let template
 if (!isProduction) {
+  const dotenv = await import('dotenv')
+  // load environment variables from .env files in development
+  dotenv.config({ 
+    path: ['.env', '.env.local', `.env.${process.env.NODE_ENV}`, `.env.${process.env.NODE_ENV}.local`],
+  })
   const { createServer } = await import('vite')
   vite = await createServer({
     server: { middlewareMode: true },

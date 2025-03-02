@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { renderToString } from 'react-dom/server'
+import { renderToStaticMarkup } from 'react-dom/server'
 import App from './App'
 
 /**
@@ -12,11 +12,23 @@ export function render(_url) {
     ZEROWEB_SERVICE_ADMIN,
     ZEROWEB_SERVICE_OPEN,
   } = process.env
+  /**
+   * @type {RuntimeEnvironmentVariable} 
+   */
+  const runtimeEnv = {
+    ZEROWEB_SERVICE_ADMIN,
+    ZEROWEB_SERVICE_OPEN,
+  }
 
   const head = renderToString(
     <>
       <title>{TITLE}</title>
       <base href={BASE ?? ''} />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.__ENV__ = ${JSON.stringify(runtimeEnv)}`
+        }}
+      />
     </>
   )
   const html = renderToString(
