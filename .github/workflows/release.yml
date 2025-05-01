@@ -1,0 +1,21 @@
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build-image:
+    if: startsWith(github.ref_name, 'app/')
+    runs-on: ubuntu-24.04
+    env:
+      REGISTRY: ghcr.io
+      NPM_CONFIG_REGISTRY: https://registry.npmjs.org
+      ZEROWEB_SERVICE_ADMIN: ${{vars.ZEROWEB_SERVICE_ADMIN}}
+      ZEROWEB_SERVICE_OPEN: ${{vars.ZEROWEB_SERVICE_OPEN}}
+    steps:
+      - uses: actions/checkout@v4
+  npm-publish:
+    if: startsWith(github.ref_name, 'sdk/')
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
