@@ -1,3 +1,6 @@
+export { default as ZerowebMetadataClient } from './metadata'
+export type { ServiceInfo, MenuInfo } from './metadata'
+
 export { default as ZerowebAdminClient } from './admin'
 export type { Dict, User, Language, I18nMessage, Translation } from './admin'
 
