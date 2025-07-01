@@ -13,12 +13,7 @@
     "declaration": true,
     "declarationDir": "./dist",
     "isolatedModules": true,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+    "baseUrl": "./"
   },
   "include": [
     "src"

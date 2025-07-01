@@ -32,6 +32,6 @@ export default (config: InstanceConfig) => {
   }
 }
 
-export type { Dict } from './dict'
-export type { User } from './user'
-export type { Language, I18nMessage, Translation } from './locale'
+export type * from './dict'
+export type * from './user'
+export type * from './locale'

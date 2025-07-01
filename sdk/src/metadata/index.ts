@@ -95,12 +95,20 @@ export default (config: InstanceConfig) => {
      * HTTP 客户端
      */
     instance,
+    /**
+     * 获取服务信息
+     * @returns 服务信息
+     */
     loadServiceInfo(): PResponse<ServiceInfo> {
       return instance.request({
         url: '/metadata/info.json',
         method: 'GET',
       })
     },
+    /**
+     * 获取菜单信息
+     * @returns 菜单信息
+     */
     loadResourceInfo(): PResponse<MenuInfo[]> {
       return instance.request({
         url: '/metadata/menu.json',
