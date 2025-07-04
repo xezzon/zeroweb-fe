@@ -27,6 +27,9 @@ export default (config: InstanceConfig) => {
   }
 }
 
+export { OpenapiStatus } from './openapi'
+export { SubscriptionStatus } from './subscription'
+
 export type * from './openapi'
-export type * from './third_party_app'
 export type * from './subscription'
+export type * from './third_party_app'

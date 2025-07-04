@@ -8,11 +8,11 @@ export enum ServiceType {
   /**
    * 前端
    */
-  CLIENT,
+  CLIENT = 'CLIENT',
   /**
    * 后端
    */
-  SERVER,
+  SERVER = 'SERVER',
 }
 
 /**
@@ -43,29 +43,28 @@ export interface ServiceInfo {
 export enum MenuType {
   /**
    * 路由
-   * 路径格式为 `/menu/submenu`
    */
-  ROUTE,
+  ROUTE = 'ROUTE',
   /**
    * 外部链接。
-   * 点击后会打开一个新的标签页 路径格式为 `https://domain.com/path`
+   * 点击后会打开一个新的标签页
    */
-  EXTERNAL_LINK,
+  EXTERNAL_LINK = 'EXTERNAL_LINK',
   /**
    * 嵌入页面。
-   * 会在当前页面嵌入一个外部网页。 路径格式为 `https://domain.com/path`
+   * 会在当前页面嵌入一个外部网页。
    */
-  EMBEDDED,
+  EMBEDDED = 'EMBEDDED',
   /**
    * 接口权限
    * 路径格式为 `resource:operation`，operation 通常为 `read`（可省略）、`write` 等。
    */
-  PERMISSION,
+  PERMISSION = 'PERMISSION',
   /**
    * 资源权限
    * 路径格式为 `resource:#:operation`，operation 通常为 `read`（可省略）、`write` 等。
    */
-  GROUP_PERMISSION,
+  GROUP_PERMISSION = 'GROUP_PERMISSION',
 }
 
 /**
@@ -85,6 +84,28 @@ export interface MenuInfo {
    * 取并集，即资源必须满足所列出的所有权限
    */
   permissions: string[];
+  /**
+   * 菜单名称
+   */
+  name?: string;
+  /**
+   * 自定义菜单的国际化
+   * 默认为 path
+   */
+  locale?: string;
+  /**
+   * 不在菜单中展示
+   */
+  hideInMenu?: boolean;
+  /**
+   * 组件路径或嵌入页面的链接
+   */
+  route?: string;
+  /**
+   * 指定布局的路径
+   * 默认为'/'
+   */
+  layout?: string;
 }
 
 export default (config: InstanceConfig) => {
