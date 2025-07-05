@@ -1,0 +1,21 @@
+{
+  "name": "@zeroweb/layout",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.5.2",
+  "scripts": {
+    "lint": "oxlint"
+  },
+  "dependencies": {
+    "@ant-design/pro-components": "^2.8.9",
+    "@xezzon/zeroweb": "workspace:^",
+    "antd": "^5.26.4",
+    "react": "^19.1.0",
+    "react-router": "^7.6.3"
+  },
+  "devDependencies": {
+    "@zeroweb/oxlint-config": "workspace:^",
+    "@zeroweb/typescript-config": "workspace:^",
+    "oxlint": "^1.6.0"
+  }
+}
