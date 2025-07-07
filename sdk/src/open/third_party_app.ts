@@ -1,4 +1,4 @@
-import { HttpClient, OData, Page, PResponse } from "../types";
+import { HttpClient, OData, Page, PResponse } from "@/types";
 
 export const BASE_URL = '/third-party-app'
 

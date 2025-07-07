@@ -13,7 +13,12 @@
     "declaration": true,
     "declarationDir": "./dist/typings",
     "isolatedModules": true,
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
   },
   "include": [
     "src"

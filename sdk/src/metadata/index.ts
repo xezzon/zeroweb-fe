@@ -1,5 +1,5 @@
 import axios from "axios"
-import { InstanceConfig, PResponse } from "../types"
+import { InstanceConfig, PResponse } from "@/types"
 
 /**
  * 服务类型

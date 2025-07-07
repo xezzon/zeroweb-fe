@@ -1,4 +1,4 @@
-import { HttpClient, Id, OData, Page, PResponse } from "../types";
+import { HttpClient, Id, OData, Page, PResponse } from "@/types";
 
 /**
  * 对外接口状态

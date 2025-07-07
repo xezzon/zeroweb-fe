@@ -1,5 +1,5 @@
 import axios from "axios";
-import { InstanceConfig } from "../types";
+import { InstanceConfig } from "@/types";
 import openapi from "./openapi";
 import thirdPartyApp from "./third_party_app";
 import subscription from "./subscription";
