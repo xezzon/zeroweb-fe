@@ -1,18 +1,28 @@
 {
   "name": "@xezzon/zeroweb",
   "version": "1.0.0",
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/typings/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/typings/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "oxlint",
-    "dev": "tsc --watch",
-    "build": "tsc"
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:esm": "tsc --module esnext --outDir dist/esm && tsc-alias",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs && tsc-alias"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
     "@zeroweb/oxlint-config": "workspace:^",
     "oxlint": "^1.6.0",
+    "tsc-alias": "^1.8.16",
     "typescript": "^5.7.2"
   },
   "dependencies": {

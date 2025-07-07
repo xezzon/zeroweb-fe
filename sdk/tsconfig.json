@@ -11,7 +11,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "declaration": true,
-    "declarationDir": "./dist",
+    "declarationDir": "./dist/typings",
     "isolatedModules": true,
     "baseUrl": "./"
   },
