@@ -13,5 +13,5 @@
   },
   "include": [
     "src"
-  ]
+, "../../packages/auth/token.js"  ]
 }

@@ -1,4 +1,5 @@
-import { selfApi } from "@/api";
+import { adminApi, selfApi } from "@/api";
+import { AuthContextProvider, LoginPage } from '@zeroweb/auth';
 import { ResourceContext, ResourceContextProvider } from '@zeroweb/layout';
 import { lazy, useContext, useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router";
@@ -16,6 +17,10 @@ const rootRoutes = [
   {
     layout: 'MixLayout',
     element: <MixLayout title={import.meta.env.VITE_APP_TITLE} />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage authnApi={adminApi.authn} homepageUrl={import.meta.env.BASE_URL} />,
   },
   {
     path: '*',
@@ -43,9 +48,11 @@ export default () => {
     return <div>Error loading routes</div>;
   } else {
     return (
-      <ResourceContextProvider resources={resources} modules={modules} rootRoutes={rootRoutes}>
-        <App />
-      </ResourceContextProvider>
+      <AuthContextProvider>
+        <ResourceContextProvider resources={resources} modules={modules} rootRoutes={rootRoutes}>
+          <App />
+        </ResourceContextProvider>
+      </AuthContextProvider>
     )
   }
 }
