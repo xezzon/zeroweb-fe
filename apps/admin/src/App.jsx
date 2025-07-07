@@ -1,13 +1,15 @@
-import NotFound from '@zeroweb/layout/404';
+import { selfApi } from "@/api";
+import LoginPage from "@/components/LoginPage";
+import { default as AuthContextProvider } from '@zeroweb/auth/AuthContext';
 import { ResourceContext, default as ResourceContextProvider } from '@zeroweb/layout/ResourceContext';
 import { lazy, useContext, useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import { selfApi } from "./api";
 
 /**
  * @type {Record<string, () => Promise<{ default: React.ComponentType }>>}
  */
 const modules = import.meta.glob('./routes/**/*.jsx');
+const NotFound = lazy(() => import('@zeroweb/layout/404'))
 /**
  * @type {import('react-router').RouteObject[]}
  */
@@ -15,6 +17,10 @@ const rootRoutes = [
   {
     layout: 'MixLayout',
     Component: lazy(() => import('@zeroweb/layout/MixLayout')),
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
   },
   {
     path: '*',
@@ -42,9 +48,11 @@ export default () => {
     return <div>Error loading routes</div>;
   } else {
     return (
-      <ResourceContextProvider resources={resources} modules={modules} rootRoutes={rootRoutes}>
-        <App />
-      </ResourceContextProvider>
+      <AuthContextProvider>
+        <ResourceContextProvider resources={resources} modules={modules} rootRoutes={rootRoutes}>
+          <App />
+        </ResourceContextProvider>
+      </AuthContextProvider>
     )
   }
 }

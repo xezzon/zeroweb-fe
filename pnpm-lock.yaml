@@ -16,6 +16,9 @@ importers:
       '@xezzon/zeroweb':
         specifier: workspace:^
         version: link:../../sdk
+      '@zeroweb/auth':
+        specifier: workspace:^
+        version: link:../../packages/auth
       '@zeroweb/layout':
         specifier: workspace:^
         version: link:../../packages/layout
@@ -53,6 +56,31 @@ importers:
       vite:
         specifier: 7.0.0
         version: 7.0.0
+
+  packages/auth:
+    dependencies:
+      '@ant-design/pro-components':
+        specifier: ^2.8.9
+        version: 2.8.9(antd@5.26.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(rc-field-form@2.7.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      antd:
+        specifier: ^5.26.5
+        version: 5.26.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react:
+        specifier: ^19.1.0
+        version: 19.1.0
+    devDependencies:
+      '@xezzon/zeroweb':
+        specifier: workspace:^
+        version: link:../../sdk
+      '@zeroweb/oxlint-config':
+        specifier: workspace:^
+        version: link:../../scripts/oxlint-config
+      '@zeroweb/typescript-config':
+        specifier: workspace:^
+        version: link:../../scripts/typescript-config
+      oxlint:
+        specifier: ^1.6.0
+        version: 1.6.0
 
   packages/layout:
     dependencies:

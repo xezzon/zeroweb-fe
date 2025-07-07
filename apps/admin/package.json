@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/pro-components": "^2.8.9",
     "@xezzon/zeroweb": "workspace:^",
+    "@zeroweb/auth": "workspace:^",
     "@zeroweb/layout": "workspace:^",
     "antd": "^5.26.3",
     "react": "^19.1.0",
