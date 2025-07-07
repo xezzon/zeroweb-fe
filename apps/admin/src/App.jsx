@@ -17,6 +17,10 @@ const rootRoutes = [
     Component: lazy(() => import('@zeroweb/layout/MixLayout')),
   },
   {
+    path: '/login',
+    Component: lazy(() => import('@zeroweb/auth/Login'))
+  },
+  {
     path: '*',
     element: <NotFound />,
   },

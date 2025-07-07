@@ -54,6 +54,22 @@ importers:
         specifier: 7.0.0
         version: 7.0.0
 
+  packages/auth:
+    dependencies:
+      react:
+        specifier: ^19.1.0
+        version: 19.1.0
+    devDependencies:
+      '@zeroweb/oxlint-config':
+        specifier: workspace:^
+        version: link:../../scripts/oxlint-config
+      '@zeroweb/typescript-config':
+        specifier: workspace:^
+        version: link:../../scripts/typescript-config
+      oxlint:
+        specifier: ^1.6.0
+        version: 1.6.0
+
   packages/layout:
     dependencies:
       '@ant-design/pro-components':

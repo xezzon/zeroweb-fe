@@ -1,0 +1,14 @@
+{
+  "name": "auth",
+  "version": "1.0.0",
+  "description": "",
+  "packageManager": "pnpm@10.12.4",
+  "devDependencies": {
+    "@zeroweb/oxlint-config": "workspace:^",
+    "@zeroweb/typescript-config": "workspace:^",
+    "oxlint": "^1.6.0"
+  },
+  "dependencies": {
+    "react": "^19.1.0"
+  }
+}
