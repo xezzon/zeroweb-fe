@@ -1,0 +1,7 @@
+{
+  "name": "@zeroweb/typescript-config",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "packageManager": "pnpm@10.12.4"
+}
