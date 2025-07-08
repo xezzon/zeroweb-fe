@@ -1,0 +1,11 @@
+{
+  "name": "@zeroweb/oxlint-config",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "packageManager": "pnpm@10.12.1",
+  "dependencies": {
+    "oxlint": "^1.6.0"
+  }
+}

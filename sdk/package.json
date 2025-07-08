@@ -5,11 +5,14 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "lint": "oxlint",
     "dev": "tsc --watch",
     "build": "tsc"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "@zeroweb/oxlint-config": "workspace:^",
+    "oxlint": "^1.6.0",
     "typescript": "^5.7.2"
   },
   "dependencies": {
