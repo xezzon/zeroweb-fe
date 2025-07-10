@@ -32,6 +32,7 @@ export default (config: InstanceConfig) => {
   }
 }
 
+export type * from './auth'
 export type * from './dict'
-export type * from './user'
 export type * from './locale'
+export type * from './user'
