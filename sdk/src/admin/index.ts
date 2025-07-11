@@ -22,13 +22,17 @@ export default (config: InstanceConfig) => {
      */
     dict: dict(instance),
     /**
-     * 用户相关接口
-     */
-    user: user(instance),
-    /**
      * 国际化相关接口
      */
     locale: locale(instance),
+    /**
+     * 角色管理接口
+     */
+    role: role(instance),
+    /**
+     * 用户相关接口
+     */
+    user: user(instance),
   }
 }
 
