@@ -1,5 +1,5 @@
 import axios from "axios"
-import { InstanceConfig } from "../types"
+import { InstanceConfig } from "@/types"
 import auth from "./auth"
 import dict from "./dict"
 import locale from "./locale"

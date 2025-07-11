@@ -1,4 +1,4 @@
-import { HttpClient, Id, OData, Page, PResponse } from "../types";
+import { HttpClient, Id, OData, Page, PResponse } from "@/types";
 import { Openapi } from "./openapi";
 import { BASE_URL as THIRD_PARTY_APP_URL } from './third_party_app';
 
