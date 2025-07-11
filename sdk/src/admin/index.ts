@@ -1,8 +1,10 @@
-import axios from "axios"
 import { InstanceConfig } from "@/types"
-import auth from "./auth"
+import axios from "axios"
+import authn from "./authn"
+import authz from "./authz"
 import dict from "./dict"
 import locale from "./locale"
+import role from "./role"
 import user from "./user"
 
 export default (config: InstanceConfig) => {
@@ -16,7 +18,11 @@ export default (config: InstanceConfig) => {
     /**
      * 认证相关接口
      */
-    auth: auth(instance),
+    authn: authn(instance),
+    /**
+     * 授权相关接口
+     */
+    authz: authz(instance),
     /**
      * 字典相关接口
      */
@@ -36,7 +42,8 @@ export default (config: InstanceConfig) => {
   }
 }
 
-export type * from './auth'
+export type * from './authn'
+export type * from './authz'
 export type * from './dict'
 export type * from './locale'
 export type * from './user'
