@@ -113,9 +113,9 @@ export default (config: InstanceConfig) => {
 
   return {
     /**
-     * HTTP 客户端
+     * 拦截器方法
      */
-    instance,
+    interceptors: instance.interceptors,
     /**
      * 获取服务信息
      * @returns 服务信息
