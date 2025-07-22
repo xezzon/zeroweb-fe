@@ -1,5 +1,5 @@
 import axios from "axios"
-import { InstanceConfig, PResponse } from "@/types"
+import { InstanceConfig } from "@/types"
 
 /**
  * 服务类型
@@ -120,8 +120,8 @@ export default (config: InstanceConfig) => {
      * 获取服务信息
      * @returns 服务信息
      */
-    loadServiceInfo(): PResponse<ServiceInfo> {
-      return instance.request({
+    loadServiceInfo() {
+      return instance.request<ServiceInfo>({
         url: '/metadata/info.json',
         method: 'GET',
       })
@@ -130,8 +130,8 @@ export default (config: InstanceConfig) => {
      * 获取菜单信息
      * @returns 菜单信息
      */
-    loadResourceInfo(): PResponse<MenuInfo[]> {
-      return instance.request({
+    loadResourceInfo() {
+      return instance.request<MenuInfo[]>({
         url: '/metadata/menu.json',
         method: 'GET',
       })

@@ -1,4 +1,4 @@
-import { HttpClient, PResponse } from "@/types";
+import { HttpClient } from "@/types";
 import { User } from "./user";
 import { Role } from "./role";
 
@@ -38,7 +38,7 @@ export default (client: HttpClient) => ({
    * @param roleId 角色ID
    * @returns 用户信息列表
    */
-  queryUserByRole: (roleId: string): PResponse<User[]> => client.request({
+  queryUserByRole: (roleId: string) => client.request<User[]>({
     url: `/auth/role/${roleId}/user`,
     method: 'GET',
   }),
@@ -46,7 +46,7 @@ export default (client: HttpClient) => ({
    * 将用户绑定到角色
    * @param roleUsers 角色-用户绑定关系
    */
-  bindUserToRole: (roleUsers: RoleUser[]): PResponse<void> => client.request({
+  bindUserToRole: (roleUsers: RoleUser[]) => client.request<void>({
     url: '/auth/role/-/user',
     method: 'PUT',
     data: roleUsers,
@@ -55,7 +55,7 @@ export default (client: HttpClient) => ({
    * 解除用户与角色的关联
    * @param roleUsers 角色-用户关联
    */
-  releaseRoleUser: (roleUsers: RoleUser[]): PResponse<void> => client.request({
+  releaseRoleUser: (roleUsers: RoleUser[]) => client.request<void>({
     url: '/auth/role/-/user',
     method: 'DELETE',
     data: roleUsers,
@@ -65,7 +65,7 @@ export default (client: HttpClient) => ({
    * @param roleId 角色ID
    * @returns 接口权限编码
    */
-  queryPermissionByRole: (roleId: string): PResponse<string[]> => client.request({
+  queryPermissionByRole: (roleId: string) => client.request<string[]>({
     url: `/auth/role/${roleId}/permission`,
     method: 'GET',
   }),
@@ -73,7 +73,7 @@ export default (client: HttpClient) => ({
    * 解除角色与接口权限的关联
    * @param rolePermissions 角色-接口权限关系
    */
-  bindPermissionToRole: (rolePermissions: RolePermission[]): PResponse<void> => client.request({
+  bindPermissionToRole: (rolePermissions: RolePermission[]) => client.request<void>({
     url: '/auth/role/-/permission',
     method: 'PUT',
     data: rolePermissions,
@@ -82,7 +82,7 @@ export default (client: HttpClient) => ({
    * 解除角色与接口权限的关联
    * @param rolePermissions 角色-接口权限关系
    */
-  releaseRolePermission: (rolePermissions: RolePermission[]): PResponse<void> => client.request({
+  releaseRolePermission: (rolePermissions: RolePermission[]) => client.request<void>({
     url: '/auth/role/-/permission',
     method: 'DELETE',
     data: rolePermissions,
@@ -92,7 +92,7 @@ export default (client: HttpClient) => ({
    * @param userId 用户ID
    * @returns 角色信息集合
    */
-  queryRoleByUser: (userId: string): PResponse<Role[]> => client.request({
+  queryRoleByUser: (userId: string) => client.request<Role[]>({
     url: `/auth/user/${userId}/role`,
     method: 'GET',
   }),
@@ -101,7 +101,7 @@ export default (client: HttpClient) => ({
    * @param permission 接口权限编码
    * @returns 角色信息集合
    */
-  queryRoleByPermission: (permission: string): PResponse<Role[]> => client.request({
+  queryRoleByPermission: (permission: string) => client.request<Role[]>({
     url: '/auth/permission/-/role',
     method: 'GET',
     params: { permission },

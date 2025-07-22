@@ -1,4 +1,4 @@
-import { HttpClient, PResponse } from "@/types";
+import { HttpClient } from "@/types";
 
 /**
  * 基础认证
@@ -63,7 +63,7 @@ export default (client: HttpClient) => ({
    * 基础认证
    * @param user 用户名口令
    */
-  basicLogin: (user: BasicAuth): PResponse<SaTokenInfo> => client.request({
+  basicLogin: (user: BasicAuth) => client.request<SaTokenInfo>({
     url: '/auth/login/basic',
     method: 'POST',
     auth: {
@@ -75,14 +75,14 @@ export default (client: HttpClient) => ({
   /**
    * @returns 当前用户的认证信息
    */
-  self: (): PResponse<JwtClaim> => client.request({
+  self: () => client.request<JwtClaim>({
     url: '/auth/self',
     method: 'GET',
   }),
   /**
    * @returns 用户令牌
    */
-  token: (): PResponse<OidcToken> => client.request({
+  token: () => client.request<OidcToken>({
     url: '/auth/token',
     method: 'GET',
   }),

@@ -1,4 +1,4 @@
-import { HttpClient, Id, OData, Page, PResponse } from "@/types";
+import { HttpClient, Id, OData, Page } from "@/types";
 
 /**
  * 字典
@@ -54,7 +54,7 @@ export default (client: HttpClient) => ({
    * 新增字典
    * @param dict 字典
    */
-  addDict: (dict: AddDictReq): PResponse<Id> => client.request({
+  addDict: (dict: AddDictReq) => client.request<Id>({
     url: '/dict',
     method: 'POST',
     data: dict,
@@ -64,7 +64,7 @@ export default (client: HttpClient) => ({
    * @param odata 分页参数
    * @returns 字典目列表
    */
-  getDictTagList: (odata: OData): PResponse<Page<Dict>> => client.request({
+  getDictTagList: (odata: OData) => client.request<Page<Dict>>({
     url: '/dict',
     method: 'GET',
     params: odata,
@@ -74,7 +74,7 @@ export default (client: HttpClient) => ({
    * @param tag 字典目编码
    * @returns 字典项列表（树形）
    */
-  getDictTreeByTag: (tag: string): PResponse<Dict[]> => client.request({
+  getDictTreeByTag: (tag: string) => client.request<Dict[]>({
     url: `/dict/tag/${tag}`,
     method: 'GET',
   }),
@@ -83,7 +83,7 @@ export default (client: HttpClient) => ({
    * @param dict 字典
    * @returns 
    */
-  modifyDict: (dict: ModifyDictReq): PResponse<void> => client.request({
+  modifyDict: (dict: ModifyDictReq) => client.request<void>({
     url: '/dict',
     method: 'PUT',
     data: dict,
@@ -93,7 +93,7 @@ export default (client: HttpClient) => ({
    * @param ids 字典ID集合
    * @param enabled 更新后的字典启用状态
    */
-  updateDictStatus: (ids: string[], enabled: boolean): PResponse<void> => client.request({
+  updateDictStatus: (ids: string[], enabled: boolean) => client.request<void>({
     url: '/dict/update-status',
     method: 'PUT',
     params: {
@@ -105,7 +105,7 @@ export default (client: HttpClient) => ({
    * 批量删除字典目/字典项
    * @param ids 字典ID集合
    */
-  removeDict: (ids: string[]): PResponse<void> => client.request({
+  removeDict: (ids: string[]) => client.request<void>({
     url: '/dict',
     method: 'DELETE',
     data: ids,
