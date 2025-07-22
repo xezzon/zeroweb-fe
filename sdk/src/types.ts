@@ -1,4 +1,5 @@
-import { AxiosInstance, CreateAxiosDefaults } from "axios";
+import { Alova, AlovaGenerics, AlovaOptions } from "alova";
+import { FetchRequestInit } from "alova/fetch";
 
 /**
  * @see {@link https://docs.oasis-open.org/odata/odata/v4.01/cs01/abnf/odata-abnf-construction-rules.txt | OData ABNF Construction Rules Version 4.01}
@@ -51,5 +52,6 @@ export interface Id {
   id: string;
 }
 
-export declare type HttpClient = AxiosInstance;
-export declare type InstanceConfig = CreateAxiosDefaults;
+declare type AG = AlovaGenerics<unknown, unknown, FetchRequestInit, Response, Headers>;
+export declare type HttpClient = Alova<AG>;
+export declare type InstanceConfig = Omit<AlovaOptions<AG>, 'requestAdapter'>;

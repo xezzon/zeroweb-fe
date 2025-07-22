@@ -49,7 +49,7 @@ export default (client: HttpClient) => ({
    * @param openapi 
    * @returns 
    */
-  addOpenapi: (openapi: AddOpenapiReq) => client.request<Id>({
+  addOpenapi: (openapi: AddOpenapiReq) => client.Request<Id>({
     url: '/openapi',
     method: 'POST',
     data: openapi,
@@ -59,7 +59,7 @@ export default (client: HttpClient) => ({
    * @param odata 分页参数
    * @returns 对外接口列表
    */
-  getOpenapiList: (odata: OData) => client.request<Page<Openapi>>({
+  getOpenapiList: (odata: OData) => client.Request<Page<Openapi>>({
     url: '/openapi',
     method: 'GET',
     params: odata,
@@ -68,7 +68,7 @@ export default (client: HttpClient) => ({
    * 更新对外接口
    * @param openapi 对外接口
    */
-  modifyOpenapi: (openapi: ModifyOpenapiReq) => client.request<void>({
+  modifyOpenapi: (openapi: ModifyOpenapiReq) => client.Request<void>({
     url: '/openapi',
     method: 'PUT',
     data: openapi,
@@ -77,7 +77,7 @@ export default (client: HttpClient) => ({
    * 发布对外接口
    * @param id 对外接口ID
    */
-  publishOpenapi: (id: string) => client.request<void>({
+  publishOpenapi: (id: string) => client.Request<void>({
     url: `/openapi/publish/${id}`,
     method: 'PUT',
   }),

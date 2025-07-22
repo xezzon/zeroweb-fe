@@ -55,7 +55,7 @@ export default (client: HttpClient) => ({
    * 订阅对外接口
    * @param subscription 接口订阅信息
    */
-  subscribe: (subscription: AddSubscriptionReq) => client.request<Id>({
+  subscribe: (subscription: AddSubscriptionReq) => client.Request<Id>({
     url: `${BASE_URL}`,
     method: 'POST',
     data: subscription,
@@ -66,7 +66,7 @@ export default (client: HttpClient) => ({
    * @param odata 分页查询参数
    * @returns 订阅列表
    */
-  listSubscription: (appId: string, odata: OData) => client.request<Page<Subscription>>({
+  listSubscription: (appId: string, odata: OData) => client.Request<Page<Subscription>>({
     url: `${THIRD_PARTY_APP_URL}/${appId}/subscription`,
     method: 'GET',
     params: odata,
@@ -76,7 +76,7 @@ export default (client: HttpClient) => ({
    * 审核后第三方应用即可调用该接口
    * @param id 订阅标识
    */
-  auditSubscription: (id: string) => client.request<void>({
+  auditSubscription: (id: string) => client.Request<void>({
     url: `${BASE_URL}/audit/${id}`,
     method: 'PUT',
   })

@@ -42,7 +42,7 @@ export default (client: HttpClient) => ({
    * @param role 角色信息
    * @returns 角色ID
    */
-  addRole: (role: AddRoleReq) => client.request<Id>({
+  addRole: (role: AddRoleReq) => client.Request<Id>({
     url: '/role',
     method: 'POST',
     data: role,
@@ -51,7 +51,7 @@ export default (client: HttpClient) => ({
    * 查询角色列表
    * @returns 角色列表（树形）
    */
-  listAllRole: () => client.request<Role[]>({
+  listAllRole: () => client.Request<Role[]>({
     url: '/role',
     method: 'GET',
   }),
@@ -59,7 +59,7 @@ export default (client: HttpClient) => ({
    * 删除角色
    * @param id 角色ID
    */
-  deleteRole: (id: string) => client.request<void>({
+  deleteRole: (id: string) => client.Request<void>({
     url: `/role/${id}`,
     method: 'DELETE',
   }),
@@ -67,7 +67,7 @@ export default (client: HttpClient) => ({
    * 查询当前登陆人的角色及它们的下一级角色
    * @returns 角色列表
    */
-  listMyRole: () => client.request<Role[]>({
+  listMyRole: () => client.Request<Role[]>({
     url: '/role/mine',
     method: 'GET',
   }),

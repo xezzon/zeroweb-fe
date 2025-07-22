@@ -1,5 +1,6 @@
 import { InstanceConfig } from "@/types"
-import axios from "axios"
+import { createAlova } from "alova"
+import adapterFetch from "alova/fetch"
 import authn from "./authn"
 import authz from "./authz"
 import dict from "./dict"
@@ -8,13 +9,12 @@ import role from "./role"
 import user from "./user"
 
 export default (config: InstanceConfig) => {
-  const instance = axios.create(config)
+  const instance = createAlova({
+    ...config,
+    requestAdapter: adapterFetch(),
+  })
 
   return {
-    /**
-     * 拦截器方法
-     */
-    interceptors: instance.interceptors,
     /**
      * 认证相关接口
      */
@@ -47,3 +47,4 @@ export type * from './authz'
 export type * from './dict'
 export type * from './locale'
 export type * from './user'
+

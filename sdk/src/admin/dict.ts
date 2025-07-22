@@ -54,7 +54,7 @@ export default (client: HttpClient) => ({
    * 新增字典
    * @param dict 字典
    */
-  addDict: (dict: AddDictReq) => client.request<Id>({
+  addDict: (dict: AddDictReq) => client.Request<Id>({
     url: '/dict',
     method: 'POST',
     data: dict,
@@ -64,7 +64,7 @@ export default (client: HttpClient) => ({
    * @param odata 分页参数
    * @returns 字典目列表
    */
-  getDictTagList: (odata: OData) => client.request<Page<Dict>>({
+  getDictTagList: (odata: OData) => client.Request<Page<Dict>>({
     url: '/dict',
     method: 'GET',
     params: odata,
@@ -74,7 +74,7 @@ export default (client: HttpClient) => ({
    * @param tag 字典目编码
    * @returns 字典项列表（树形）
    */
-  getDictTreeByTag: (tag: string) => client.request<Dict[]>({
+  getDictTreeByTag: (tag: string) => client.Request<Dict[]>({
     url: `/dict/tag/${tag}`,
     method: 'GET',
   }),
@@ -83,7 +83,7 @@ export default (client: HttpClient) => ({
    * @param dict 字典
    * @returns 
    */
-  modifyDict: (dict: ModifyDictReq) => client.request<void>({
+  modifyDict: (dict: ModifyDictReq) => client.Request<void>({
     url: '/dict',
     method: 'PUT',
     data: dict,
@@ -93,7 +93,7 @@ export default (client: HttpClient) => ({
    * @param ids 字典ID集合
    * @param enabled 更新后的字典启用状态
    */
-  updateDictStatus: (ids: string[], enabled: boolean) => client.request<void>({
+  updateDictStatus: (ids: string[], enabled: boolean) => client.Request<void>({
     url: '/dict/update-status',
     method: 'PUT',
     params: {
@@ -105,7 +105,7 @@ export default (client: HttpClient) => ({
    * 批量删除字典目/字典项
    * @param ids 字典ID集合
    */
-  removeDict: (ids: string[]) => client.request<void>({
+  removeDict: (ids: string[]) => client.Request<void>({
     url: '/dict',
     method: 'DELETE',
     data: ids,

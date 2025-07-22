@@ -63,26 +63,22 @@ export default (client: HttpClient) => ({
    * 基础认证
    * @param user 用户名口令
    */
-  basicLogin: (user: BasicAuth) => client.request<SaTokenInfo>({
+  basicLogin: (user: BasicAuth) => client.Request<SaTokenInfo>({
     url: '/auth/login/basic',
     method: 'POST',
-    auth: {
-      username: user.username,
-      password: user.password,
-    },
     data: user,
   }),
   /**
    * @returns 当前用户的认证信息
    */
-  self: () => client.request<JwtClaim>({
+  self: () => client.Request<JwtClaim>({
     url: '/auth/self',
     method: 'GET',
   }),
   /**
    * @returns 用户令牌
    */
-  token: () => client.request<OidcToken>({
+  token: () => client.Request<OidcToken>({
     url: '/auth/token',
     method: 'GET',
   }),

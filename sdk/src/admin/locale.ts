@@ -80,7 +80,7 @@ export default (client: HttpClient) => ({
    * 新增语言
    * @param language 语言
    */
-  addLanguage: (language: AddLanguageReq) => client.request<Id>({
+  addLanguage: (language: AddLanguageReq) => client.Request<Id>({
     url: '/language',
     method: 'POST',
     data: language,
@@ -89,7 +89,7 @@ export default (client: HttpClient) => ({
    * 查询语言列表
    * @returns 语言列表
    */
-  queryLanguageList: () => client.request<Language[]>({
+  queryLanguageList: () => client.Request<Language[]>({
     url: '/language',
     method: 'GET',
   }),
@@ -97,7 +97,7 @@ export default (client: HttpClient) => ({
    * 更新语言
    * @param language 语言
    */
-  updateLanguage: (language: Language) => client.request<void>({
+  updateLanguage: (language: Language) => client.Request<void>({
     url: '/language',
     method: 'PUT',
     data: language,
@@ -106,7 +106,7 @@ export default (client: HttpClient) => ({
    * 删除语言
    * @param id 语言ID
    */
-  deleteLanguage: (id: string) => client.request<void>({
+  deleteLanguage: (id: string) => client.Request<void>({
     url: `/language/${id}`,
     method: 'DELETE',
   }),
@@ -114,7 +114,7 @@ export default (client: HttpClient) => ({
    * 新增国际化内容
    * @param i18nMessage 国际化内容
    */
-  addI18nMessage: (i18nMessage: AddI18nMessageReq) => client.request<Id>({
+  addI18nMessage: (i18nMessage: AddI18nMessageReq) => client.Request<Id>({
     url: '/i18n',
     method: 'POST',
     data: i18nMessage,
@@ -123,7 +123,7 @@ export default (client: HttpClient) => ({
    * 列举国际化内容命名空间
    * @returns 国际化内容命名空间
    */
-  listI18nNamespace: () => client.request<string[]>({
+  listI18nNamespace: () => client.Request<string[]>({
     url: '/i18n',
     method: 'GET',
   }),
@@ -133,7 +133,7 @@ export default (client: HttpClient) => ({
    * @param odata 分页查询参数
    * @returns 国际化内容列表
    */
-  queryI18nMessageList: (namespace: string, odata: OData) => client.request<Page<I18nMessage>>({
+  queryI18nMessageList: (namespace: string, odata: OData) => client.Request<Page<I18nMessage>>({
     url: `/i18n/${namespace}`,
     method: 'GET',
     params: odata,
@@ -142,7 +142,7 @@ export default (client: HttpClient) => ({
    * 更新国际化内容
    * @param i18nMessage 国际化内容
    */
-  updateI18nMessage: (i18nMessage: I18nMessage) => client.request<void>({
+  updateI18nMessage: (i18nMessage: I18nMessage) => client.Request<void>({
     url: '/i18n',
     method: 'PUT',
     data: i18nMessage,
@@ -151,7 +151,7 @@ export default (client: HttpClient) => ({
    * 删除国际化内容
    * @param id 国际化内容ID
    */
-  deleteI18nMessage: (id: string) => client.request<void>({
+  deleteI18nMessage: (id: string) => client.Request<void>({
     url: `/i18n/${id}`,
     method: 'DELETE',
   }),
@@ -161,7 +161,7 @@ export default (client: HttpClient) => ({
    * @param messageKey 国际化内容
    * @returns 语言-国际化内容
    */
-  queryTranslation: (namespace: string, messageKey: string) => client.request<Map<string, string>>({
+  queryTranslation: (namespace: string, messageKey: string) => client.Request<Map<string, string>>({
     url: `/i18n/${namespace}/${messageKey}`,
     method: 'GET',
   }),
@@ -169,7 +169,7 @@ export default (client: HttpClient) => ({
    * 新增/更新国际化文本
    * @param translation 国际化文本
    */
-  upsertTranslation: (translation: UpsertTranslationReq) => client.request<Id>({
+  upsertTranslation: (translation: UpsertTranslationReq) => client.Request<Id>({
     url: '/locale',
     method: 'PUT',
     data: translation,
@@ -180,7 +180,7 @@ export default (client: HttpClient) => ({
    * @param namespace 命名空间
    * @returns 国际化内容-国际化文本
    */
-  loadTranslation: (language: string, namespace: string) => client.request<Map<string, string>>({
+  loadTranslation: (language: string, namespace: string) => client.Request<Map<string, string>>({
     url: `/locale/${language}/${namespace}`,
     method: 'GET',
   })

@@ -42,7 +42,7 @@ export default (client: HttpClient) => ({
    * 新增第三方应用
    * @param thirdPartyApp 第三方应用
    */
-  addThirdPartyApp: (thirdPartyApp: AddThirdPartyAppReq) => client.request<AccessSecret>({
+  addThirdPartyApp: (thirdPartyApp: AddThirdPartyAppReq) => client.Request<AccessSecret>({
     url: `${BASE_URL}`,
     method: 'POST',
     data: thirdPartyApp,
@@ -52,7 +52,7 @@ export default (client: HttpClient) => ({
    * @param odata 分页参数
    * @returns 第三方应用列表
    */
-  listMyThirdPartyApp: (odata: OData) => client.request<Page<ThirdPartyApp>>({
+  listMyThirdPartyApp: (odata: OData) => client.Request<Page<ThirdPartyApp>>({
     url: `${BASE_URL}/mine`,
     method: 'GET',
     params: odata,
@@ -62,7 +62,7 @@ export default (client: HttpClient) => ({
    * @param odata 分页参数
    * @returns 第三方应用列表
    */
-  listThirdPartyApp: (odata: OData) => client.request<Page<ThirdPartyApp>>({
+  listThirdPartyApp: (odata: OData) => client.Request<Page<ThirdPartyApp>>({
     url: `${BASE_URL}`,
     method: 'GET',
     params: odata,
@@ -73,7 +73,7 @@ export default (client: HttpClient) => ({
    * @param id 第三方应用ID
    * @returns 新的应用访问凭据及密钥
    */
-  rollAccessSecret: (id: string) => client.request<AccessSecret>({
+  rollAccessSecret: (id: string) => client.Request<AccessSecret>({
     url: `${BASE_URL}/${id}/roll`,
     method: 'PATCH',
   })

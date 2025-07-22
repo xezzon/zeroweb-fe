@@ -21,12 +21,12 @@ export interface User {
  */
 declare type RegisterReq = Omit<User, 'id'>
 
-export default ({ request }: HttpClient) => ({
+export default ({ Request }: HttpClient) => ({
   /**
    * 用户注册
    * @param user 用户
    */
-  register: (user: RegisterReq) => request<Id>({
+  register: (user: RegisterReq) => Request<Id>({
     url: '/user/register',
     method: 'POST',
     data: user,

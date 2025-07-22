@@ -1,17 +1,17 @@
-import axios from "axios";
 import { InstanceConfig } from "@/types";
+import { createAlova } from "alova";
+import adapterFetch from "alova/fetch";
 import openapi from "./openapi";
-import thirdPartyApp from "./third_party_app";
 import subscription from "./subscription";
+import thirdPartyApp from "./third_party_app";
 
 export default (config: InstanceConfig) => {
-  const instance = axios.create(config)
+  const instance = createAlova({
+    ...config,
+    requestAdapter: adapterFetch(),
+  })
 
   return {
-    /**
-     * 拦截器方法
-     */
-    interceptors: instance.interceptors,
     /**
      * 对外接口相关接口
      */
@@ -27,9 +27,9 @@ export default (config: InstanceConfig) => {
   }
 }
 
-export { OpenapiStatus } from './openapi'
-export { SubscriptionStatus } from './subscription'
+export { OpenapiStatus } from './openapi';
+export { SubscriptionStatus } from './subscription';
 
-export type * from './openapi'
-export type * from './subscription'
-export type * from './third_party_app'
+export type * from './openapi';
+export type * from './subscription';
+export type * from './third_party_app';
