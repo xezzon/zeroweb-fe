@@ -1,4 +1,4 @@
-import { HttpClient, Id, PResponse } from "@/types";
+import { HttpClient, Id } from "@/types";
 
 export interface User {
   id: string;
@@ -26,7 +26,7 @@ export default ({ request }: HttpClient) => ({
    * 用户注册
    * @param user 用户
    */
-  register: (user: RegisterReq): PResponse<Id> => request({
+  register: (user: RegisterReq) => request<Id>({
     url: '/user/register',
     method: 'POST',
     data: user,

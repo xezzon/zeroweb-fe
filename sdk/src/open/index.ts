@@ -9,9 +9,9 @@ export default (config: InstanceConfig) => {
 
   return {
     /**
-     * HTTP 客户端
+     * 拦截器方法
      */
-    instance,
+    interceptors: instance.interceptors,
     /**
      * 对外接口相关接口
      */
