@@ -1,5 +1,6 @@
 import { InstanceConfig } from "@/types"
 import axios from "axios"
+import app from "./app"
 import authn from "./authn"
 import authz from "./authz"
 import dict from "./dict"
@@ -15,6 +16,10 @@ export default (config: InstanceConfig) => {
      * 拦截器方法
      */
     interceptors: instance.interceptors,
+    /**
+     * 应用管理相关接口
+     */
+    app: app(instance),
     /**
      * 认证相关接口
      */
@@ -42,6 +47,7 @@ export default (config: InstanceConfig) => {
   }
 }
 
+export type * from './app'
 export type * from './authn'
 export type * from './authz'
 export type * from './dict'
