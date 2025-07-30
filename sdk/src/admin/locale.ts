@@ -1,4 +1,4 @@
-import { HttpClient, Id, OData, Page } from "@/types";
+import { HttpClient, Id, OData, Page, PResponse } from "@/types";
 
 /**
  * 语言
@@ -75,111 +75,126 @@ declare type AddI18nMessageReq = Omit<I18nMessage, 'id'>;
  */
 declare type UpsertTranslationReq = Omit<Translation, 'id'>;
 
-export default (client: HttpClient) => ({
+export interface LocaleAPI {
   /**
    * 新增语言
    * @param language 语言
    */
-  addLanguage: (language: AddLanguageReq) => client.request<Id>({
-    url: '/language',
-    method: 'POST',
-    data: language,
-  }),
+  addLanguage: (language: AddLanguageReq) => PResponse<Id>;
   /**
    * 查询语言列表
    * @returns 语言列表
    */
-  queryLanguageList: () => client.request<Language[]>({
-    url: '/language',
-    method: 'GET',
-  }),
+  queryLanguageList: () => PResponse<Language[]>;
   /**
    * 更新语言
    * @param language 语言
    */
-  updateLanguage: (language: Language) => client.request<void>({
-    url: '/language',
-    method: 'PUT',
-    data: language,
-  }),
+  updateLanguage: (language: Language) => PResponse<void>;
   /**
    * 删除语言
    * @param id 语言ID
    */
-  deleteLanguage: (id: string) => client.request<void>({
-    url: `/language/${id}`,
-    method: 'DELETE',
-  }),
+  deleteLanguage: (id: string) => PResponse<void>;
   /**
    * 新增国际化内容
    * @param i18nMessage 国际化内容
    */
-  addI18nMessage: (i18nMessage: AddI18nMessageReq) => client.request<Id>({
-    url: '/i18n',
-    method: 'POST',
-    data: i18nMessage,
-  }),
+  addI18nMessage: (i18nMessage: AddI18nMessageReq) => PResponse<Id>;
   /**
    * 列举国际化内容命名空间
    * @returns 国际化内容命名空间
    */
-  listI18nNamespace: () => client.request<string[]>({
-    url: '/i18n',
-    method: 'GET',
-  }),
+  listI18nNamespace: () => PResponse<string[]>;
   /**
    * 分页查询国际化内容
    * @param namespace 命名空间
    * @param odata 分页查询参数
    * @returns 国际化内容列表
    */
-  queryI18nMessageList: (namespace: string, odata: OData) => client.request<Page<I18nMessage>>({
-    url: `/i18n/${namespace}`,
-    method: 'GET',
-    params: odata,
-  }),
+  queryI18nMessageList: (namespace: string, odata: OData) => PResponse<Page<I18nMessage>>;
   /**
    * 更新国际化内容
    * @param i18nMessage 国际化内容
    */
-  updateI18nMessage: (i18nMessage: I18nMessage) => client.request<void>({
-    url: '/i18n',
-    method: 'PUT',
-    data: i18nMessage,
-  }),
+  updateI18nMessage: (i18nMessage: I18nMessage) => PResponse<void>;
   /**
    * 删除国际化内容
    * @param id 国际化内容ID
    */
-  deleteI18nMessage: (id: string) => client.request<void>({
-    url: `/i18n/${id}`,
-    method: 'DELETE',
-  }),
+  deleteI18nMessage: (id: string) => PResponse<void>;
   /**
    * 查询国际化文本
    * @param namespace 命名空间
    * @param messageKey 国际化内容
    * @returns 语言-国际化内容
    */
-  queryTranslation: (namespace: string, messageKey: string) => client.request<Map<string, string>>({
-    url: `/i18n/${namespace}/${messageKey}`,
-    method: 'GET',
-  }),
+  queryTranslation: (namespace: string, messageKey: string) => PResponse<Map<string, string>>;
   /**
    * 新增/更新国际化文本
    * @param translation 国际化文本
    */
-  upsertTranslation: (translation: UpsertTranslationReq) => client.request<Id>({
-    url: '/locale',
-    method: 'PUT',
-    data: translation,
-  }),
+  upsertTranslation: (translation: UpsertTranslationReq) => PResponse<Id>;
   /**
    * 加载国际化资源
    * @param language 语言
    * @param namespace 命名空间
    * @returns 国际化内容-国际化文本
    */
+  loadTranslation: (language: string, namespace: string) => PResponse<Map<string, string>>;
+}
+
+export default (client: HttpClient): LocaleAPI => ({
+  addLanguage: (language: AddLanguageReq) => client.request<Id>({
+    url: '/language',
+    method: 'POST',
+    data: language,
+  }),
+  queryLanguageList: () => client.request<Language[]>({
+    url: '/language',
+    method: 'GET',
+  }),
+  updateLanguage: (language: Language) => client.request<void>({
+    url: '/language',
+    method: 'PUT',
+    data: language,
+  }),
+  deleteLanguage: (id: string) => client.request<void>({
+    url: `/language/${id}`,
+    method: 'DELETE',
+  }),
+  addI18nMessage: (i18nMessage: AddI18nMessageReq) => client.request<Id>({
+    url: '/i18n',
+    method: 'POST',
+    data: i18nMessage,
+  }),
+  listI18nNamespace: () => client.request<string[]>({
+    url: '/i18n',
+    method: 'GET',
+  }),
+  queryI18nMessageList: (namespace: string, odata: OData) => client.request<Page<I18nMessage>>({
+    url: `/i18n/${namespace}`,
+    method: 'GET',
+    params: odata,
+  }),
+  updateI18nMessage: (i18nMessage: I18nMessage) => client.request<void>({
+    url: '/i18n',
+    method: 'PUT',
+    data: i18nMessage,
+  }),
+  deleteI18nMessage: (id: string) => client.request<void>({
+    url: `/i18n/${id}`,
+    method: 'DELETE',
+  }),
+  queryTranslation: (namespace: string, messageKey: string) => client.request<Map<string, string>>({
+    url: `/i18n/${namespace}/${messageKey}`,
+    method: 'GET',
+  }),
+  upsertTranslation: (translation: UpsertTranslationReq) => client.request<Id>({
+    url: '/locale',
+    method: 'PUT',
+    data: translation,
+  }),
   loadTranslation: (language: string, namespace: string) => client.request<Map<string, string>>({
     url: `/locale/${language}/${namespace}`,
     method: 'GET',

@@ -1,4 +1,4 @@
-import { HttpClient, Id } from "@/types";
+import { HttpClient, Id, PResponse } from "@/types";
 
 /**
  * 应用
@@ -26,38 +26,45 @@ export interface App {
 declare type AddAppReq = Omit<App, 'id'>;
 declare type UpdateAppReq = App;
 
-export default (client: HttpClient) => ({
+export interface AppAPI {
   /**
    * 新增应用
    * @param app 应用
    * @returns 应用ID 
    */
+  addApp: (app: AddAppReq) => PResponse<Id>;
+  /**
+   * 查询应用列表
+   * @returns 应用列表
+   */
+  listApp: () => PResponse<App[]>;
+  /**
+   * 更新应用信息
+   * @param app 应用信息
+   */
+  updateApp: (app: UpdateAppReq) => PResponse<void>;
+  /**
+   * 删除应用
+   * @param id 应用ID
+   */
+  deleteApp: (id: string) => PResponse<void>;
+}
+
+export default (client: HttpClient): AppAPI => ({
   addApp: (app: AddAppReq) => client.request<Id>({
     url: '/app',
     method: 'POST',
     data: app,
   }),
-  /**
-   * 查询应用列表
-   * @returns 应用列表
-   */
   listApp: () => client.request<App[]>({
     url: '/app',
     method: 'GET',
   }),
-  /**
-   * 更新应用信息
-   * @param app 应用信息
-   */
   updateApp: (app: UpdateAppReq) => client.request<void>({
     url: '/app',
     method: 'PUT',
     data: app,
   }),
-  /**
-   * 删除应用
-   * @param id 应用ID
-   */
   deleteApp: (id: string) => client.request<void>({
     url: `/app/${id}`,
     method: 'DELETE',

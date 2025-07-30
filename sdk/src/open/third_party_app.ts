@@ -1,4 +1,4 @@
-import { HttpClient, OData, Page } from "@/types";
+import { HttpClient, OData, Page, PResponse } from "@/types";
 
 export const BASE_URL = '/third-party-app'
 
@@ -37,44 +37,51 @@ export interface AccessSecret {
  */
 declare type AddThirdPartyAppReq = Omit<ThirdPartyApp, 'id' | 'ownerId'>;
 
-export default (client: HttpClient) => ({
+export interface ThirdPartyAppAPI {
   /**
    * 新增第三方应用
    * @param thirdPartyApp 第三方应用
    */
-  addThirdPartyApp: (thirdPartyApp: AddThirdPartyAppReq) => client.request<AccessSecret>({
-    url: `${BASE_URL}`,
-    method: 'POST',
-    data: thirdPartyApp,
-  }),
+  addThirdPartyApp: (thirdPartyApp: AddThirdPartyAppReq) => PResponse<AccessSecret>;
   /**
    * 获取当前用户的所有第三方应用列表（分页）
    * @param odata 分页参数
    * @returns 第三方应用列表
    */
-  listMyThirdPartyApp: (odata: OData) => client.request<Page<ThirdPartyApp>>({
-    url: `${BASE_URL}/mine`,
-    method: 'GET',
-    params: odata,
-  }),
+  listMyThirdPartyApp: (odata: OData) => PResponse<Page<ThirdPartyApp>>;
   /**
    * 获取所有的第三方应用列表（分页）
    * @param odata 分页参数
    * @returns 第三方应用列表
    */
-  listThirdPartyApp: (odata: OData) => client.request<Page<ThirdPartyApp>>({
-    url: `${BASE_URL}`,
-    method: 'GET',
-    params: odata,
-  }),
+  listThirdPartyApp: (odata: OData) => PResponse<Page<ThirdPartyApp>>;
   /**
    * 刷新应用访问凭据及密钥
    * 旧的密钥将失效
    * @param id 第三方应用ID
    * @returns 新的应用访问凭据及密钥
    */
+  rollAccessSecret: (id: string) => PResponse<AccessSecret>;
+}
+
+export default (client: HttpClient): ThirdPartyAppAPI => ({
+  addThirdPartyApp: (thirdPartyApp: AddThirdPartyAppReq) => client.request<AccessSecret>({
+    url: `${BASE_URL}`,
+    method: 'POST',
+    data: thirdPartyApp,
+  }),
+  listMyThirdPartyApp: (odata: OData) => client.request<Page<ThirdPartyApp>>({
+    url: `${BASE_URL}/mine`,
+    method: 'GET',
+    params: odata,
+  }),
+  listThirdPartyApp: (odata: OData) => client.request<Page<ThirdPartyApp>>({
+    url: `${BASE_URL}`,
+    method: 'GET',
+    params: odata,
+  }),
   rollAccessSecret: (id: string) => client.request<AccessSecret>({
     url: `${BASE_URL}/${id}/roll`,
     method: 'PATCH',
-  })
+  }),
 })

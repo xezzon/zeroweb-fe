@@ -1,4 +1,4 @@
-import { AxiosInstance, CreateAxiosDefaults } from "axios";
+import { AxiosInstance, AxiosResponse, CreateAxiosDefaults } from "axios";
 
 /**
  * @see {@link https://docs.oasis-open.org/odata/odata/v4.01/cs01/abnf/odata-abnf-construction-rules.txt | OData ABNF Construction Rules Version 4.01}
@@ -53,3 +53,4 @@ export interface Id {
 
 export declare type HttpClient = AxiosInstance;
 export declare type InstanceConfig = CreateAxiosDefaults;
+export declare type PResponse<T> = Promise<AxiosResponse<T>>;

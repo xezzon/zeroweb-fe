@@ -1,4 +1,4 @@
-import { HttpClient, Id } from "@/types";
+import { HttpClient, Id, PResponse } from "@/types";
 
 export interface User {
   id: string;
@@ -21,11 +21,15 @@ export interface User {
  */
 declare type RegisterReq = Omit<User, 'id'>
 
-export default ({ request }: HttpClient) => ({
+export interface UserAPI {
   /**
    * 用户注册
    * @param user 用户
    */
+  register: (user: RegisterReq) => PResponse<Id>;
+}
+
+export default ({ request }: HttpClient): UserAPI => ({
   register: (user: RegisterReq) => request<Id>({
     url: '/user/register',
     method: 'POST',

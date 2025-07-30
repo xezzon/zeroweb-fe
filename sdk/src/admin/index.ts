@@ -34,6 +34,7 @@ export default (config: InstanceConfig) => {
     dict: dict(instance),
     /**
      * 国际化相关接口
+     * @deprecated
      */
     locale: locale(instance),
     /**

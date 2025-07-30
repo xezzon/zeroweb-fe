@@ -1,4 +1,4 @@
-import { HttpClient, Id, OData, Page } from "@/types";
+import { HttpClient, Id, OData, Page, PResponse } from "@/types";
 
 /**
  * 对外接口状态
@@ -43,40 +43,47 @@ export interface Openapi {
 declare type AddOpenapiReq = Omit<Openapi, 'id' | 'status'>;
 declare type ModifyOpenapiReq = Omit<Openapi, 'status'>;
 
-export default (client: HttpClient) => ({
+export interface OpenapiAPI {
   /**
-   * 
+   * 新增对外接口
    * @param openapi 
    * @returns 
    */
-  addOpenapi: (openapi: AddOpenapiReq) => client.request<Id>({
-    url: '/openapi',
-    method: 'POST',
-    data: openapi,
-  }),
+  addOpenapi: (Openapi: AddOpenapiReq) => PResponse<Id>;
   /**
    * 查询对外接口列表（分页）
    * @param odata 分页参数
    * @returns 对外接口列表
    */
+  getOpenapiList: (odata: OData) => PResponse<Page<Openapi>>;
+  /**
+   * 更新对外接口
+   * @param openapi 对外接口
+   */
+  modifyOpenapi: (openapi: ModifyOpenapiReq) => PResponse<void>;
+  /**
+   * 发布对外接口
+   * @param id 对外接口ID
+   */
+  publishOpenapi: (id: string) => PResponse<void>;
+}
+
+export default (client: HttpClient): OpenapiAPI => ({
+  addOpenapi: (openapi: AddOpenapiReq) => client.request<Id>({
+    url: '/openapi',
+    method: 'POST',
+    data: openapi,
+  }),
   getOpenapiList: (odata: OData) => client.request<Page<Openapi>>({
     url: '/openapi',
     method: 'GET',
     params: odata,
   }),
-  /**
-   * 更新对外接口
-   * @param openapi 对外接口
-   */
   modifyOpenapi: (openapi: ModifyOpenapiReq) => client.request<void>({
     url: '/openapi',
     method: 'PUT',
     data: openapi,
   }),
-  /**
-   * 发布对外接口
-   * @param id 对外接口ID
-   */
   publishOpenapi: (id: string) => client.request<void>({
     url: `/openapi/publish/${id}`,
     method: 'PUT',

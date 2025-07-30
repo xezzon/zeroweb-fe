@@ -1,4 +1,4 @@
-import { HttpClient, Id } from "@/types";
+import { HttpClient, Id, PResponse } from "@/types";
 
 /**
  * 角色
@@ -36,37 +36,44 @@ export interface Role {
 
 declare type AddRoleReq = Omit<Role, 'id' | 'value'>
 
-export default (client: HttpClient) => ({
+export interface RoleAPI {
   /**
    * 新增角色
    * @param role 角色信息
    * @returns 角色ID
    */
+  addRole: (role: AddRoleReq) => PResponse<Id>;
+  /**
+   * 查询角色列表
+   * @returns 角色列表（树形）
+   */
+  listAllRole: () => PResponse<Role[]>;
+  /**
+   * 删除角色
+   * @param id 角色ID
+   */
+  deleteRole: (id: string) => PResponse<void>;
+  /**
+   * 查询当前登陆人的角色及它们的下一级角色
+   * @returns 角色列表
+   */
+  listMyRole: () => PResponse<Role[]>;
+}
+
+export default (client: HttpClient): RoleAPI => ({
   addRole: (role: AddRoleReq) => client.request<Id>({
     url: '/role',
     method: 'POST',
     data: role,
   }),
-  /**
-   * 查询角色列表
-   * @returns 角色列表（树形）
-   */
   listAllRole: () => client.request<Role[]>({
     url: '/role',
     method: 'GET',
   }),
-  /**
-   * 删除角色
-   * @param id 角色ID
-   */
   deleteRole: (id: string) => client.request<void>({
     url: `/role/${id}`,
     method: 'DELETE',
   }),
-  /**
-   * 查询当前登陆人的角色及它们的下一级角色
-   * @returns 角色列表
-   */
   listMyRole: () => client.request<Role[]>({
     url: '/role/mine',
     method: 'GET',
