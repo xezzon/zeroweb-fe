@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "lint": "oxlint",
-    "build": "npm run build:cjs && npm run build:esm",
+    "build": "pnpm run build:cjs && pnpm run build:esm",
     "build:esm": "tsc --module esnext --outDir dist/esm && tsc-alias",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs && tsc-alias"
   },
