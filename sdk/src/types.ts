@@ -53,5 +53,4 @@ export interface Id {
 
 export declare type HttpClient = AxiosInstance;
 export declare type InstanceConfig = CreateAxiosDefaults;
-export declare type HttpResponse<T> = AxiosResponse<T>;
-export declare type PResponse<T> = Promise<HttpResponse<T>>;
+export declare type PResponse<T> = Promise<AxiosResponse<T>>;
