@@ -23,5 +23,17 @@
     "name": "应用菜单",
     "route": "menu/index",
     "parent": "app-management"
+  },
+  {
+    "type": "GROUP",
+    "path": "setting",
+    "name": "配置管理"
+  },
+  {
+    "type": "ROUTE",
+    "path": "/dict",
+    "name": "字典",
+    "route": "dict/index",
+    "parent": "setting"
   }
 ]
