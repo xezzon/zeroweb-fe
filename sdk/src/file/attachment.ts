@@ -55,6 +55,8 @@ export interface Attachment {
   createTime: Date;
 }
 
+declare type AddAttachmentReq = Omit<Attachment, 'id' | 'provider' | 'status' | 'createTime' | 'ownerId'>;
+
 export interface AddAttachmentResp {
   /**
    * 附件ID
@@ -67,7 +69,20 @@ export interface AddAttachmentResp {
   maxPartSize: number;
 }
 
-declare type AddAttachmentReq = Omit<Attachment, 'id' | 'provider' | 'status' | 'createTime' | 'ownerId'>;
+export interface UploadAddress {
+  /**
+   * 附件ID
+   */
+  id: string;
+  /**
+   * 存储后端
+   */
+  provider: FileProviderEnum;
+  /**
+   * 上传地址
+   */
+  endpoint: string;
+}
 
 export interface AttachmentAPI {
   /**
@@ -78,22 +93,32 @@ export interface AttachmentAPI {
    * @returns 文件上传元数据
    */
   addAttachment: (file: File, bizType: string, bizId: string) => PResponse<AddAttachmentResp>;
+  /**
+   * 获取附件上传地址
+   * @param id 附件ID
+   * @returns 上传地址
+   */
+  getUploadAddress: (id: string) => PResponse<UploadAddress>;
 }
 
 export default (client: HttpClient): AttachmentAPI => ({
   addAttachment: async (file, bizType, bizId) => {
-    const req : AddAttachmentReq = {
+    const req: AddAttachmentReq = {
       name: file.name,
       checksum: await checksum(file),
       size: file.size,
       type: file.type,
       bizType,
       bizId,
-    }
+    };
     return client.request({
       url: '/attachment',
       method: 'POST',
       data: req,
-    })
+    });
   },
+  getUploadAddress: (id) => client.request({
+    url: `/attachment/${id}/endpoint/upload`,
+    method: 'GET',
+  }),
 })
