@@ -6,3 +6,6 @@ export type * from './admin'
 
 export { default as ZerowebOpenClient, OpenapiStatus, SubscriptionStatus, } from './open'
 export type * from './open'
+
+export { default as ZerowebDevClient } from './dev'
+export type * from './dev'
