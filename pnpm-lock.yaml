@@ -21,7 +21,13 @@ importers:
       axios:
         specifier: ^1.7.9
         version: 1.7.9
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
     devDependencies:
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
       '@types/node':
         specifier: ^22.10.2
         version: 22.10.2
@@ -96,6 +102,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@types/crypto-js@4.2.2':
+    resolution: {integrity: sha512-sDOLlVbHhXpAUAL0YHDUUwDZf3iN4Bwi4W6a0W0b+QcAezUbRtH4FVb+9J4h+XFPW7l/gQ9F8qC7P+Ec4k8QVQ==}
+
   '@types/node@22.10.2':
     resolution: {integrity: sha512-Xxr6BBRCAOQixvonOye19wnzyDiUtTeqldOOmj3CkeblonbccA12PFwlufvRdrpjXxqnmUaeiU5EOA+7s5diUQ==}
 
@@ -132,6 +141,9 @@ packages:
   commander@9.5.0:
     resolution: {integrity: sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==}
     engines: {node: ^12.20.0 || >=14}
+
+  crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
 
   delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
@@ -325,6 +337,8 @@ snapshots:
   '@oxlint/win32-x64@1.6.0':
     optional: true
 
+  '@types/crypto-js@4.2.2': {}
+
   '@types/node@22.10.2':
     dependencies:
       undici-types: 6.20.0
@@ -369,6 +383,8 @@ snapshots:
       delayed-stream: 1.0.0
 
   commander@9.5.0: {}
+
+  crypto-js@4.2.0: {}
 
   delayed-stream@1.0.0: {}
 

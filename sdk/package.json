@@ -19,6 +19,7 @@
     "build:cjs": "tsc --module commonjs --outDir dist/cjs && tsc-alias"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^22.10.2",
     "@zeroweb/oxlint-config": "workspace:^",
     "oxlint": "^1.6.0",
@@ -26,6 +27,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "axios": "^1.7.9"
+    "axios": "^1.7.9",
+    "crypto-js": "^4.2.0"
   }
 }
