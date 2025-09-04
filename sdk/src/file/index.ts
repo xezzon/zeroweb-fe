@@ -1,9 +1,11 @@
 import { InstanceConfig } from "@/types"
 import axios from "axios"
 import attachment from "./attachment"
+import { upload } from "./upload"
 
 export default (config: InstanceConfig) => {
   const instance = axios.create(config)
+  const attachmentApi = attachment(instance)
 
   return {
     /**
@@ -13,7 +15,14 @@ export default (config: InstanceConfig) => {
     /**
      * 附件管理接口
      */
-    attachment: attachment(instance),
+    attachment: attachmentApi,
+    /**
+     * 文件上传
+     * @param file 文件
+     * @param bizType 业务类型
+     * @param bizId 业务编码
+     */
+    upload: upload(instance, attachmentApi),
   }
 }
 
