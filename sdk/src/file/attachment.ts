@@ -84,6 +84,28 @@ export interface UploadAddress {
   endpoint: string;
 }
 
+/**
+ * S3 分段上传凭据
+ */
+export interface S3Etag {
+  /**
+   * 附件ID
+   */
+  attachmentId: string
+  /**
+   * 分段序号
+   */
+  partNumber: number;
+  /**
+   * S3 Etag
+   */
+  etag: string;
+  /**
+   * 分段校验和
+   */
+  checksum: string;
+}
+
 export interface AttachmentAPI {
   /**
    * 新增附件
@@ -99,6 +121,23 @@ export interface AttachmentAPI {
    * @returns 上传地址
    */
   getUploadAddress: (id: string) => PResponse<UploadAddress>;
+  /**
+   * 获取附件分段上传地址
+   * @param id 附件ID
+   * @param partNumber 分段序号
+   * @returns 上传地址
+   */
+  getMultipartUploadAddress: (id: string, partNumber: number) => PResponse<UploadAddress>;
+  /**
+   * 文件上传完成后，将其状态变更为已完成
+   * @param id 附件ID
+   */
+  finishUpload: (id: string) => PResponse<void>;
+  /**
+   * S3上传完分段后，将返回内容提交到服务器
+   * @param etag S3分段上传凭据
+   */
+  upsertS3Etag: (etag: S3Etag) => PResponse<void>;
 }
 
 export default (client: HttpClient): AttachmentAPI => ({
@@ -120,5 +159,18 @@ export default (client: HttpClient): AttachmentAPI => ({
   getUploadAddress: (id) => client.request({
     url: `/attachment/${id}/endpoint/upload`,
     method: 'GET',
+  }),
+  getMultipartUploadAddress: (id, partNumber) => client.request({
+    url: `/attachment/${id}/endpoint/upload/${partNumber}`,
+    method: 'GET',
+  }),
+  finishUpload: (id) => client.request({
+    url: `/attachment/${id}/status/done`,
+    method: 'PUT',
+  }),
+  upsertS3Etag: (etag) => client.request({
+    url: `/s3/${etag.attachmentId}/etag`,
+    method: 'PUT',
+    data: etag,
   }),
 })
