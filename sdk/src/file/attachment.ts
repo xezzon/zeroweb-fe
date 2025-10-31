@@ -57,19 +57,7 @@ export interface Attachment {
 
 declare type AddAttachmentReq = Omit<Attachment, 'id' | 'provider' | 'status' | 'createTime' | 'ownerId'>;
 
-export interface AddAttachmentResp {
-  /**
-   * 附件ID
-   */
-  id: string;
-  /**
-   * 单个文件分片的最大大小
-   * 单位：MB。
-   */
-  maxPartSize: number;
-}
-
-export interface UploadAddress {
+export interface UploadInfo {
   /**
    * 附件ID
    */
@@ -79,9 +67,32 @@ export interface UploadAddress {
    */
   provider: FileProviderEnum;
   /**
+   * 分片数量
+   */
+  partCount: number;
+  /**
+   * 分片大小。单位 Byte。
+   */
+  partSize: number;
+  /**
+   * 上传地址
+   */
+  addresses: UploadAddress[];
+}
+
+export interface UploadAddress {
+  /**
+   * 分片序号
+   */
+  partNumber: number;
+  /**
    * 上传地址
    */
   endpoint: string;
+  /**
+   * 回调地址
+   */
+  callback: string;
 }
 
 /**
@@ -114,20 +125,15 @@ export interface AttachmentAPI {
    * @param bizId 业务ID
    * @returns 文件上传元数据
    */
-  addAttachment: (file: File, bizType: string, bizId: string) => PResponse<AddAttachmentResp>;
+  addAttachment: (file: File, bizType: string, bizId: string) => PResponse<UploadInfo>;
   /**
    * 获取附件上传地址
    * @param id 附件ID
+   * @param checksum 文件摘要
+   * @param fileSize 文件大小
    * @returns 上传地址
    */
-  getUploadAddress: (id: string) => PResponse<UploadAddress>;
-  /**
-   * 获取附件分段上传地址
-   * @param id 附件ID
-   * @param partNumber 分段序号
-   * @returns 上传地址
-   */
-  getMultipartUploadAddress: (id: string, partNumber: number) => PResponse<UploadAddress>;
+  getUploadAddress: (id: string, checksum: string, fileSize: number) => PResponse<UploadAddress>;
   /**
    * 文件上传完成后，将其状态变更为已完成
    * @param id 附件ID
@@ -156,13 +162,10 @@ export default (client: HttpClient): AttachmentAPI => ({
       data: req,
     });
   },
-  getUploadAddress: (id) => client.request({
+  getUploadAddress: (id, checksum, fileSize) => client.request({
     url: `/attachment/${id}/endpoint/upload`,
     method: 'GET',
-  }),
-  getMultipartUploadAddress: (id, partNumber) => client.request({
-    url: `/attachment/${id}/endpoint/upload/${partNumber}`,
-    method: 'GET',
+    params: { checksum, fileSize },
   }),
   finishUpload: (id) => client.request({
     url: `/attachment/${id}/status/done`,

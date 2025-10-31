@@ -1,6 +1,6 @@
 import { HttpClient, PResponse } from "@/types"
 import CryptoJS from "crypto-js"
-import { AttachmentAPI } from "./attachment"
+import { AttachmentAPI, UploadInfo } from "./attachment"
 import { FileProviderEnum } from "."
 
 /**
@@ -30,40 +30,29 @@ declare global {
 
 export function upload(client: HttpClient, attachmentApi: AttachmentAPI) {
 
-  const uploadFile = async (attachmentId: string, file: File): Promise<string> => {
-    return attachmentApi.getUploadAddress(attachmentId)
-      .then(response => response.data)
-      .then(async ({ endpoint }) => client.request({
-        url: endpoint,
-        method: 'PUT',
-        data: file.slice(),
-        headers: {
+  return async (file: File, uploadInfo: UploadInfo) => file.arrayBuffer()
+    .then(arrayBuffer => {
+      const partCount = uploadInfo.partCount
+      const partSize = uploadInfo.partSize
+      const partContents = []
+      for (let index = 0; index < partCount - 1; index++) {
+        partContents.push(arrayBuffer.slice(index * partSize, (index + 1) * partSize))
+      }
+      partContents.push(arrayBuffer.slice((partCount - 1) * partSize, file.size))
+      return partContents
+    })
+    .then(partContents => {
+      const header = uploadInfo.partCount > 1
+        ? {}
+        : {
           'x-amz-meta-filename': file.name,
           'Content-Type': file.type,
-          'x-amz-sdk-checksum-algorithm': 'SHA256',
-          'x-amz-checksum-sha256': await checksum(file),
-        },
-      }))
-      .then(() => attachmentId)
-  }
-
-  const uploadMultipartFile = async (attachmentId: string, file: File, maxPartSize: number): Promise<string> => {
-    const partCount = Math.ceil(file.size / maxPartSize)
-    return file.arrayBuffer()
-      .then(arrayBuffer => {
-        const partContents = []
-        for (let index = 0; index < partCount - 1; index++) {
-          partContents.push(arrayBuffer.slice(index * maxPartSize, (index + 1) * maxPartSize))
         }
-        partContents.push(arrayBuffer.slice((partCount - 1) * maxPartSize, file.size))
-        return partContents
-      })
-      .then(partContents => Promise.all(
-        partContents.map((partContent, index) => attachmentApi
-          .getMultipartUploadAddress(attachmentId, index + 1)
-          .then(response => response.data)
-          .then(async ({ endpoint, provider }) => {
-            const partChecksum = CryptoJS
+      return Promise.all(
+        uploadInfo.addresses
+          .map(async ({ partNumber, endpoint, callback }) => {
+            const partContent = partContents[partNumber - 1]
+            const checksum = CryptoJS
               .SHA256(CryptoJS.lib.WordArray.create(partContent))
               .toString(CryptoJS.enc.Base64)
             return client
@@ -72,40 +61,23 @@ export function upload(client: HttpClient, attachmentApi: AttachmentAPI) {
                 method: 'PUT',
                 data: partContent,
                 headers: {
+                  ...header,
                   'x-amz-sdk-checksum-algorithm': 'SHA256',
-                  'x-amz-checksum-sha256': partChecksum,
+                  'x-amz-checksum-sha256': checksum,
                 },
               })
-              .then((response) => {
-                if (provider == FileProviderEnum.S3) {
+              .then(response => {
+                if (uploadInfo.provider == FileProviderEnum.S3 && !!callback) {
                   return attachmentApi.upsertS3Etag({
-                    attachmentId,
+                    attachmentId: uploadInfo.id,
                     etag: response.headers["etag"],
-                    partNumber: index + 1,
-                    checksum: partChecksum,
+                    partNumber,
+                    checksum,
                   })
                 }
               })
           })
-        )
-      ))
-      .then(() => attachmentId)
-  }
-
-  return async (file: File, bizType: string, bizId: string) => attachmentApi
-    // 新增附件
-    .addAttachment(file, bizType, bizId)
-    .then((response) => response.data)
-    // 上传文件
-    .then(({ id, maxPartSize }) => {
-      const maxPartSizeInByte = maxPartSize * 1024 * 1024
-      if (file.size > maxPartSizeInByte) {
-        // 大文件需要分段上传
-        return uploadMultipartFile(id, file, maxPartSizeInByte)
-      } else {
-        return uploadFile(id, file)
-      }
+      )
     })
-    // 完成上传
-    .then(attachmentApi.finishUpload)
+    .then(() => attachmentApi.finishUpload(uploadInfo.id))
 }
