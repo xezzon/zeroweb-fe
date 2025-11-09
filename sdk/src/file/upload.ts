@@ -1,30 +1,43 @@
-import { HttpClient, PResponse } from "@/types"
-import CryptoJS from "crypto-js"
-import attachment, { AttachmentAPI, UploadInfo } from "./attachment"
-import { FileProviderEnum } from "."
+import { HttpClient } from "@/types";
+import CryptoJS from "crypto-js";
+import { crc32 } from "js-crc";
+import { FileProviderEnum } from ".";
+import { AttachmentAPI, UploadInfo } from "./attachment";
 
 /**
  * 计算文件的校验和
  * @param file 文件
  * @returns 文件的SHA256值
  */
-export async function checksum(file: File): Promise<string> {
-  if (file.checksum) {
-    return file.checksum
+export async function checksum(file: File): Promise<File> {
+  if (file.checksum && file.crc) {
+    return file
   }
   return file.arrayBuffer()
-    .then(arrayBuffer => {
-      const checksum = CryptoJS
-        .SHA256(CryptoJS.lib.WordArray.create(arrayBuffer))
-        .toString(CryptoJS.enc.Base64)
-      file.checksum = checksum
-      return checksum
-    })
+    .then(arrayBuffer => Promise.all([
+      Promise.resolve()
+        .then(() => CryptoJS
+          .SHA256(CryptoJS.lib.WordArray.create(arrayBuffer))
+          .toString(CryptoJS.enc.Base64)
+        )
+        .then(checksum => {
+          file.checksum = checksum
+        }),
+      Promise.resolve()
+        .then(() => CryptoJS.enc.Base64.stringify(
+          CryptoJS.enc.Hex.parse(crc32.hex(arrayBuffer))
+        ))
+        .then(crc => {
+          file.crc = crc
+        }),
+    ]))
+    .then(() => file)
 }
 
 declare global {
   interface File {
     checksum?: string;
+    crc?: string;
   }
 }
 
@@ -34,51 +47,73 @@ export function upload(client: HttpClient, attachmentApi: AttachmentAPI) {
     .then(arrayBuffer => {
       const partCount = uploadInfo.partCount
       const partSize = uploadInfo.partSize
-      const partContents = []
+      const parts = []
       for (let index = 0; index < partCount - 1; index++) {
-        partContents.push(arrayBuffer.slice(index * partSize, (index + 1) * partSize))
+        const content = arrayBuffer.slice(index * partSize, (index + 1) * partSize)
+        const crc = CryptoJS.enc.Base64.stringify(
+          CryptoJS.enc.Hex.parse(crc32.hex(content))
+        )
+        parts.push({ content, crc })
       }
-      partContents.push(arrayBuffer.slice((partCount - 1) * partSize, file.size))
-      return partContents
-    })
-    .then(partContents => {
-      const header = uploadInfo.partCount > 1
-        ? {}
-        : {
-          'x-amz-meta-id': uploadInfo.id,
-          'x-amz-meta-filename': file.name,
-          'Content-Type': file.type,
-        }
-      return Promise.all(
-        uploadInfo.addresses
-          .map(async ({ partNumber, endpoint, callback }) => {
-            const partContent = partContents[partNumber - 1]
-            const checksum = CryptoJS
-              .SHA256(CryptoJS.lib.WordArray.create(partContent))
-              .toString(CryptoJS.enc.Base64)
-            return client
-              .request({
-                url: endpoint,
-                method: 'PUT',
-                data: partContent,
-                headers: {
-                  ...header,
-                  'x-amz-sdk-checksum-algorithm': 'SHA256',
-                  'x-amz-checksum-sha256': checksum,
-                },
-              })
-              .then(response => {
-                if (uploadInfo.provider == FileProviderEnum.S3 && !!callback) {
-                  return attachmentApi.upsertS3Etag({
-                    attachmentId: uploadInfo.id,
-                    etag: response.headers["etag"],
-                    partNumber,
-                    checksum,
-                  })
-                }
-              })
-          })
+      const content = arrayBuffer.slice((partCount - 1) * partSize, file.size)
+      const crc = CryptoJS.enc.Base64.stringify(
+        CryptoJS.enc.Hex.parse(crc32.hex(content))
       )
+      parts.push({ content, crc })
+      return parts
     })
+    .then(parts => Promise.all(parts
+      .map(async (part, index) => Promise.resolve()
+        .then(() => {
+          if (uploadInfo.partCount > 1) {
+            return attachmentApi.getMultipartUploadEndpoint(uploadInfo.id, index + 1, part.crc)
+          } else {
+            return attachmentApi.getUploadEndpoint(uploadInfo.id)
+          }
+        })
+        .then(response => response.data)
+        .then(async ({ partNumber, endpoint, callback }) => {
+          if (!endpoint) {
+            return;
+          }
+          const partChecksum = CryptoJS
+            .SHA256(CryptoJS.lib.WordArray.create(part.content))
+            .toString(CryptoJS.enc.Base64)
+          let headers
+          if (uploadInfo.partCount > 1) {
+            // 分片上传的请求头
+            headers = {
+              'x-amz-sdk-checksum-algorithm': 'CRC32',
+              'x-amz-checksum-crc32': part.crc,
+            }
+          } else {
+            headers = {
+              'x-amz-sdk-checksum-algorithm': 'SHA256',
+              'x-amz-checksum-sha256': partChecksum,
+              'x-amz-meta-id': uploadInfo.id,
+              'x-amz-meta-filename': file.name,
+              'Content-Type': file.type,
+            }
+          }
+          return client
+            .request({
+              url: endpoint,
+              method: 'PUT',
+              data: part.content,
+              headers: headers,
+            })
+            .then(response => {
+              if (uploadInfo.provider == FileProviderEnum.S3 && !!callback) {
+                return attachmentApi.upsertS3Etag({
+                  attachmentId: uploadInfo.id,
+                  etag: response.headers["etag"],
+                  partNumber,
+                  checksum: partChecksum,
+                })
+              }
+            })
+        })
+      )
+    ))
     .then(() => attachmentApi.finishUpload(uploadInfo.id))
 }
