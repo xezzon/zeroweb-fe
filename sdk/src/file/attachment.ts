@@ -85,10 +85,6 @@ export interface UploadAddress {
    * 上传地址
    */
   endpoint?: string;
-  /**
-   * 回调地址
-   */
-  callback?: string;
 }
 
 /**

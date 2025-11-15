@@ -72,7 +72,7 @@ export function upload(client: HttpClient, attachmentApi: AttachmentAPI) {
           }
         })
         .then(response => response.data)
-        .then(async ({ partNumber, endpoint, callback }) => {
+        .then(async ({ endpoint }) => {
           if (!endpoint) {
             return;
           }
@@ -101,16 +101,6 @@ export function upload(client: HttpClient, attachmentApi: AttachmentAPI) {
               method: 'PUT',
               data: part.content,
               headers: headers,
-            })
-            .then(response => {
-              if (uploadInfo.provider == FileProviderEnum.S3 && !!callback) {
-                return attachmentApi.upsertS3Etag({
-                  attachmentId: uploadInfo.id,
-                  etag: response.headers["etag"],
-                  partNumber,
-                  checksum: partChecksum,
-                })
-              }
             })
         })
       )
