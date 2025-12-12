@@ -23,6 +23,11 @@ export default defineConfig(({ mode }) => {
     server: {
       host: true,
       proxy: {
+        [env.ZEROWEB_ADMIN_API]: {
+          target: env.ZEROWEB_ADMIN_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(env.ZEROWEB_ADMIN_API, '')
+        },
       },
     },
   }
