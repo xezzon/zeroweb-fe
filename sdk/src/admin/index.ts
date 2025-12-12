@@ -2,6 +2,7 @@ import { InstanceConfig } from "@/types"
 import axios from "axios"
 import app from "./app"
 import authn from "./authn"
+import role from "./role"
 import setting from "./setting"
 import user from "./user"
 
@@ -22,6 +23,10 @@ export default (config: InstanceConfig) => {
      */
     authn: authn(instance),
     /**
+     * 角色管理接口
+     */
+    role: role(instance),
+    /**
      * 业务参数管理接口
      */
     setting: setting(instance),
@@ -34,5 +39,6 @@ export default (config: InstanceConfig) => {
 
 export type * from './app'
 export type * from './authn'
+export type * from './role'
 export type * from './setting'
 export type * from './user'
