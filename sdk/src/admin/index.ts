@@ -1,6 +1,7 @@
 import { InstanceConfig } from "@/types"
 import axios from "axios"
 import app from "./app"
+import authn from "./authn"
 
 export default (config: InstanceConfig) => {
   const instance = axios.create(config)
@@ -14,7 +15,12 @@ export default (config: InstanceConfig) => {
      * 应用管理相关接口
      */
     app: app(instance),
+    /**
+     * 认证相关接口
+     */
+    authn: authn(instance),
   }
 }
 
 export type * from './app'
+export type * from './authn'
