@@ -4,5 +4,5 @@ export type * from './metadata'
 export { default as ZerowebAdminClient } from './admin'
 export type * from './admin'
 
-export { default as ZerowebOpenClient } from './open'
+export { default as ZerowebOpenClient, OpenapiStatus } from './open'
 export type * from './open'
