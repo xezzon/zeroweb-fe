@@ -2,6 +2,7 @@ import { InstanceConfig } from "@/types"
 import axios from "axios"
 import app from "./app"
 import authn from "./authn"
+import authz from "./authz"
 import crypto from "./crypto"
 import dict from "./dict"
 import role from "./role"
@@ -24,6 +25,10 @@ export default (config: InstanceConfig) => {
      * 认证相关接口
      */
     authn: authn(instance),
+    /**
+     * 授权相关接口
+     */
+    authz: authz(instance),
     /**
      * 加密相关接口
      */
@@ -49,6 +54,7 @@ export default (config: InstanceConfig) => {
 
 export type * from './app'
 export type * from './authn'
+export type * from './authz'
 export type * from './crypto'
 export type * from './dict'
 export type * from './role'
