@@ -1,0 +1,10 @@
+{
+  "name": "@zeroweb/oxlint",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ZeroWeb 项目 oxlint 配置",
+  "main": "index.js",
+  "dependencies": {
+    "oxlint": "catalog:"
+  }
+}

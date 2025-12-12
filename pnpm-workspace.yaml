@@ -5,3 +5,6 @@ packages:
   - sdk
   - packages/*
   - scripts/*
+
+catalog:
+  oxlint: ^1.32.0
