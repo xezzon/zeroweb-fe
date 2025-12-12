@@ -2,6 +2,7 @@ import { InstanceConfig } from "@/types"
 import axios from "axios"
 import app from "./app"
 import authn from "./authn"
+import user from "./user"
 
 export default (config: InstanceConfig) => {
   const instance = axios.create(config)
@@ -19,8 +20,13 @@ export default (config: InstanceConfig) => {
      * 认证相关接口
      */
     authn: authn(instance),
+    /**
+     * 用户相关接口
+     */
+    user: user(instance),
   }
 }
 
 export type * from './app'
 export type * from './authn'
+export type * from './user'
