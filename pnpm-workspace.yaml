@@ -1,10 +1,10 @@
-$schema: https://www.schemastore.org/pnpm-workspace.json
-
 packages:
   - apps/*
   - sdk
   - packages/*
   - scripts/*
+
+$schema: https://www.schemastore.org/pnpm-workspace.json
 
 catalog:
   oxlint: ^1.32.0
