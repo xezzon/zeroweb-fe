@@ -1,0 +1,6 @@
+{
+  "name": "@zeroweb/typescript",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ZeroWeb 项目的 TypeScript 配置"
+}
