@@ -4,5 +4,17 @@
     "path": "/",
     "name": "首页",
     "route": "_index"
+  },
+  {
+    "type": "GROUP",
+    "path": "app-management",
+    "name": "应用管理"
+  },
+  {
+    "type": "ROUTE",
+    "path": "/app",
+    "name": "应用注册",
+    "route": "app/index",
+    "parent": "app-management"
   }
 ]
