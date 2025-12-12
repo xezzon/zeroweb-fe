@@ -9,3 +9,6 @@ export type * from './open'
 
 export { default as ZerowebFileClient, FileProvider, AttachmentStatus, } from './file'
 export type * from './file'
+
+export { default as ZerowebDevClient } from './dev'
+export type * from './dev'
