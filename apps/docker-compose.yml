@@ -1,0 +1,10 @@
+services:
+  admin:
+    image: zeroweb-app-admin:latest
+    build:
+      context: ..
+      dockerfile: apps/admin/Dockerfile
+      args:
+        - NPM_CONFIG_REGISTRY=${NPM_CONFIG_REGISTRY:-https://registry.npmmirror.com}
+        - BASE_URI=${BASE_URI:-}
+        - BASE_URL=${RELATIVE_PATH:-/}${BASE_URI:-}

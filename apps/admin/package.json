@@ -1,0 +1,30 @@
+{
+  "name": "zeroweb-app-admin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "lint": "oxlint",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons": "catalog:",
+    "@ant-design/pro-components": "catalog:",
+    "@xezzon/zeroweb": "workspace:^",
+    "antd": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-router": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^5.1.2",
+    "@zeroweb/oxlint": "workspace:^",
+    "@zeroweb/typescript": "workspace:^",
+    "oxlint": "catalog:",
+    "rolldown-vite": "^7.2.11"
+  }
+}
