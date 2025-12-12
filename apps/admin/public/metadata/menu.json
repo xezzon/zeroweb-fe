@@ -1,0 +1,8 @@
+[
+  {
+    "type": "ROUTE",
+    "path": "/",
+    "name": "首页",
+    "route": "_index"
+  }
+]
