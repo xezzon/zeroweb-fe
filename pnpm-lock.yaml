@@ -49,6 +49,9 @@ importers:
       '@xezzon/zeroweb':
         specifier: workspace:^
         version: link:../../sdk
+      '@zeroweb/auth':
+        specifier: workspace:^
+        version: link:../../packages/auth
       '@zeroweb/layout':
         specifier: workspace:^
         version: link:../../packages/layout
@@ -86,6 +89,34 @@ importers:
       rolldown-vite:
         specifier: ^7.2.11
         version: 7.2.11(@types/node@25.0.1)(esbuild@0.25.12)
+
+  packages/auth:
+    dependencies:
+      '@ant-design/pro-components':
+        specifier: 'catalog:'
+        version: 3.0.2-0(@types/react@19.2.7)(antd@6.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      antd:
+        specifier: 'catalog:'
+        version: 6.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react:
+        specifier: 'catalog:'
+        version: 19.2.3
+      react-router:
+        specifier: 'catalog:'
+        version: 7.10.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+    devDependencies:
+      '@xezzon/zeroweb':
+        specifier: workspace:^
+        version: link:../../sdk
+      '@zeroweb/oxlint':
+        specifier: workspace:^
+        version: link:../../scripts/oxlint
+      '@zeroweb/typescript':
+        specifier: workspace:^
+        version: link:../../scripts/typescript
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.32.0
 
   packages/layout:
     dependencies:
