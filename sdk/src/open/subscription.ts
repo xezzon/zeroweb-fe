@@ -72,17 +72,17 @@ export interface SubscriptionAPI {
 }
 
 export default (client: HttpClient): SubscriptionAPI => ({
-  subscribe: (subscription: AddSubscriptionReq) => client.request<Id>({
+  subscribe: (subscription: AddSubscriptionReq) => client.request({
     url: `${BASE_URL}`,
     method: 'POST',
     data: subscription,
   }),
-  listSubscription: (appId: string, odata: OData) => client.request<Page<Subscription>>({
+  listSubscription: (appId: string, odata: OData) => client.request({
     url: `${THIRD_PARTY_APP_URL}/${appId}/subscription`,
     method: 'GET',
     params: odata,
   }),
-  auditSubscription: (id: string) => client.request<void>({
+  auditSubscription: (id: string) => client.request({
     url: `${BASE_URL}/audit/${id}`,
     method: 'PUT',
   }),
