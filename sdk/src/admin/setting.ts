@@ -67,30 +67,30 @@ export interface SettingAPI {
 }
 
 export default (client: HttpClient): SettingAPI => ({
-  addSetting: (setting) => client.request<Id>({
+  addSetting: (setting) => client.request({
     url: '/setting',
     method: 'POST',
     data: setting,
   }),
-  listSetting: () => client.request<Page<Setting>>({
+  listSetting: () => client.request({
     url: '/setting',
     method: 'GET',
   }),
-  querySettingByCode: (code) => client.request<Setting>({
+  querySettingByCode: (code) => client.request({
     url: `/setting/${code}`,
     method: 'GET',
   }),
-  updateSchema: (setting) => client.request<void>({
+  updateSchema: (setting) => client.request({
     url: '/setting/schema',
     method: 'PUT',
     data: setting,
   }),
-  updateValue: (setting) => client.request<void>({
+  updateValue: (setting) => client.request({
     url: '/setting/value',
     method: 'PUT',
     data: setting,
   }),
-  deleteSetting: (id) => client.request<void>({
+  deleteSetting: (id) => client.request({
     url: `/setting/${id}`,
     method: 'DELETE',
   }),

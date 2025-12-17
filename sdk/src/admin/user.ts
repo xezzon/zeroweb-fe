@@ -30,7 +30,7 @@ export interface UserAPI {
 }
 
 export default ({ request }: HttpClient): UserAPI => ({
-  register: (user: RegisterReq) => request<Id>({
+  register: (user: RegisterReq) => request({
     url: '/user/register',
     method: 'POST',
     data: user,

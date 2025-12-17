@@ -20,7 +20,7 @@ export interface App {
    * 应用排序
    * 顺序越小越靠前
    */
-  ordinal: string;
+  ordinal: number;
 }
 
 declare type AddAppReq = Omit<App, 'id'>;
@@ -51,21 +51,21 @@ export interface AppAPI {
 }
 
 export default (client: HttpClient): AppAPI => ({
-  addApp: (app: AddAppReq) => client.request<Id>({
+  addApp: (app: AddAppReq) => client.request({
     url: '/app',
     method: 'POST',
     data: app,
   }),
-  listApp: () => client.request<App[]>({
+  listApp: () => client.request({
     url: '/app',
     method: 'GET',
   }),
-  updateApp: (app: UpdateAppReq) => client.request<void>({
+  updateApp: (app: UpdateAppReq) => client.request({
     url: '/app',
     method: 'PUT',
     data: app,
   }),
-  deleteApp: (id: string) => client.request<void>({
+  deleteApp: (id: string) => client.request({
     url: `/app/${id}`,
     method: 'DELETE',
   }),

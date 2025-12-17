@@ -52,10 +52,10 @@ export interface JwtClaim {
  * @see {@link https://openid.net/specs/openid-connect-core-1_0.html|OIDC}
  */
 export interface OidcToken {
-  accessToken: string;
-  refreshToken: string;
-  expiresIn: number;
-  idToken: string;
+  access_token: string;
+  refresh_token: string;
+  expires_in: number;
+  id_token: string;
 }
 
 export interface AuthnAPI {
@@ -63,7 +63,7 @@ export interface AuthnAPI {
    * 基础认证
    * @param user 用户名口令
    */
-  basicLogin: (user: BasicAuth) => PResponse<SaTokenInfo>;
+  basicLogin: (user: BasicAuth) => PResponse<OidcToken>;
   /**
    * @returns 当前用户的认证信息
    */
@@ -75,7 +75,7 @@ export interface AuthnAPI {
 }
 
 export default (client: HttpClient): AuthnAPI => ({
-  basicLogin: (user: BasicAuth) => client.request<SaTokenInfo>({
+  basicLogin: (user: BasicAuth) => client.request({
     url: '/auth/login/basic',
     method: 'POST',
     auth: {
@@ -84,11 +84,11 @@ export default (client: HttpClient): AuthnAPI => ({
     },
     data: user,
   }),
-  self: () => client.request<JwtClaim>({
+  self: () => client.request({
     url: '/auth/self',
     method: 'GET',
   }),
-  token: () => client.request<OidcToken>({
+  token: () => client.request({
     url: '/auth/token',
     method: 'GET',
   }),

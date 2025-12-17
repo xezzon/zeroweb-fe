@@ -16,7 +16,7 @@ export interface Dict {
   /**
    * 字典值
    */
-  label: string;
+  label?: string;
   /**
    * 排序号
    * 数值越小，顺序越靠前
@@ -87,26 +87,26 @@ export interface DictAPI {
 }
 
 export default (client: HttpClient): DictAPI => ({
-  addDict: (dict: AddDictReq) => client.request<Id>({
+  addDict: (dict: AddDictReq) => client.request({
     url: '/dict',
     method: 'POST',
     data: dict,
   }),
-  getDictTagList: (odata: OData) => client.request<Page<Dict>>({
+  getDictTagList: (odata: OData) => client.request({
     url: '/dict',
     method: 'GET',
     params: odata,
   }),
-  getDictTreeByTag: (tag: string) => client.request<Dict[]>({
+  getDictTreeByTag: (tag: string) => client.request({
     url: `/dict/tag/${tag}`,
     method: 'GET',
   }),
-  modifyDict: (dict: ModifyDictReq) => client.request<void>({
+  modifyDict: (dict: ModifyDictReq) => client.request({
     url: '/dict',
     method: 'PUT',
     data: dict,
   }),
-  updateDictStatus: (ids: string[], enabled: boolean) => client.request<void>({
+  updateDictStatus: (ids: string[], enabled: boolean) => client.request({
     url: '/dict/update-status',
     method: 'PUT',
     params: {
@@ -114,7 +114,7 @@ export default (client: HttpClient): DictAPI => ({
     },
     data: ids,
   }),
-  removeDict: (ids: string[]) => client.request<void>({
+  removeDict: (ids: string[]) => client.request({
     url: '/dict',
     method: 'DELETE',
     data: ids,

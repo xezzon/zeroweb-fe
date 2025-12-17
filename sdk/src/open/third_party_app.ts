@@ -94,7 +94,7 @@ export interface ThirdPartyAppAPI {
    * @param timeout 邀请码有效期。单位：小时。默认为 24 小时。
    * @returns 邀请码
    */
-  inviteMember: (appId: string, timeout?: number) => PResponse<String>;
+  inviteMember: (appId: string, timeout?: number) => PResponse<string>;
   /**
    * 邀请用户成为第三方应用成员
    * @param appId 第三方应用ID
@@ -102,7 +102,7 @@ export interface ThirdPartyAppAPI {
    * @param timeout 邀请码有效期。单位：小时。默认为 24 小时。
    * @returns 邀请码
    */
-  inviteParticularMember: (appId: string, userId: string, timeout?: number) => PResponse<String>;
+  inviteParticularMember: (appId: string, userId: string, timeout?: number) => PResponse<string>;
   /**
    * 持邀请码成为第三方应用成员
    * @param token 邀请码
@@ -124,22 +124,22 @@ export interface ThirdPartyAppAPI {
 }
 
 export default (client: HttpClient): ThirdPartyAppAPI => ({
-  addThirdPartyApp: (thirdPartyApp: AddThirdPartyAppReq) => client.request<AccessSecret>({
+  addThirdPartyApp: (thirdPartyApp: AddThirdPartyAppReq) => client.request({
     url: `${BASE_URL}`,
     method: 'POST',
     data: thirdPartyApp,
   }),
-  listMyThirdPartyApp: (odata: OData) => client.request<Page<ThirdPartyApp>>({
+  listMyThirdPartyApp: (odata: OData) => client.request({
     url: `${BASE_URL}/mine`,
     method: 'GET',
     params: odata,
   }),
-  listThirdPartyApp: (odata: OData) => client.request<Page<ThirdPartyApp>>({
+  listThirdPartyApp: (odata: OData) => client.request({
     url: `${BASE_URL}`,
     method: 'GET',
     params: odata,
   }),
-  rollAccessSecret: (id: string) => client.request<AccessSecret>({
+  rollAccessSecret: (id: string) => client.request({
     url: `${BASE_URL}/${id}/roll`,
     method: 'PATCH',
   }),
