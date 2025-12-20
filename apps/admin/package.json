@@ -13,6 +13,7 @@
     "@ant-design/icons": "catalog:",
     "@ant-design/pro-components": "catalog:",
     "@xezzon/zeroweb": "workspace:^",
+    "@zeroweb/auth": "workspace:^",
     "@zeroweb/layout": "workspace:^",
     "antd": "catalog:",
     "react": "catalog:",

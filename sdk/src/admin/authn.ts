@@ -72,6 +72,10 @@ export interface AuthnAPI {
    * @returns 用户令牌
    */
   token: () => PResponse<OidcToken>;
+  /**
+   * 退出登录
+   */
+  logout: () => PResponse<void>;
 }
 
 export default (client: HttpClient): AuthnAPI => ({
@@ -91,5 +95,9 @@ export default (client: HttpClient): AuthnAPI => ({
   token: () => client.request({
     url: '/auth/token',
     method: 'GET',
+  }),
+  logout: () => client.request({
+    url: '/auth/logout',
+    method: 'PUT',
   }),
 })
