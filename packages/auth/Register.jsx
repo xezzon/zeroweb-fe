@@ -1,7 +1,5 @@
-import { Form, Input, Button, Card, Row, Col } from "antd"
-import { useContext } from "react"
+import { Button, Card, Col, Form, Input, Row } from "antd"
 import { useNavigate } from "react-router"
-import { AuthContext } from "./AuthContext"
 
 /**
  * 注册页。
@@ -15,7 +13,7 @@ export default ({ userApi, loginUrl = '/login' }) => {
 
   /**
    *
-   * @param {import('@xezzon/zeroweb').RegisterReq} user
+   * @param {import('@xezzon/zeroweb').User} user
    * @returns
    */
   const register = async (user) => userApi

@@ -1,6 +1,7 @@
 import { adminApi, selfApi } from "@/api";
-import { AuthContextProvider, LoginPage, RequireLogin } from '@zeroweb/auth';
+import { AuthContext, AuthContextProvider, LoginPage, RegisterPage, RequireLogin } from '@zeroweb/auth';
 import { MixLayout, NotFoundPage, ResourceContext, ResourceContextProvider } from '@zeroweb/layout';
+import { Dropdown, Space } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { createBrowserRouter, Navigate, Outlet, RouterProvider, useLocation } from "react-router";
 
@@ -19,6 +20,10 @@ const rootRoutes = [
   {
     path: '/login',
     element: <LoginPage authnApi={adminApi.authn} homepageUrl={import.meta.env.BASE_URL} />,
+  },
+  {
+    path: '/register',
+    element: <RegisterPage userApi={adminApi.user} loginUrl='/login' />,
   },
   {
     path: '*',
@@ -68,6 +73,7 @@ function ZerowebAppAdmin() {
 
 function MainPage() {
   const location = useLocation()
+  const { user, logout } = useContext(AuthContext)
 
   return <>
     <RequireLogin fallback={
@@ -78,7 +84,26 @@ function MainPage() {
         }).toString()
       }} />
     }>
-      <MixLayout title={import.meta.env.VITE_APP_TITLE}>
+      <MixLayout
+        title={import.meta.env.VITE_APP_TITLE}
+        actionsRender={() => (
+          <Space>
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: 'logout',
+                    label: '退出登录',
+                    onClick: logout,
+                  },
+                ],
+              }}
+            >
+              {user?.nickname}
+            </Dropdown>
+          </Space>
+        )}
+      >
         <Outlet />
       </MixLayout>
     </RequireLogin>
