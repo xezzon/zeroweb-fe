@@ -1,7 +1,8 @@
 import { adminApi, selfApi } from "@/api";
 import { AuthContext, AuthContextProvider, LoginPage, RegisterPage, RequireLogin } from '@zeroweb/auth';
 import { MixLayout, NotFoundPage, ResourceContext, ResourceContextProvider } from '@zeroweb/layout';
-import { Dropdown, Space } from "antd";
+import { ConfigProvider, Dropdown, Space } from "antd";
+import zhCN from 'antd/es/locale/zh_CN';
 import { useContext, useEffect, useState } from "react";
 import { createBrowserRouter, Navigate, Outlet, RouterProvider, useLocation } from "react-router";
 
@@ -53,7 +54,9 @@ export default () => {
     return (
       <AuthContextProvider authnApi={adminApi.authn}>
         <ResourceContextProvider resources={resources} modules={modules} rootRoutes={rootRoutes}>
-          <ZerowebAppAdmin />
+          <ConfigProvider locale={zhCN}>
+            <ZerowebAppAdmin />
+          </ConfigProvider>
         </ResourceContextProvider>
       </AuthContextProvider>
     )
