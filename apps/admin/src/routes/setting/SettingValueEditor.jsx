@@ -1,6 +1,8 @@
 import { adminApi } from "@/api";
+import SchemaForm from '@rjsf/antd';
+import validator from '@rjsf/validator-ajv8';
 import { Form, Input, Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * @param {Object} param0
@@ -8,20 +10,31 @@ import { useState } from "react";
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function SettingValueEditor({ record, onClose }) {
-  /**
-   * @type {[import('antd').FormInstance<import('@xezzon/zeroweb').Setting>]}
-   */
-  const [form] = Form.useForm()
+  const schema = record?.schema ? JSON.parse(record?.schema) : {}
+
   const [confirmLoading, setConfirmLoading] = useState(false)
+  const [value, setValue] = useState(record?.value)
+
+  useEffect(() => {
+    setValue(record?.value)
+  }, [record?.value])
+
   const handleFinish = () => {
-    const submit = adminApi.setting.updateSetting
     setConfirmLoading(true)
-    form.validateFields()
-      .then(submit)
-      .then(() => onClose(true))
+    adminApi.setting.updateValue({
+      ...record,
+      value,
+    })
+      .then(() => {
+        onClose(true)
+        setValue(null)
+      })
       .finally(() => setConfirmLoading(false))
   }
-  const handleCancel = () => onClose(false)
+  const handleCancel = () => {
+    onClose(false)
+    setValue(null)
+  }
 
   return <>
     <Modal
@@ -30,41 +43,26 @@ export default function SettingValueEditor({ record, onClose }) {
       confirmLoading={confirmLoading}
       onOk={handleFinish}
       onCancel={handleCancel}
-      modalRender={dom => <>
-        <Form
-          layout="vertical"
-          initialValues={record}
-          clearOnDestroy
-          onFinish={handleFinish}
-          form={form}
-        >
-          {dom}
-        </Form>
-      </>}
     >
-      <Form.Item
-        name="code"
-        label="参数标识"
+      <Form
+        layout="vertical"
+        initialValues={record}
+        clearOnDestroy
       >
-        <Input disabled />
-      </Form.Item>
-      <Form.Item
-        name="value"
-        label="参数值"
-        rules={[
-          { required: true, message: '请输入参数值' },
-        ]}
-        tooltip="JSON格式的参数值"
-      >
-        <Input.TextArea
-          rows={6}
-          placeholder="请输入参数值"
-        />
-      </Form.Item>
-      <Form.Item name="schema" hidden>
-        <Input />
-      </Form.Item>
-
+        <Form.Item
+          name="code"
+          label="参数标识"
+        >
+          <Input disabled />
+        </Form.Item>
+      </Form>
+      <SchemaForm
+        schema={schema}
+        formData={value}
+        validator={validator}
+        uiSchema={{ "ui:submitButtonOptions": { "norender": true } }}
+        onChange={(e) => setValue(e.formData)}
+      />
     </Modal>
   </>
 }
