@@ -83,6 +83,9 @@ importers:
       '@zeroweb/typescript':
         specifier: workspace:^
         version: link:../../scripts/typescript
+      axios:
+        specifier: ^1.13.2
+        version: 1.13.2
       oxlint:
         specifier: 'catalog:'
         version: 1.32.0

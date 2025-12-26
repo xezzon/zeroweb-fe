@@ -43,7 +43,8 @@ export default function AuthContextProvider({ children, authnApi }) {
       .then(({ roles, entitlements: permissions, ...user }) => {
         setAuth({ user, roles, permissions })
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error(err)
         clearToken()
       })
       .finally(() => {

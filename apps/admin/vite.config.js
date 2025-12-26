@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
         [env.ZEROWEB_ADMIN_API]: {
           target: env.ZEROWEB_ADMIN_URL,
           changeOrigin: true,
-          rewrite: (path) => path.replace(env.ZEROWEB_ADMIN_API, '')
+          rewrite: (path) => path.replace(env.ZEROWEB_ADMIN_API, ''),
         },
       },
     },
