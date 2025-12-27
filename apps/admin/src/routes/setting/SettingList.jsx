@@ -2,7 +2,7 @@ import { Button, Drawer, Descriptions } from "antd";
 
 /**
  * @param {Object} param0
- * @param {import('@xezzon/zeroweb').Setting} param0.setting
+ * @param {import('@xezzon/zeroweb-sdk').Setting} param0.setting
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function SettingList({ setting, onClose }) {

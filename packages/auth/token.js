@@ -3,7 +3,7 @@ import { useState } from 'react';
 const TOKEN_VALUE = 'AccessToken'
 
 /**
- * @param {import('@xezzon/zeroweb').OidcToken} token 
+ * @param {import('@xezzon/zeroweb-sdk').OidcToken} token 
  * @param {boolean} remember 
  */
 export function setToken({ access_token }, remember) {
@@ -22,7 +22,7 @@ export function clearToken() {
 }
 
 /**
- * @returns {import('@xezzon/zeroweb').OidcToken?} 
+ * @returns {import('@xezzon/zeroweb-sdk').OidcToken?} 
  */
 export function getToken() {
   let access_token = sessionStorage.getItem(TOKEN_VALUE)
@@ -39,8 +39,8 @@ export function getToken() {
 /**
  * Custom React Hook for managing token state
  * @returns {{ 
- * token: import('@xezzon/zeroweb').OidcToken?, 
- * setToken: (tokenInfo: import('@xezzon/zeroweb').OidcToken, remember: boolean) => void, 
+ * token: import('@xezzon/zeroweb-sdk').OidcToken?, 
+ * setToken: (tokenInfo: import('@xezzon/zeroweb-sdk').OidcToken, remember: boolean) => void, 
  * clearToken: () => void 
  * }}
  */

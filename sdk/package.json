@@ -1,6 +1,6 @@
 {
-  "name": "@xezzon/zeroweb",
-  "version": "1.0.0",
+  "name": "@xezzon/zeroweb-sdk",
+  "version": "0.8.5",
   "types": "dist/typings/index.d.ts",
   "exports": {
     ".": {

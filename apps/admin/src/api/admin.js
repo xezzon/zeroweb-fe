@@ -1,4 +1,4 @@
-import { ZerowebAdminClient } from "@xezzon/zeroweb";
+import { ZerowebAdminClient } from "@xezzon/zeroweb-sdk";
 import { authn } from "./interceptor";
 
 export const adminApi = ZerowebAdminClient({

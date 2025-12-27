@@ -1,12 +1,12 @@
 import { adminApi } from "@/api";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
-import { ZerowebMetadataClient } from "@xezzon/zeroweb";
+import { ZerowebMetadataClient } from "@xezzon/zeroweb-sdk";
 import { Button, Flex, Popconfirm, Table, theme } from "antd";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AppEditor from "./AppEditor";
 
 export default function AppPage() {
-  const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb').App} */(null))
+  const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').App} */(null))
   const actionRef = useRef(/** @type {import('@ant-design/pro-components').ActionType} */(null))
   const closeEditor = useCallback((refresh) => {
     setRecord(null)
@@ -21,9 +21,9 @@ export default function AppPage() {
   const { token: designToken } = theme.useToken()
 
   /**
-   * @type {import('antd').TableProps<import('@xezzon/zeroweb').App>['columns']}
+   * @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').App>['columns']}
    */
-  const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb').App>['columns']} */([
+  const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').App>['columns']} */([
     {
       dataIndex: 'name',
       title: '应用名称',
@@ -54,7 +54,7 @@ export default function AppPage() {
       </>,
     },
   ]), [designToken])
-  const [data, setData] = useState(/** @type {import('@xezzon/zeroweb').App[]} */([]))
+  const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').App[]} */([]))
 
   const fetchData = () => {
     adminApi.app.listApp()

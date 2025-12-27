@@ -5,14 +5,14 @@ import DictEditor from "./DictEditor";
 
 /**
  * @param {Object} param0 
- * @param {import('@xezzon/zeroweb').Dict} param0.tag
+ * @param {import('@xezzon/zeroweb-sdk').Dict} param0.tag
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function DictList({ tag, onClose }) {
-  const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb').Dict} */(null))
+  const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
   const actionRef = useRef(/** @type {import('@ant-design/pro-components').ActionType} */(null))
 
-  const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb').Dict>['columns']} */([
+  const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Dict>['columns']} */([
     {
       dataIndex: 'code',
       title: '字典键',
@@ -55,7 +55,7 @@ export default function DictList({ tag, onClose }) {
       </>,
     },
   ]), [tag])
-  const [data, setData] = useState(/** @type {import('@xezzon/zeroweb').Dict[]} */([]))
+  const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict[]} */([]))
 
   const fetchData = () => {
     if (!tag?.code) {

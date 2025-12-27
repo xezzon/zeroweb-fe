@@ -4,7 +4,7 @@ import { useNavigate } from "react-router"
 /**
  * 注册页。
  * @param {Object} param0
- * @param {import('@xezzon/zeroweb').UserAPI} param0.userApi 用户 HTTP 接口
+ * @param {import('@xezzon/zeroweb-sdk').UserAPI} param0.userApi 用户 HTTP 接口
  * @param {string?} param0.loginUrl 登录页面 URL。注册成功后跳转到登录页。
  */
 export default ({ userApi, loginUrl = '/login' }) => {
@@ -13,7 +13,7 @@ export default ({ userApi, loginUrl = '/login' }) => {
 
   /**
    *
-   * @param {import('@xezzon/zeroweb').User} user
+   * @param {import('@xezzon/zeroweb-sdk').User} user
    * @returns
    */
   const register = async (user) => userApi

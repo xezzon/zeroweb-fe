@@ -7,11 +7,11 @@ import SettingSchemaEditor from './SettingSchemaEditor'
 import SettingValueEditor from './SettingValueEditor'
 
 export default function SettingPage() {
-  const [setting, setSetting] = useState(/** @type {import('@xezzon/zeroweb').Setting} */(null))
-  const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb').Setting} */(null))
-  const [valueRecord, setValueRecord] = useState(/** @type {import('@xezzon/zeroweb').Setting} */(null))
+  const [setting, setSetting] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
+  const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
+  const [valueRecord, setValueRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
 
-  const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb').Setting>['columns']} */([
+  const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Setting>['columns']} */([
     {
       dataIndex: 'code',
       title: '参数标识',
@@ -46,7 +46,7 @@ export default function SettingPage() {
     },
     // oxlint-disable-next-line exhaustive-deps
   ]), [])
-  const [data, setData] = useState(/** @type {import('@xezzon/zeroweb').Setting[]} */([]))
+  const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting[]} */([]))
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,

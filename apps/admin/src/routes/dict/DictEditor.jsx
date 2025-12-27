@@ -4,12 +4,12 @@ import { useState } from "react";
 
 /**
  * @param {Object} param0 
- * @param {import('@xezzon/zeroweb').Dict} param0.record
+ * @param {import('@xezzon/zeroweb-sdk').Dict} param0.record
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function DictEditor({ record, onClose }) {
   /**
-   * @type {[import('antd').FormInstance<import('@xezzon/zeroweb').Dict>]}
+   * @type {[import('antd').FormInstance<import('@xezzon/zeroweb-sdk').Dict>]}
    */
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)

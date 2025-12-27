@@ -4,12 +4,12 @@ import { useState } from "react";
 
 /**
  * @param {Object} param0
- * @param {import('@xezzon/zeroweb').App} param0.record
+ * @param {import('@xezzon/zeroweb-sdk').App} param0.record
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function AppEditor({ record, onClose }) {
   /**
-   * @type {[import('antd').FormInstance<import('@xezzon/zeroweb').App>]}
+   * @type {[import('antd').FormInstance<import('@xezzon/zeroweb-sdk').App>]}
    */
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)

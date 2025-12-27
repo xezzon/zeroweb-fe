@@ -1,5 +1,5 @@
 /**
- * @typedef {Omit<import('@xezzon/zeroweb').JwtClaim, 'roles' | 'entitlements'>} User 用户
+ * @typedef {Omit<import('@xezzon/zeroweb-sdk').JwtClaim, 'roles' | 'entitlements'>} User 用户
  */
 import { createContext, useEffect, useState } from "react";
 import { useToken } from "./token";
@@ -24,7 +24,7 @@ const defaultAuth = {
 
 /**
  * @param {object} param0
- * @param {import('@xezzon/zeroweb').AuthnAPI} param0.authnApi
+ * @param {import('@xezzon/zeroweb-sdk').AuthnAPI} param0.authnApi
  * @param {import('react').ReactElement} param0.children
  */
 export default function AuthContextProvider({ children, authnApi }) {
@@ -85,7 +85,7 @@ export const AuthContext = createContext({
   ...defaultAuth,
   loading: true,
   /**
-   * @param {import("@xezzon/zeroweb").OidcToken} _claim
+   * @param {import("@xezzon/zeroweb-sdk").OidcToken} _claim
    * @param {boolean} _remember
    */
   afterLogin: (_claim, _remember = false) => { },

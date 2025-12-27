@@ -55,7 +55,7 @@ importers:
       '@rjsf/validator-ajv8':
         specifier: ^6.1.2
         version: 6.1.2(@rjsf/utils@6.1.2(react@19.2.3))
-      '@xezzon/zeroweb':
+      '@xezzon/zeroweb-sdk':
         specifier: workspace:^
         version: link:../../sdk
       '@zeroweb/auth':
@@ -117,7 +117,7 @@ importers:
         specifier: 'catalog:'
         version: 7.11.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
     devDependencies:
-      '@xezzon/zeroweb':
+      '@xezzon/zeroweb-sdk':
         specifier: workspace:^
         version: link:../../sdk
       '@zeroweb/oxlint':
@@ -135,7 +135,7 @@ importers:
       '@ant-design/pro-components':
         specifier: 'catalog:'
         version: 3.0.2-0(@types/react@19.2.7)(antd@6.1.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@xezzon/zeroweb':
+      '@xezzon/zeroweb-sdk':
         specifier: workspace:^
         version: link:../../sdk
       antd:

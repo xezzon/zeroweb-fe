@@ -5,11 +5,11 @@ import DictEditor from './DictEditor'
 import DictList from './DictList'
 
 export default function DictTagPage() {
-  const [tag, setTag] = useState(/** @type {import('@xezzon/zeroweb').Dict} */(null))
-  const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb').Dict} */(null))
+  const [tag, setTag] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
+  const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
   const actionRef = useRef(/** @type {import('@ant-design/pro-components').ActionType} */(null))
 
-  const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb').Dict>['columns']} */([
+  const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Dict>['columns']} */([
     {
       dataIndex: 'code',
       title: '字典键',
@@ -41,7 +41,7 @@ export default function DictTagPage() {
       </>,
     },
   ]), [])
-  const [data, setData] = useState(/** @type {import('@xezzon/zeroweb').Dict[]} */([]))
+  const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict[]} */([]))
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,

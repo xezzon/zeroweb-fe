@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@ant-design/pro-components": "catalog:",
-    "@xezzon/zeroweb": "workspace:^",
+    "@xezzon/zeroweb-sdk": "workspace:^",
     "antd": "catalog:",
     "react": "catalog:",
     "react-router": "catalog:"

@@ -15,7 +15,7 @@
     "@rjsf/antd": "^6.1.2",
     "@rjsf/core": "^6.1.2",
     "@rjsf/validator-ajv8": "^6.1.2",
-    "@xezzon/zeroweb": "workspace:^",
+    "@xezzon/zeroweb-sdk": "workspace:^",
     "@zeroweb/auth": "workspace:^",
     "@zeroweb/layout": "workspace:^",
     "antd": "catalog:",

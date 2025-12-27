@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 /**
  * @param {Object} param0
- * @param {import('@xezzon/zeroweb').Setting} param0.record
+ * @param {import('@xezzon/zeroweb-sdk').Setting} param0.record
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function SettingValueEditor({ record, onClose }) {
