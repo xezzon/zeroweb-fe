@@ -1,10 +1,10 @@
-import { MenuType } from "@xezzon/zeroweb";
+import { MenuType } from "@xezzon/zeroweb-sdk";
 import { createContext, Fragment, lazy, useMemo } from "react";
 
 /**
  * @param {object} param0
  * @param {import("react").ReactElement} param0.children
- * @param {import('@xezzon/zeroweb').MenuInfo[]} param0.resources
+ * @param {import('@xezzon/zeroweb-sdk').MenuInfo[]} param0.resources
  * @param {Record<string, () => Promise<{ default: React.ComponentType }>>} param0.modules
  * @param {import('react-router').RouteObject[]} param0.rootRoutes
  */
@@ -75,7 +75,7 @@ export const ResourceContext = createContext({
 
 /**
  * 
- * @param {import('@xezzon/zeroweb').MenuInfo[]} resources 
+ * @param {import('@xezzon/zeroweb-sdk').MenuInfo[]} resources 
  * @returns {import('@ant-design/pro-components').MenuDataItem[]}
  */
 function resources2menus(resources, parent) {

@@ -6,7 +6,7 @@ import { AuthContext } from "./AuthContext"
 /**
  * 登录页。
  * @param {Object} param0
- * @param {import('@xezzon/zeroweb').AuthnAPI} param0.authnApi 认证 HTTP 接口
+ * @param {import('@xezzon/zeroweb-sdk').AuthnAPI} param0.authnApi 认证 HTTP 接口
  * @param {string?} param0.homepageUrl 应用首页。登录成功后，如果没有指定跳转地址，则默认返回到首页。
  */
 export default ({ authnApi, homepageUrl }) => {
@@ -17,7 +17,7 @@ export default ({ authnApi, homepageUrl }) => {
 
   /**
    * 
-   * @param {import('@xezzon/zeroweb').BasicAuth} basicToken 
+   * @param {import('@xezzon/zeroweb-sdk').BasicAuth} basicToken 
    * @returns 
    */
   const login = async (basicToken) => authnApi

@@ -12,7 +12,7 @@
     "react-router": "catalog:"
   },
   "devDependencies": {
-    "@xezzon/zeroweb": "workspace:^",
+    "@xezzon/zeroweb-sdk": "workspace:^",
     "@zeroweb/oxlint": "workspace:^",
     "@zeroweb/typescript": "workspace:^",
     "oxlint": "catalog:"

@@ -1,6 +1,9 @@
 {
-  "name": "@xezzon/zeroweb",
-  "version": "1.0.0",
+  "name": "@xezzon/zeroweb-sdk",
+  "version": "0.8.5",
+  "repository": {
+    "url": "https://github.com/xezzon/zeroweb-fe"
+  },
   "types": "dist/typings/index.d.ts",
   "exports": {
     ".": {

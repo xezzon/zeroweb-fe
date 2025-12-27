@@ -35,7 +35,7 @@ const rootRoutes = [
 export default () => {
 
   const [loading, setLoading] = useState(true);
-  const [resources, setResources] = useState(/** @type {import('@xezzon/zeroweb').MenuInfo[]} */(null));
+  const [resources, setResources] = useState(/** @type {import('@xezzon/zeroweb-sdk').MenuInfo[]} */(null));
 
   useEffect(() => {
     selfApi.loadResourceInfo()
