@@ -1,10 +1,10 @@
-$schema: https://www.schemastore.org/pnpm-workspace.json
-
 packages:
   - apps/*
   - sdk
   - packages/*
   - scripts/*
+
+$schema: https://www.schemastore.org/pnpm-workspace.json
 
 catalog:
   '@ant-design/icons': ^6.1.0
