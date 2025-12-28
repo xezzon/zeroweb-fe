@@ -1,0 +1,99 @@
+name: release
+run-name: Release ${{ inputs.version }} for ${{ github.ref_name }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '版本号'
+        required: true
+        type: string
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Setup git user
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+      - name: Create and push tag
+        env:
+          TAG: ${{ format('{0}@{1}', github.ref_name, github.event.inputs.version) }}
+        run: |
+          echo "Creating tag: $TAG"
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            echo "Tag $TAG already exists, skipping."
+            exit 0
+          fi
+          git tag -a "$TAG" -m "release $TAG"
+          git push origin "$TAG"
+  deploy-sdk:
+    runs-on: ubuntu-latest
+    if: github.ref_name == 'sdk'
+    permissions: 
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build SDK
+        working-directory: sdk
+        run: pnpm run build
+      - name: Publish to npm
+        working-directory: sdk
+        run: npm publish --access public
+  deploy-app:
+    runs-on: ubuntu-latest
+    if: contains(github.ref_name, 'app/')
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    env:
+      REGISTRY: ghcr.io
+    steps:
+      - uses: actions/checkout@v5
+      - name: Determine app name from ref
+        id: meta
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          echo "Ref name: $REF_NAME"
+          APP_NAME="${REF_NAME#app/}"
+          APP_NAME="${APP_NAME%%/*}"
+          echo "Determined APP_NAME=$APP_NAME"
+          echo "app_name=$APP_NAME" >> $GITHUB_OUTPUT
+          echo "image_name=${{ github.repository_owner }}/zeroweb-app-$APP_NAME" >> $GITHUB_OUTPUT
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build application with docker compose
+        working-directory: apps
+        run: docker compose --progress=plain build --pull ${{steps.meta.outputs.app_name}}
+      - name: Tag docker image
+        run: >
+          docker tag 
+          zeroweb-app-${{ steps.meta.outputs.app_name }} 
+          ${{ env.REGISTRY }}/${{ steps.meta.outputs.image_name }}:${{ github.event.inputs.version }}
+      - name: Push Docker image
+        id: push
+        run: docker push ${{ env.REGISTRY }}/${{ steps.meta.outputs.image_name }}:${{ github.event.inputs.version }}
