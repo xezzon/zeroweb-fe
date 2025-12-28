@@ -1,0 +1,38 @@
+{
+  "name": "@xezzon/zeroweb-sdk",
+  "version": "0.8.5",
+  "repository": {
+    "url": "https://github.com/xezzon/zeroweb-fe"
+  },
+  "types": "dist/typings/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/typings/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "oxlint",
+    "build": "pnpm run build:cjs && pnpm run build:esm",
+    "build:esm": "tsc --module esnext --outDir dist/esm && tsc-alias",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs && tsc-alias",
+    "prepare": "pnpm run build"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^25.0.1",
+    "@zeroweb/oxlint": "workspace:^",
+    "oxlint": "catalog:",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "axios": "catalog:",
+    "crypto-js": "^4.2.0",
+    "js-crc": "^0.3.1"
+  }
+}
