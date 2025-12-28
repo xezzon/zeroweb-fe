@@ -1,0 +1,20 @@
+{
+  "name": "@zeroweb/layout",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "oxlint"
+  },
+  "dependencies": {
+    "@ant-design/pro-components": "catalog:",
+    "@xezzon/zeroweb-sdk": "workspace:^",
+    "antd": "catalog:",
+    "react": "catalog:",
+    "react-router": "catalog:"
+  },
+  "devDependencies": {
+    "@zeroweb/oxlint": "workspace:^",
+    "@zeroweb/typescript": "workspace:^",
+    "oxlint": "catalog:"
+  }
+}
