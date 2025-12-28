@@ -87,6 +87,65 @@ importers:
         specifier: ^7.3.0
         version: 7.3.0(@types/node@25.0.3)(esbuild@0.27.2)
 
+  packages/auth:
+    dependencies:
+      '@ant-design/pro-components':
+        specifier: 'catalog:'
+        version: 3.1.0-0(antd@6.1.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      antd:
+        specifier: 'catalog:'
+        version: 6.1.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react:
+        specifier: 'catalog:'
+        version: 19.2.3
+      react-router:
+        specifier: 'catalog:'
+        version: 7.11.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+    devDependencies:
+      '@xezzon/zeroweb-sdk':
+        specifier: workspace:^
+        version: link:../../sdk
+      '@zeroweb/oxlint':
+        specifier: workspace:^
+        version: link:../../scripts/oxlint
+      '@zeroweb/typescript':
+        specifier: workspace:^
+        version: link:../../scripts/typescript
+      axios:
+        specifier: 'catalog:'
+        version: 1.13.2
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.35.0
+
+  packages/layout:
+    dependencies:
+      '@ant-design/pro-components':
+        specifier: 'catalog:'
+        version: 3.1.0-0(antd@6.1.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@xezzon/zeroweb-sdk':
+        specifier: workspace:^
+        version: link:../../sdk
+      antd:
+        specifier: 'catalog:'
+        version: 6.1.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react:
+        specifier: 'catalog:'
+        version: 19.2.3
+      react-router:
+        specifier: 'catalog:'
+        version: 7.11.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+    devDependencies:
+      '@zeroweb/oxlint':
+        specifier: workspace:^
+        version: link:../../scripts/oxlint
+      '@zeroweb/typescript':
+        specifier: workspace:^
+        version: link:../../scripts/typescript
+      oxlint:
+        specifier: 'catalog:'
+        version: 1.35.0
+
   scripts/oxlint:
     dependencies:
       oxlint:
