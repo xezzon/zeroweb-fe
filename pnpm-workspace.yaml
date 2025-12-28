@@ -13,6 +13,7 @@ catalog:
   '@types/react-dom': ^19.2.3
   antd: ^6.1.2
   axios: ^1.13.2
+  dayjs: ^1.11.19
   oxlint: ^1.35.0
   react: ^19.2.3
   react-dom: ^19.2.3
