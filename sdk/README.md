@@ -15,19 +15,19 @@ ZeroWeb SDK 是一个用于与 ZeroWeb 微服务进行交互的 TypeScript 客�
 ### npm
 
 ```bash
-npm install @xezzon/zeroweb
+npm install @xezzon/zeroweb-sdk
 ```
 
 ### pnpm
 
 ```bash
-pnpm add @xezzon/zeroweb
+pnpm add @xezzon/zeroweb-sdk
 ```
 
 ### yarn
 
 ```bash
-yarn add @xezzon/zeroweb
+yarn add @xezzon/zeroweb-sdk
 ```
 
 ## 快速开始
@@ -41,7 +41,7 @@ import {
   ZerowebOpenClient,
   ZerowebFileClient,
   ZerowebDevClient
-} from '@xezzon/zeroweb';
+} from '@xezzon/zeroweb-sdk';
 
 // 基础配置
 const config = {
