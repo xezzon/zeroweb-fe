@@ -12,10 +12,14 @@
   "dependencies": {
     "@ant-design/icons": "catalog:",
     "@ant-design/pro-components": "catalog:",
+    "@rjsf/antd": "^6.1.2",
+    "@rjsf/core": "^6.1.2",
+    "@rjsf/validator-ajv8": "^6.1.2",
     "@xezzon/zeroweb-sdk": "workspace:^",
     "@zeroweb/auth": "workspace:^",
     "@zeroweb/layout": "workspace:^",
     "antd": "catalog:",
+    "dayjs": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-router": "catalog:"
