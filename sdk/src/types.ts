@@ -51,6 +51,25 @@ export interface Id {
   id: string;
 }
 
+export interface ErrorResult {
+  /**
+   * 错误码
+   */
+  code: string;
+  /**
+   * 服务端的错误描述
+   */
+  message: string;
+  /**
+   * 用于消息插值的参数。
+   */
+  parameters: Record<string, any>;
+  /**
+   * 有关导致该报告错误的具体错误的详细信息数组。
+   */
+  details?: ErrorResult[];
+}
+
 export declare type HttpClient = AxiosInstance;
 export declare type InstanceConfig = CreateAxiosDefaults;
 export declare type PResponse<T> = Promise<AxiosResponse<T>>;
