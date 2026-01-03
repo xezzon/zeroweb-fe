@@ -1,11 +1,15 @@
 import { InstanceConfig } from "@/types";
 import axios from "axios";
+import { zerowebErrorHandler } from "../interceptors";
 import openapi from "./openapi";
 import subscription from "./subscription";
 import thirdPartyApp from "./third_party_app";
 
 export default (config: InstanceConfig) => {
   const instance = axios.create(config)
+
+  const interceptors = instance.interceptors
+  interceptors.response.use(null, zerowebErrorHandler)
 
   return {
     /**
@@ -33,3 +37,4 @@ export { SubscriptionStatus } from './subscription';
 export type * from './openapi';
 export type * from './subscription';
 export type * from './third_party_app';
+

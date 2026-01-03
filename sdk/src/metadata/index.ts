@@ -1,5 +1,6 @@
 import axios from "axios"
 import { InstanceConfig } from "@/types"
+import { zerowebErrorHandler } from "../interceptors";
 
 /**
  * 服务类型
@@ -111,11 +112,14 @@ export interface MenuInfo {
 export default (config: InstanceConfig) => {
   const instance = axios.create(config)
 
+  const interceptors = instance.interceptors
+  interceptors.response.use(null, zerowebErrorHandler)
+
   return {
     /**
      * 拦截器方法
      */
-    interceptors: instance.interceptors,
+    interceptors,
     /**
      * 获取服务信息
      * @returns 服务信息
