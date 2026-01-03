@@ -70,6 +70,15 @@ export interface ErrorResult {
   details?: ErrorResult[];
 }
 
+export interface StructuredError {
+  httpStatus?: number;
+  code?: string;
+  message: string;
+  notification: string;
+  parameters?: Record<string, any>;
+  details?: ErrorResult[];
+}
+
 export declare type HttpClient = AxiosInstance;
 export declare type InstanceConfig = CreateAxiosDefaults;
 export declare type PResponse<T> = Promise<AxiosResponse<T>>;
