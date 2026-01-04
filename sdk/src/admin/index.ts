@@ -1,5 +1,6 @@
 import { InstanceConfig } from "@/types"
 import axios from "axios"
+import { zerowebErrorHandler } from "../interceptors"
 import app from "./app"
 import authn from "./authn"
 import authz from "./authz"
@@ -12,11 +13,14 @@ import user from "./user"
 export default (config: InstanceConfig) => {
   const instance = axios.create(config)
 
+  const interceptors = instance.interceptors
+  interceptors.response.use(null, zerowebErrorHandler)
+
   return {
     /**
      * 拦截器方法
      */
-    interceptors: instance.interceptors,
+    interceptors,
     /**
      * 应用管理相关接口
      */
@@ -60,3 +64,4 @@ export type * from './dict'
 export type * from './role'
 export type * from './setting'
 export type * from './user'
+
