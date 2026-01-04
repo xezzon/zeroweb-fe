@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react';
 import { resolve } from "node:path";
 import { defineConfig, loadEnv } from 'rolldown-vite';
+import metadata from '@zeroweb/vite-plugin-metadata'
 
 const envPrefix = ['ZEROWEB_', 'VITE_']
 
@@ -14,6 +15,12 @@ export default defineConfig(({ mode }) => {
     envPrefix,
     plugins: [
       react(),
+      metadata({
+        name: process.env.npm_package_name,
+        version: process.env.npm_package_version,
+        type: 'CLIENT',
+        hidden: true,
+      }),
     ],
     resolve: {
       alias: {

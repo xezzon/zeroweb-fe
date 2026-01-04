@@ -30,6 +30,7 @@
     "@vitejs/plugin-react": "^5.1.2",
     "@zeroweb/oxlint": "workspace:^",
     "@zeroweb/typescript": "workspace:^",
+    "@zeroweb/vite-plugin-metadata": "workspace:^",
     "oxlint": "catalog:",
     "rolldown-vite": "^7.3.0"
   }

@@ -101,6 +101,9 @@ importers:
       '@zeroweb/typescript':
         specifier: workspace:^
         version: link:../../scripts/typescript
+      '@zeroweb/vite-plugin-metadata':
+        specifier: workspace:^
+        version: link:../../packages/vite-plugin-metadata
       oxlint:
         specifier: 'catalog:'
         version: 1.35.0
