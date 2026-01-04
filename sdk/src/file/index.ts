@@ -1,17 +1,22 @@
 import { InstanceConfig } from "@/types"
 import axios from "axios"
+import { zerowebErrorHandler } from "../interceptors"
 import attachment from "./attachment"
 import { upload } from "./upload"
 
 export default (config: InstanceConfig) => {
   const instance = axios.create(config)
+
+  const interceptors = instance.interceptors
+  interceptors.response.use(null, zerowebErrorHandler)
+
   const attachmentApi = attachment(instance)
 
   return {
     /**
      * 拦截器方法
      */
-    interceptors: instance.interceptors,
+    interceptors,
     /**
      * 附件管理接口
      */

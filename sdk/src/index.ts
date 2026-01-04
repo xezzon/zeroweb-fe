@@ -13,4 +13,7 @@ export type * from './file'
 export { default as ZerowebDevClient } from './dev'
 export type * from './dev'
 
+export { ErrorSource } from './types'
 export type * from './types'
+
+export { zerowebErrorHandler, ErrorCodeEnum } from './interceptors'

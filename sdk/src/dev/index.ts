@@ -1,15 +1,19 @@
 import { InstanceConfig } from "@/types"
 import axios from "axios"
+import { zerowebErrorHandler } from "../interceptors"
 import locale from "./locale"
 
 export default (config: InstanceConfig) => {
   const instance = axios.create(config)
 
+  const interceptors = instance.interceptors
+  interceptors.response.use(null, zerowebErrorHandler)
+
   return {
     /**
      * 拦截器方法
      */
-    interceptors: instance.interceptors,
+    interceptors,
     /**
      * 国际化相关接口
      */

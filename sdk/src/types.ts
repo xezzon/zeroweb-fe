@@ -70,6 +70,40 @@ export interface ErrorResult {
   details?: ErrorResult[];
 }
 
+export enum ErrorSource {
+  NETWORK = 1,
+  INFRA = 2,
+  INTERNAL = 3,
+  BAD_REQUEST = 4,
+}
+
+export interface StructuredError {
+  /**
+   * 异常原因
+   */
+  source: ErrorSource;
+  /**
+   * 错误码
+   */
+  errorCode?: string;
+  /**
+   * 提示信息。
+   * 包含错误码（`C0005`例外）的 4xx 响应该字段不为 null。
+   * @deprecated 该字段为临时字段。后续将采用 errorCode + 国际化的方式获取提示信息
+   */
+  notification?: string;
+  /**
+   * 错误相关的信息。可用于国际化。
+   * 包含错误码的 4xx 响应该字段不为 null。
+   */
+  parameters?: Record<string, any>;
+  /**
+   * 错误详细原因
+   * 错误码为 `C0005` 的响应该字段不为 null
+   */
+  details?: ErrorResult[];
+}
+
 export declare type HttpClient = AxiosInstance;
 export declare type InstanceConfig = CreateAxiosDefaults;
 export declare type PResponse<T> = Promise<AxiosResponse<T>>;
