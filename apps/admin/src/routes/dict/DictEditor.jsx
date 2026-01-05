@@ -18,6 +18,24 @@ export default function DictEditor({ record, onClose }) {
     setConfirmLoading(true)
     form.validateFields()
       .then(submit)
+      .catch(error => {
+        /**
+         * @type {import('@xezzon/zeroweb-sdk').ErrorResult[]}
+         */
+        const details = error.details
+        if (!details) {
+          return Promise.reject(error)
+        }
+        const fieldErrors = {}
+        details.forEach(({ parameters: { field }, message }) => {
+          fieldErrors[field] = fieldErrors[field] || []
+          fieldErrors[field].push(message)
+        })
+        form.setFields(
+          Object.entries(fieldErrors).map(([name, errors]) => ({ name, errors }))
+        )
+        return Promise.reject(error)
+      })
       .then(() => onClose(true))
       .finally(() => setConfirmLoading(false))
   }
