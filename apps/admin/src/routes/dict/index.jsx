@@ -3,6 +3,7 @@ import { Button, Flex, Popconfirm, Table } from 'antd'
 import { useEffect, useMemo, useState } from 'react'
 import DictEditor from './DictEditor'
 import DictList from './DictList'
+import { PageContainer } from '@ant-design/pro-components'
 
 export default function DictTagPage() {
   const [tag, setTag] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
@@ -81,23 +82,26 @@ export default function DictTagPage() {
   }, [pagination.current, pagination.pageSize]);
 
   return <>
-    <Table
-      columns={columns}
-      dataSource={data}
-      loading={loading}
-      rowKey="id"
-      search={false}
-      pagination={pagination}
-      title={() =>
-        <Flex justify="flex-end">
-          <Button
-            type='primary'
-            onClick={() => setRecord({ tag: 'DICT', parentId: '0' })}
-          >新增字典</Button>
-        </Flex>
+    <PageContainer
+      extra={
+        <Button
+          type='primary'
+          onClick={() => setRecord({ tag: 'DICT', parentId: '0' })}
+        >
+          新增字典
+        </Button>
       }
-      onChange={handleTableChange}
-    />
+    >
+      <Table
+        columns={columns}
+        dataSource={data}
+        loading={loading}
+        rowKey="id"
+        search={false}
+        pagination={pagination}
+        onChange={handleTableChange}
+      />
+    </PageContainer>
     <DictList
       tag={tag}
       onClose={() => setTag(null)}

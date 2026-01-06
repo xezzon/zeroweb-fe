@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react'
 import SettingSchemaEditor from './SettingSchemaEditor'
 import SettingValueEditor from './SettingValueEditor'
 import dayjs from 'dayjs'
+import { PageContainer } from '@ant-design/pro-components'
 
 export default function SettingPage() {
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
@@ -83,23 +84,26 @@ export default function SettingPage() {
   }, [pagination.current, pagination.pageSize]);
 
   return <>
-    <Table
-      columns={columns}
-      dataSource={data}
-      loading={loading}
-      rowKey="id"
-      search={false}
-      pagination={pagination}
-      title={() =>
-        <Flex justify="flex-end">
-          <Button
-            type='primary'
-            onClick={() => setRecord({ value: {} })}
-          >新增业务参数</Button>
-        </Flex>
+    <PageContainer
+      extra={
+        <Button
+          type='primary'
+          onClick={() => setRecord({ value: {} })}
+        >
+          新增业务参数
+        </Button>
       }
-      onChange={handleTableChange}
-    />
+    >
+      <Table
+        columns={columns}
+        dataSource={data}
+        loading={loading}
+        rowKey="id"
+        search={false}
+        pagination={pagination}
+        onChange={handleTableChange}
+      />
+    </PageContainer>
     <SettingSchemaEditor
       record={record}
       onClose={(refresh) => {

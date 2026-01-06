@@ -1,5 +1,6 @@
 import { adminApi } from "@/api";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
+import { PageContainer } from "@ant-design/pro-components";
 import { ZerowebMetadataClient } from "@xezzon/zeroweb-sdk";
 import { Button, Flex, Popconfirm, Table, theme } from "antd";
 import { useEffect, useMemo, useState } from "react";
@@ -74,21 +75,22 @@ export default function AppPage() {
   useEffect(fetchData, [])
 
   return <>
-    <Table
-      columns={columns}
-      dataSource={data}
-      loading={loading}
-      rowKey="id"
-      search={false}
-      title={() =>
-        <Flex justify="flex-end">
-          <Button type="primary" onClick={() => setRecord({})}>新增应用</Button>
-        </Flex>
+    <PageContainer
+      extra={
+        <Button type="primary" onClick={() => setRecord({})}>新增应用</Button>
       }
-    />
-    <AppEditor
-      record={record}
-      onClose={closeEditor}
-    />
+    >
+      <Table
+        columns={columns}
+        dataSource={data}
+        loading={loading}
+        rowKey="id"
+        search={false}
+      />
+      <AppEditor
+        record={record}
+        onClose={closeEditor}
+      />
+    </PageContainer>
   </>
 }
