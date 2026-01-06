@@ -1,7 +1,7 @@
-import { HttpClient } from "@/types";
 import CryptoJS from "crypto-js";
 import { crc32 } from "js-crc";
-import { AttachmentAPI, UploadInfo } from "./attachment";
+import type { HttpClient } from "../types";
+import type { AttachmentAPI, UploadInfo } from "./attachment";
 
 /**
  * 计算文件的校验和

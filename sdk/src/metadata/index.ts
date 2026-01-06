@@ -1,6 +1,6 @@
-import axios from "axios"
-import { InstanceConfig } from "@/types"
+import axios from "axios";
 import { zerowebErrorHandler } from "../interceptors";
+import type { InstanceConfig } from "../types";
 
 /**
  * 服务类型

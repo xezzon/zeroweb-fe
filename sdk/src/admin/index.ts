@@ -1,6 +1,6 @@
-import { InstanceConfig } from "@/types"
 import axios from "axios"
 import { zerowebErrorHandler } from "../interceptors"
+import type { InstanceConfig } from "../types"
 import app from "./app"
 import authn from "./authn"
 import authz from "./authz"

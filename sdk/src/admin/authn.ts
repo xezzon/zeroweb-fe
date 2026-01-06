@@ -1,4 +1,4 @@
-import { HttpClient, PResponse } from "@/types";
+import type { HttpClient, PResponse } from "../types";
 
 /**
  * 基础认证

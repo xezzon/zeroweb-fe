@@ -1,6 +1,6 @@
-import { HttpClient, PResponse } from "@/types";
-import { User } from "./user";
-import { Role } from "./role";
+import type { HttpClient, PResponse } from "../types";
+import type { Role } from "./role";
+import type { User } from "./user";
 
 /**
  * 角色-用户
