@@ -4,6 +4,7 @@ import { PageContainer } from "@ant-design/pro-components";
 import { ZerowebMetadataClient } from "@xezzon/zeroweb-sdk";
 import { Button, Flex, Popconfirm, Table, theme } from "antd";
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 import AppEditor from "./AppEditor";
 
 export default function AppPage() {
@@ -20,6 +21,7 @@ export default function AppPage() {
       fetchData()
     })
   const { token: designToken } = theme.useToken()
+  const navigate = useNavigate()
 
   /**
    * @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').App>['columns']}
@@ -53,13 +55,23 @@ export default function AppPage() {
       key: 'action',
       title: '操作',
       render: (_, record) => <>
+        {record.status &&
+          <Button
+            type="link"
+            onClick={() => {
+              navigate(`/app/${record.id}/menu`)
+            }}
+          >
+            查看菜单
+          </Button>
+        }
         <Button type="link" onClick={() => setRecord(record)}>编辑</Button>
         <Popconfirm title="确认删除" onConfirm={() => deleteRecord(record.id)}>
           <Button type="link" danger>删除</Button>
         </Popconfirm>
       </>,
     },
-  ]), [designToken])
+  ]), [designToken, serviceTypeDict])
   const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').App[]} */([]))
   const [loading, setLoading] = useState(false)
 
