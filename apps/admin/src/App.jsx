@@ -1,10 +1,10 @@
 import { adminApi, selfApi } from "@/api";
 import { AuthContext, AuthContextProvider, LoginPage, RegisterPage, RequireLogin } from '@zeroweb/auth';
 import { MixLayout, NotFoundPage, ResourceContext, ResourceContextProvider } from '@zeroweb/layout';
-import { ConfigProvider, Dropdown, Space } from "antd";
+import { ConfigProvider, Dropdown, Space, Typography } from "antd";
 import zhCN from 'antd/es/locale/zh_CN';
 import { useContext, useEffect, useState } from "react";
-import { createBrowserRouter, Navigate, Outlet, RouterProvider, useLocation } from "react-router";
+import { createBrowserRouter, Navigate, Outlet, RouterProvider, useLocation, useNavigate } from "react-router";
 
 /**
  * @type {Record<string, () => Promise<{ default: React.ComponentType }>>}
@@ -76,6 +76,7 @@ function ZerowebAppAdmin() {
 
 function MainPage() {
   const location = useLocation()
+  const navigate = useNavigate()
   const { user, logout } = useContext(AuthContext)
 
   return <>
@@ -89,6 +90,12 @@ function MainPage() {
     }>
       <MixLayout
         title={import.meta.env.VITE_APP_TITLE}
+        breadcrumbProps={{
+          itemRender: ({ linkPath, title }) =>
+            <Typography.Link onClick={() => navigate(linkPath)}>
+              {title}
+            </Typography.Link>
+        }}
         actionsRender={() => (
           <Space>
             <Dropdown
