@@ -8,6 +8,7 @@ import AppEditor from "./AppEditor";
 
 export default function AppPage() {
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').App} */(null))
+  const [serviceTypeDict, setServiceTypeDict] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict[]} */([]))
   const closeEditor = (refresh) => {
     setRecord(null)
     if (refresh) {
@@ -38,6 +39,11 @@ export default function AppPage() {
       render: (status) => status
         ? <CheckCircleTwoTone twoToneColor={designToken.colorSuccess} />
         : <CloseCircleTwoTone twoToneColor={designToken.colorError} />,
+    },
+    {
+      dataIndex: 'type',
+      title: '服务类型',
+      render: (type) => serviceTypeDict.find(({ code }) => type === code)?.label ?? type
     },
     {
       dataIndex: 'version',
@@ -73,6 +79,11 @@ export default function AppPage() {
       .finally(() => setLoading(false))
   }
   useEffect(fetchData, [])
+  useEffect(() => {
+    adminApi.dict.getDictTreeByTag('ServiceType')
+      .then(response => response.data)
+      .then(setServiceTypeDict)
+  }, [])
 
   return <>
     <PageContainer
