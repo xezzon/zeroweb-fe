@@ -1,6 +1,6 @@
-import { InstanceConfig } from "@/types";
 import axios from "axios";
 import { zerowebErrorHandler } from "../interceptors";
+import type { InstanceConfig } from "../types";
 import openapi from "./openapi";
 import subscription from "./subscription";
 import thirdPartyApp from "./third_party_app";

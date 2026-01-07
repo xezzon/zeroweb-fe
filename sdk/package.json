@@ -18,8 +18,8 @@
   "scripts": {
     "lint": "oxlint",
     "build": "pnpm run build:cjs && pnpm run build:esm",
-    "build:esm": "tsc --module esnext --outDir dist/esm && tsc-alias",
-    "build:cjs": "tsc --module commonjs --outDir dist/cjs && tsc-alias",
+    "build:esm": "tsc --module esnext --outDir dist/esm",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "prepare": "pnpm run build"
   },
   "devDependencies": {
@@ -27,7 +27,6 @@
     "@types/node": "^25.0.1",
     "@zeroweb/oxlint": "workspace:^",
     "oxlint": "catalog:",
-    "tsc-alias": "^1.8.16",
     "typescript": "^5.9.3"
   },
   "dependencies": {

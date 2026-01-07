@@ -1,4 +1,4 @@
-import { HttpClient, Id, PResponse } from "@/types";
+import type { HttpClient, Id, PResponse } from "../types";
 
 /**
  * 角色

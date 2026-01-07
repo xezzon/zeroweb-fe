@@ -1,5 +1,6 @@
-import { AxiosError } from "axios"
-import { ErrorResult, ErrorSource, StructuredError } from "./types"
+import type { AxiosError } from "axios"
+import type { ErrorResult, StructuredError } from "./types"
+import { ErrorSource } from "./types"
 
 const ERROR_CODE_HEADER = 'x-error-code'
 export const ErrorCodeEnum = {

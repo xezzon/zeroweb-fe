@@ -1,5 +1,5 @@
-import { HttpClient, PResponse } from "@/types";
-import { FileProvider } from "..";
+import type { FileProvider } from "..";
+import type { HttpClient, PResponse } from "../types";
 import { checksum } from "./upload";
 
 export enum AttachmentStatus {
