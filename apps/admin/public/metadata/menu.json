@@ -32,16 +32,17 @@
   {
     "type": "ROUTE",
     "path": "/app",
-    "name": "应用注册",
+    "name": "应用列表",
     "route": "app/index",
     "parent": "app-management"
   },
   {
     "type": "ROUTE",
-    "path": "/menu",
+    "path": "/app/:id/menu",
     "name": "菜单管理",
-    "route": "menu/index",
-    "parent": "app-management"
+    "route": "app/_id/menu",
+    "parent": "app-management",
+    "hideInMenu": true
   },
   {
     "type": "ROUTE",
