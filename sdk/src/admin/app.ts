@@ -1,4 +1,4 @@
-import { HttpClient, Id, PResponse } from "@/types";
+import type { HttpClient, Id, PResponse } from "../types";
 
 /**
  * 应用
@@ -39,6 +39,12 @@ export interface AppAPI {
    */
   listApp: () => PResponse<App[]>;
   /**
+   * 查询指定应用
+   * @param {string} id 应用 ID
+   * @returns 应用
+   */
+  queryAppById: (id: string) => PResponse<App>;
+  /**
    * 更新应用信息
    * @param app 应用信息
    */
@@ -58,6 +64,10 @@ export default (client: HttpClient): AppAPI => ({
   }),
   listApp: () => client.request({
     url: '/app',
+    method: 'GET',
+  }),
+  queryAppById: (id) => client.request({
+    url: `/app/${id}`,
     method: 'GET',
   }),
   updateApp: (app: UpdateAppReq) => client.request({

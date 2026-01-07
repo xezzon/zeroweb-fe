@@ -1,5 +1,5 @@
-import { HttpClient, Id, OData, Page, PResponse } from "@/types";
-import { Openapi } from "./openapi";
+import type { HttpClient, Id, OData, Page, PResponse } from "../types";
+import type { Openapi } from "./openapi";
 import { BASE_URL as THIRD_PARTY_APP_URL } from './third_party_app';
 
 const BASE_URL = '/subscription'
