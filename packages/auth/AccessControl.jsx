@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
+import { hasPermission } from './util';
 
 /**
  * 要求登录的组件
@@ -64,9 +65,7 @@ export function RequirePermissions({ children, required, fallback = <></>, loadi
     return loading
   }
 
-  if (!required.some(p => permissions.includes(p))) {
-    return fallback;
-  }
-
-  return children;
+  return hasPermission(permissions, required)
+    ? children
+    : fallback
 }

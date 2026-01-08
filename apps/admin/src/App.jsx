@@ -1,5 +1,5 @@
 import { adminApi, selfApi } from "@/api";
-import { AuthContext, AuthContextProvider, LoginPage, RegisterPage, RequireLogin } from '@zeroweb/auth';
+import { AuthContext, AuthContextProvider, hasPermission, LoginPage, RegisterPage, RequireLogin } from '@zeroweb/auth';
 import { MixLayout, NotFoundPage, ResourceContext, ResourceContextProvider } from '@zeroweb/layout';
 import { ConfigProvider, Dropdown, Space, Typography } from "antd";
 import zhCN from 'antd/es/locale/zh_CN';
@@ -33,33 +33,43 @@ const rootRoutes = [
 ]
 
 export default () => {
+  return <>
+    <ConfigProvider locale={zhCN}>
+      <AuthContextProvider authnApi={adminApi.authn}>
+        <AppWithResource />
+      </AuthContextProvider>
+    </ConfigProvider>
+  </>
+}
+
+function AppWithResource() {
 
   const [loading, setLoading] = useState(true);
   const [resources, setResources] = useState(/** @type {import('@xezzon/zeroweb-sdk').MenuInfo[]} */(null));
+  const { permissions } = useContext(AuthContext)
 
   useEffect(() => {
     selfApi.loadResourceInfo()
       .then((response) => response.data)
+      .then(menuInfos => menuInfos
+        .filter(menuInfo => hasPermission(permissions, menuInfo.permissions))
+      )
       .then(setResources)
       .finally(() => {
         setLoading(false);
       })
-  }, [])
+  }, [permissions])
 
   if (loading) {
     return <div>Loading...</div>;
   } else if (!resources) {
     return <div>Error loading routes</div>;
   } else {
-    return (
-      <ConfigProvider locale={zhCN}>
-        <AuthContextProvider authnApi={adminApi.authn}>
-          <ResourceContextProvider resources={resources} modules={modules} rootRoutes={rootRoutes}>
-            <ZerowebAppAdmin />
-          </ResourceContextProvider>
-        </AuthContextProvider>
-      </ConfigProvider>
-    )
+    return <>
+      <ResourceContextProvider resources={resources} modules={modules} rootRoutes={rootRoutes}>
+        <ZerowebAppAdmin />
+      </ResourceContextProvider>
+    </>
   }
 }
 
