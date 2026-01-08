@@ -1,5 +1,6 @@
 import { adminApi } from "@/api";
 import { Form, Input, Modal } from "antd";
+import validator from "@rjsf/validator-ajv8";
 import { useState } from "react";
 
 /**
@@ -60,7 +61,22 @@ export default function SettingSchemaEditor({ record, onClose }) {
         label="参数约束定义"
         rules={[
           { required: true, message: '请输入JSON Schema' },
+          {
+            validator: (_, value) => {
+              try {
+                const schema = JSON.parse(value);
+                const valid = validator.ajv.validateSchema(schema);
+                if (!valid) {
+                  return Promise.reject(new Error('无效的 JSON Schema: ' + validator.ajv.errorsText(validator.ajv.errors)));
+                }
+                return Promise.resolve();
+              } catch (e) {
+                return Promise.reject(new Error('无效的 JSON'));
+              }
+            },
+          },
         ]}
+        validateTrigger="onBlur"
         tooltip="JSON Schema格式的参数约束定义"
       >
         <Input.TextArea
