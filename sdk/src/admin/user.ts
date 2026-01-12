@@ -1,4 +1,4 @@
-import type { HttpClient, Id, PResponse } from "../types";
+import type { HttpClient, Id, OData, Page, PResponse } from "../types";
 
 export interface User {
   id: string;
@@ -27,6 +27,12 @@ export interface UserAPI {
    * @param user 用户
    */
   register: (user: RegisterReq) => PResponse<Id>;
+  /**
+   * 获取用户列表
+   * @param odata 查询参数
+   * @returns 包含分页信息的用户列表
+   */
+  queryUserList: (odata: OData) => PResponse<Page<User>>;
 }
 
 export default ({ request }: HttpClient): UserAPI => ({
@@ -34,5 +40,10 @@ export default ({ request }: HttpClient): UserAPI => ({
     url: '/user/register',
     method: 'POST',
     data: user,
+  }),
+  queryUserList: (odata) => request({
+    url: '/user',
+    method: 'GET',
+    params: odata,
   }),
 })
