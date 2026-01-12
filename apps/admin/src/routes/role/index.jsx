@@ -2,12 +2,14 @@ import { adminApi } from "@/api";
 import { PageContainer } from "@ant-design/pro-components";
 import { Button, Popconfirm, Table } from "antd";
 import { useEffect, useMemo, useState } from "react";
+import BindToPermission from "./BindToPermission";
 import BindToUser from "./BindToUser";
 import RoleEditor from "./RoleEditor";
 
 export default function RolePage() {
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
   const [bindToUser, setBindToUser] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
+  const [bindToPermission, setBindToPermission] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
   const closeEditor = (refresh) => {
     setRecord(null)
     if (refresh) {
@@ -39,7 +41,9 @@ export default function RolePage() {
           <Button type="link" onClick={() => setRecord({ parentId: record.id })}>添加子角色</Button>
         }
         <Button type="link" onClick={() => setBindToUser(record)}>绑定用户</Button>
-        <Button type="link">设置权限</Button>
+        {['3'].includes(record.id) ||
+          <Button type="link" onClick={() => setBindToPermission(record)}>设置权限</Button>
+        }
         {['1', '2', '3'].includes(record.id) ||
           <Popconfirm title="确认删除" onConfirm={() => deleteRecord(record.id)}>
             <Button type="link" danger>删除</Button>
@@ -77,6 +81,10 @@ export default function RolePage() {
     <BindToUser
       role={bindToUser}
       onClose={() => setBindToUser(null)}
+    />
+    <BindToPermission
+      role={bindToPermission}
+      onClose={() => setBindToPermission(null)}
     />
   </>
 }
