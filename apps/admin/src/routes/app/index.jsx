@@ -5,9 +5,11 @@ import { ZerowebMetadataClient } from "@xezzon/zeroweb-sdk";
 import { Button, Popconfirm, Table, theme } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 import AppEditor from "./AppEditor";
 
 export default function AppPage() {
+  const { t } = useTranslation('field')
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').App} */(null))
   const [serviceTypeDict, setServiceTypeDict] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict[]} */([]))
   const closeEditor = (refresh) => {
@@ -29,31 +31,31 @@ export default function AppPage() {
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').App>['columns']} */([
     {
       dataIndex: 'name',
-      title: '应用名称',
+      title: t('app.name'),
     },
     {
       dataIndex: 'baseUrl',
-      title: '基础访问路径',
+      title: t('app.baseUrl'),
     },
     {
       dataIndex: 'status',
-      title: '状态',
+      title: t('app.status'),
       render: (status) => status
         ? <CheckCircleTwoTone twoToneColor={designToken.colorSuccess} />
         : <CloseCircleTwoTone twoToneColor={designToken.colorError} />,
     },
     {
       dataIndex: 'type',
-      title: '服务类型',
+      title: t('app.type'),
       render: (type) => serviceTypeDict.find(({ code }) => type === code)?.label ?? type
     },
     {
       dataIndex: 'version',
-      title: '版本',
+      title: t('app.version'),
     },
     {
       key: 'action',
-      title: '操作',
+      title: t('common.action'),
       render: (_, record) => <>
         {record.status &&
           <Button
@@ -72,7 +74,7 @@ export default function AppPage() {
       </>,
     },
     // oxlint-disable-next-line exhaustive-deps
-  ]), [serviceTypeDict])
+  ]), [serviceTypeDict, t])
   const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').App[]} */([]))
   const [loading, setLoading] = useState(false)
 

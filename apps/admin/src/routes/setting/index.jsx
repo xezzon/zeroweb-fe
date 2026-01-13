@@ -2,33 +2,35 @@
 import { adminApi } from '@/api'
 import { Button, Popconfirm, Table } from 'antd'
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import SettingSchemaEditor from './SettingSchemaEditor'
 import SettingValueEditor from './SettingValueEditor'
 import dayjs from 'dayjs'
 import { PageContainer } from '@ant-design/pro-components'
 
 export default function SettingPage() {
+  const { t } = useTranslation('field')
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
   const [valueRecord, setValueRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
 
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Setting>['columns']} */([
     {
       dataIndex: 'code',
-      title: '参数标识',
+      title: t('setting.code'),
     },
     {
       dataIndex: 'value',
-      title: '参数值',
+      title: t('setting.value'),
       render: (value) => value ? JSON.stringify(value) : '',
     },
     {
       dataIndex: 'updateTime',
-      title: '更新时间',
+      title: t('setting.updateTime'),
       render: (updateTime) => updateTime ? dayjs(updateTime).format('YYYY-MM-DD HH:mm:ss') : '',
     },
     {
       key: 'action',
-      title: '操作',
+      title: t('common.action'),
       render: (_, record) => <>
         <Button type='link' onClick={() => setRecord(record)}>编辑约束</Button>
         <Button type='link' onClick={() => setValueRecord(record)}>编辑值</Button>

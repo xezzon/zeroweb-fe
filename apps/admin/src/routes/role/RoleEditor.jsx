@@ -82,7 +82,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="code"
-        label="角色简码"
+        label={t('role.code')}
         rules={[
           { required: true, },
         ]}
@@ -91,7 +91,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="name"
-        label="角色名称"
+        label={t('role.name')}
         rules={[
           { required: true, },
         ]}
@@ -100,7 +100,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="parentId"
-        label="上级角色"
+        label={t('role.parentId')}
         hidden={true}
       >
         <Select allowClear>
@@ -109,7 +109,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="inheritable"
-        label="允许创建下级角色"
+        label={t('role.inheritable')}
         valuePropName="checked"
         initialValue={false}
       >

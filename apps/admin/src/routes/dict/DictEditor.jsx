@@ -72,7 +72,7 @@ export default function DictEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="code"
-        label="字典键"
+        label={t('dict.code')}
         rules={[
           { required: true, },
         ]}
@@ -81,13 +81,13 @@ export default function DictEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="label"
-        label="字典值"
+        label={t('dict.label')}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="ordinal"
-        label="顺序"
+        label={t('dict.ordinal')}
         tooltip="顺序越小越靠前"
         rules={[
           { required: true, },
@@ -98,7 +98,7 @@ export default function DictEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="enabled"
-        label="启用状态"
+        label={t('dict.enabled')}
         rules={[
           { required: true, },
         ]}

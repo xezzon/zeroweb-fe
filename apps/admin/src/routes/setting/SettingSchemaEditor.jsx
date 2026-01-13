@@ -2,6 +2,7 @@ import { adminApi } from "@/api";
 import { Form, Input, Modal } from "antd";
 import validator from "@rjsf/validator-ajv8";
 import { useState } from "react";
+import { useTranslation } from 'react-i18next'
 
 /**
  * @param {Object} param0
@@ -9,6 +10,7 @@ import { useState } from "react";
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function SettingSchemaEditor({ record, onClose }) {
+  const { t } = useTranslation('field')
   const exist = !!record?.id
   /**
    * @type {[import('antd').FormInstance<import('@xezzon/zeroweb-sdk').Setting>]}
@@ -49,7 +51,7 @@ export default function SettingSchemaEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="code"
-        label="参数标识"
+        label={t('setting.code')}
         rules={[
           { required: true, message: '请输入参数标识' },
         ]}
@@ -58,7 +60,7 @@ export default function SettingSchemaEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="schema"
-        label="参数约束定义"
+        label={t('setting.schema')}
         rules={[
           { required: true, message: '请输入JSON Schema' },
           {

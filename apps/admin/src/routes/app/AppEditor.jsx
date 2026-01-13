@@ -69,7 +69,7 @@ export default function AppEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="name"
-        label="应用名称"
+        label={t('app.name')}
         rules={[
           { required: true, },
         ]}
@@ -78,7 +78,7 @@ export default function AppEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="baseUrl"
-        label="基础访问路径"
+        label={t('app.baseUrl')}
         rules={[
           { required: true, },
         ]}
@@ -87,7 +87,7 @@ export default function AppEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="ordinal"
-        label="应用顺序"
+        label={t('app.ordinal')}
         rules={[
           { required: true, },
         ]}

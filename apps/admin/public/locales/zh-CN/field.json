@@ -1,0 +1,35 @@
+{
+  "app": {
+    "name": "应用名称",
+    "baseUrl": "基础访问路径",
+    "status": "状态",
+    "type": "服务类型",
+    "version": "版本",
+    "ordinal": "应用顺序"
+  },
+  "dict": {
+    "code": "字典键",
+    "label": "字典值",
+    "ordinal": "顺序",
+    "enabled": "启用状态"
+  },
+  "role": {
+    "code": "角色简码",
+    "name": "角色名称",
+    "parentId": "上级角色",
+    "inheritable": "允许创建下级角色"
+  },
+  "setting": {
+    "code": "参数标识",
+    "value": "参数值",
+    "updateTime": "更新时间",
+    "schema": "参数约束定义"
+  },
+  "menu": {
+    "path": "资源编码",
+    "name": "资源名称"
+  },
+  "common": {
+    "action": "操作"
+  }
+}

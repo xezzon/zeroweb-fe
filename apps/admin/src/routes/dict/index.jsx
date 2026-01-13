@@ -1,26 +1,28 @@
 import { adminApi } from '@/api'
 import { Button, Popconfirm, Table } from 'antd'
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import DictEditor from './DictEditor'
 import DictList from './DictList'
 import { PageContainer } from '@ant-design/pro-components'
 
 export default function DictTagPage() {
+  const { t } = useTranslation('field')
   const [tag, setTag] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
 
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Dict>['columns']} */([
     {
       dataIndex: 'code',
-      title: '字典键',
+      title: t('dict.code'),
     },
     {
       dataIndex: 'label',
-      title: '字典值',
+      title: t('dict.label'),
     },
     {
       key: 'action',
-      title: '操作',
+      title: t('common.action'),
       render: (_, record) => <>
         <Button type='link' onClick={() => setTag(record)}>查看</Button>
         <Button

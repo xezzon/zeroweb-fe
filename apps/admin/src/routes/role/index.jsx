@@ -2,11 +2,13 @@ import { adminApi } from "@/api";
 import { PageContainer } from "@ant-design/pro-components";
 import { Button, Popconfirm, Table } from "antd";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from 'react-i18next'
 import BindToPermission from "./BindToPermission";
 import BindToUser from "./BindToUser";
 import RoleEditor from "./RoleEditor";
 
 export default function RolePage() {
+  const { t } = useTranslation('field')
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
   const [bindToUser, setBindToUser] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
   const [bindToPermission, setBindToPermission] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
@@ -27,15 +29,15 @@ export default function RolePage() {
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Role>['columns']} */([
     {
       dataIndex: 'code',
-      title: '角色简码',
+      title: t('role.code'),
     },
     {
       dataIndex: 'name',
-      title: '角色名称',
+      title: t('role.name'),
     },
     {
       key: 'action',
-      title: '操作',
+      title: t('common.action'),
       render: (_, record) => <>
         {record.inheritable &&
           <Button type="link" onClick={() => setRecord({ parentId: record.id })}>添加子角色</Button>
@@ -51,6 +53,7 @@ export default function RolePage() {
         }
       </>,
     },
+    // oxlint-disable-next-line exhaustive-deps
   ]), [])
   const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role[]} */([]))
   const [loading, setLoading] = useState(false)
