@@ -1,5 +1,5 @@
 import { adminApi } from '@/api'
-import { Button, Flex, Popconfirm, Table } from 'antd'
+import { Button, Popconfirm, Table } from 'antd'
 import { useEffect, useMemo, useState } from 'react'
 import DictEditor from './DictEditor'
 import DictList from './DictList'

@@ -70,6 +70,7 @@ export default function SettingSchemaEditor({ record, onClose }) {
                   return Promise.reject(new Error('无效的 JSON Schema: ' + validator.ajv.errorsText(validator.ajv.errors)));
                 }
                 return Promise.resolve();
+                // oxlint-disable-next-line no-unused-vars
               } catch (e) {
                 return Promise.reject(new Error('无效的 JSON'));
               }

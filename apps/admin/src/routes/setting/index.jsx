@@ -1,6 +1,6 @@
 
 import { adminApi } from '@/api'
-import { Button, Flex, Popconfirm, Table } from 'antd'
+import { Button, Popconfirm, Table } from 'antd'
 import { useEffect, useMemo, useState } from 'react'
 import SettingSchemaEditor from './SettingSchemaEditor'
 import SettingValueEditor from './SettingValueEditor'
