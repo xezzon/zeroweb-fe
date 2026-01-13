@@ -1,6 +1,7 @@
 import { adminApi } from "@/api";
 import { Form, Input, Modal, Select, Switch } from "antd";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {Object} param0
@@ -14,6 +15,7 @@ export default function RoleEditor({ record, onClose }) {
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)
   const [roles, setRoles] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role[]} */([]))
+  const { t } = useTranslation(['error_code'])
 
   useEffect(() => {
     adminApi.role.listAllRole()
@@ -41,9 +43,11 @@ export default function RoleEditor({ record, onClose }) {
           return Promise.reject(error)
         }
         const fieldErrors = {}
-        details.forEach(({ parameters: { field }, message }) => {
-          fieldErrors[field] = fieldErrors[field] || []
-          fieldErrors[field].push(message)
+        details.forEach(({ code, parameters }) => {
+          fieldErrors[parameters.field] = [
+            ...(fieldErrors[parameters.field] || []),
+            t(`detail.${code}`, parameters),
+          ]
         })
         form.setFields(
           Object.entries(fieldErrors).map(([name, errors]) => ({ name, errors }))

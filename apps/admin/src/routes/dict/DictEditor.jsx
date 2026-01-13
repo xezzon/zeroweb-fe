@@ -1,6 +1,7 @@
 import { adminApi } from "@/api";
 import { Form, Input, InputNumber, Modal, Switch } from "antd";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {Object} param0 
@@ -13,6 +14,7 @@ export default function DictEditor({ record, onClose }) {
    */
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)
+  const { t } = useTranslation(['error_code'])
   const handleFinish = () => {
     const submit = record?.id ? adminApi.dict.modifyDict : adminApi.dict.addDict
     setConfirmLoading(true)
@@ -27,9 +29,11 @@ export default function DictEditor({ record, onClose }) {
           return Promise.reject(error)
         }
         const fieldErrors = {}
-        details.forEach(({ parameters: { field }, message }) => {
-          fieldErrors[field] = fieldErrors[field] || []
-          fieldErrors[field].push(message)
+        details.forEach(({ code, parameters }) => {
+          fieldErrors[parameters.field] = [
+            ...(fieldErrors[parameters.field] || []),
+            t(`detail.${code}`, parameters),
+          ]
         })
         form.setFields(
           Object.entries(fieldErrors).map(([name, errors]) => ({ name, errors }))
