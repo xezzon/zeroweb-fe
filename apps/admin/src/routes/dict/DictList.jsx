@@ -10,7 +10,7 @@ import DictEditor from "./DictEditor";
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function DictList({ tag, onClose }) {
-  const { t } = useTranslation('field')
+  const { t } = useTranslation(['field', 'translation'])
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
 
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Dict>['columns']} */([
@@ -26,8 +26,8 @@ export default function DictList({ tag, onClose }) {
       dataIndex: 'enabled',
       title: t('dict.enabled'),
       render: (enabled) => enabled
-        ? <Tag color="success">启用</Tag>
-        : <Tag color="error">禁用</Tag>
+        ? <Tag color="success">{t('common.enabled')}</Tag>
+        : <Tag color="error">{t('common.disabled')}</Tag>
     },
     {
       key: 'action',
@@ -38,31 +38,33 @@ export default function DictList({ tag, onClose }) {
           disabled={!record.editable}
           onClick={() => setRecord(record)}
         >
-          编辑
+          {t('common.edit')}
         </Button>
         <Button
           type="link"
           disabled={!record.editable}
           onClick={() => setRecord({ tag: tag?.code, parentId: record.id })}
         >
-          新增字典
+          {t('dict.addDict')}
         </Button>
-        <Button 
+        <Button
           type="link"
           onClick={() => adminApi.dict
             .updateDictStatus([record.id], !record.enabled)
             .then(() => fetchData())
           }
         >
-          { record.enabled ? '禁用' : '启用' }
+          {record.enabled ? t('common.disable') : t('common.enable')}
         </Button>
         <Popconfirm
-          title="确认删除"
+          title="{t('common.confirmDelete')}"
           onConfirm={() => adminApi.dict.removeDict([record.id])
             .then(() => fetchData())
           }
         >
-          <Button type="link" danger disabled={!record.editable}>删除</Button>
+          <Button type="link" danger disabled={!record.editable}>
+            {t('common.delete')}
+          </Button>
         </Popconfirm>
       </>,
     },
@@ -100,7 +102,9 @@ export default function DictList({ tag, onClose }) {
               type="primary"
               disabled={!tag?.editable}
               onClick={() => setRecord({ tag: tag.code, parentId: tag.id })}
-            >新增字典</Button>
+            >
+              {t('dict.addDict')}
+            </Button>
           </Flex>
         }
       />

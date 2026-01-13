@@ -48,7 +48,7 @@ function AppWithResource() {
   const [loading, setLoading] = useState(true);
   const [resources, setResources] = useState(/** @type {import('@xezzon/zeroweb-sdk').MenuInfo[]} */(null));
   const { permissions } = useContext(AuthContext)
-  const { t } = useTranslation(['menu'])
+  const { t } = useTranslation(['menu', 'translation'])
 
   useEffect(() => {
     selfApi.loadResourceInfo()
@@ -67,9 +67,9 @@ function AppWithResource() {
   }, [permissions, t])
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>{t('loading')}</div>;
   } else if (!resources) {
-    return <div>Error loading routes</div>;
+    return <div>{t('error.loadingRoutes')}</div>;
   } else {
     return <>
       <ResourceContextProvider resources={resources} modules={modules} rootRoutes={rootRoutes}>
@@ -94,6 +94,7 @@ function MainPage() {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useContext(AuthContext)
+  const { t } = useTranslation('translation')
 
   return <>
     <RequireLogin fallback={
@@ -119,7 +120,7 @@ function MainPage() {
                 items: [
                   {
                     key: 'logout',
-                    label: '退出登录',
+                    label: t('logout'),
                     onClick: logout,
                   },
                 ],

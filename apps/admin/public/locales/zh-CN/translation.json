@@ -1,2 +1,54 @@
 {
+  "common": {
+    "edit": "编辑",
+    "delete": "删除",
+    "confirmDelete": "确认删除",
+    "view": "查看",
+    "enabled": "启用",
+    "disabled": "禁用",
+    "enable": "启用",
+    "disable": "禁用"
+  },
+  "loading": "加载中...",
+  "error": {
+    "loadingRoutes": "加载路由时出错",
+    "invalidJsonSchema": "无效的 JSON Schema: ",
+    "invalidJson": "无效的 JSON"
+  },
+  "logout": "退出登录",
+  "app": {
+    "viewMenu": "查看菜单",
+    "addApp": "新增应用"
+  },
+  "menu": {
+    "internationalize": "国际化"
+  },
+  "dict": {
+    "addDict": "新增字典",
+    "tooltip": {
+      "ordinal": "顺序越小越靠前"
+    }
+  },
+  "role": {
+    "addSubRole": "添加子角色",
+    "setPermission": "设置权限",
+    "bindUser": "绑定用户",
+    "bindUserSuccess": "绑定用户成功",
+    "availablePermissions": "可选权限",
+    "currentPermissions": "已有权限",
+    "availableUsers": "可选用户",
+    "boundUsers": "已绑定用户"
+  },
+  "setting": {
+    "editSchema": "编辑约束",
+    "editValue": "编辑值",
+    "addSetting": "新增业务参数",
+    "tooltip": {
+      "jsonSchema": "JSON Schema格式的参数约束定义"
+    },
+    "placeholder": {
+      "enterCode": "请输入参数标识",
+      "enterJsonSchema": "请输入JSON Schema"
+    }
+  }
 }

@@ -7,7 +7,7 @@ import { useParams } from "react-router";
 import { useTranslation } from 'react-i18next'
 
 export default function MenuPage() {
-  const { t } = useTranslation('field')
+  const { t } = useTranslation(['field', 'translation'])
   const { id: appId } = useParams()
   const [app, setApp] = useState(/** @type {import('@xezzon/zeroweb-sdk').App} */(null))
   const [dataSource, setDataSource] = useState(/** @type {import('@xezzon/zeroweb-sdk').MenuInfo[]} */([]))
@@ -28,7 +28,7 @@ export default function MenuPage() {
       key: 'action',
       title: t('common.action'),
       render: () => <>
-        <Button type="link">国际化</Button>
+        <Button type="link">{t('menu.internationalize')}</Button>
       </>,
     }
   ]

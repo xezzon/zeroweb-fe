@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import AppEditor from "./AppEditor";
 
 export default function AppPage() {
-  const { t } = useTranslation('field')
+  const { t } = useTranslation(['field', 'translation'])
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').App} */(null))
   const [serviceTypeDict, setServiceTypeDict] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict[]} */([]))
   const closeEditor = (refresh) => {
@@ -64,12 +64,12 @@ export default function AppPage() {
               navigate(`/app/${record.id}/menu`)
             }}
           >
-            查看菜单
+            {t('app.viewMenu')}
           </Button>
         }
-        <Button type="link" onClick={() => setRecord(record)}>编辑</Button>
-        <Popconfirm title="确认删除" onConfirm={() => deleteRecord(record.id)}>
-          <Button type="link" danger>删除</Button>
+        <Button type="link" onClick={() => setRecord(record)}>{t('common.edit')}</Button>
+        <Popconfirm title={t('common.confirmDelete')} onConfirm={() => deleteRecord(record.id)}>
+          <Button type="link" danger>{t('common.delete')}</Button>
         </Popconfirm>
       </>,
     },
@@ -103,7 +103,7 @@ export default function AppPage() {
   return <>
     <PageContainer
       extra={
-        <Button type="primary" onClick={() => setRecord({})}>新增应用</Button>
+        <Button type="primary" onClick={() => setRecord({})}>{t('app.addApp')}</Button>
       }
     >
       <Table

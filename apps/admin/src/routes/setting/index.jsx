@@ -9,7 +9,7 @@ import dayjs from 'dayjs'
 import { PageContainer } from '@ant-design/pro-components'
 
 export default function SettingPage() {
-  const { t } = useTranslation('field')
+  const { t } = useTranslation(['field', 'translation'])
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
   const [valueRecord, setValueRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
 
@@ -32,17 +32,23 @@ export default function SettingPage() {
       key: 'action',
       title: t('common.action'),
       render: (_, record) => <>
-        <Button type='link' onClick={() => setRecord(record)}>编辑约束</Button>
-        <Button type='link' onClick={() => setValueRecord(record)}>编辑值</Button>
+        <Button type='link' onClick={() => setRecord(record)}>
+          {t('setting.editSchema')}
+        </Button>
+        <Button type='link' onClick={() => setValueRecord(record)}>
+          {t('setting.editValue')}
+        </Button>
         <Popconfirm
-          title="确认删除"
+          title={t('common.confirmDelete')}
           onConfirm={() => adminApi.setting.deleteSetting(record.id)
             .then(() => {
               loadData()
             })
           }
         >
-          <Button type="link" danger>删除</Button>
+          <Button type="link" danger>
+            {t('common.delete')}
+          </Button>
         </Popconfirm>
       </>,
     },
@@ -92,7 +98,7 @@ export default function SettingPage() {
           type='primary'
           onClick={() => setRecord({ value: {} })}
         >
-          新增业务参数
+          {t('setting.addSetting')}
         </Button>
       }
     >

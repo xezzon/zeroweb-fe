@@ -8,7 +8,7 @@ import BindToUser from "./BindToUser";
 import RoleEditor from "./RoleEditor";
 
 export default function RolePage() {
-  const { t } = useTranslation('field')
+  const { t } = useTranslation(['field', 'translation'])
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
   const [bindToUser, setBindToUser] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
   const [bindToPermission, setBindToPermission] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
@@ -40,15 +40,19 @@ export default function RolePage() {
       title: t('common.action'),
       render: (_, record) => <>
         {record.inheritable &&
-          <Button type="link" onClick={() => setRecord({ parentId: record.id })}>添加子角色</Button>
+          <Button type="link" onClick={() => setRecord({ parentId: record.id })}>
+            {t('role.addSubRole')}
+          </Button>
         }
-        <Button type="link" onClick={() => setBindToUser(record)}>绑定用户</Button>
+        <Button type="link" onClick={() => setBindToUser(record)}>
+          {t('role.bindUser')}
+        </Button>
         {['3'].includes(record.id) ||
-          <Button type="link" onClick={() => setBindToPermission(record)}>设置权限</Button>
+          <Button type="link" onClick={() => setBindToPermission(record)}>{t('role.setPermission')}</Button>
         }
         {['1', '2', '3'].includes(record.id) ||
-          <Popconfirm title="确认删除" onConfirm={() => deleteRecord(record.id)}>
-            <Button type="link" danger>删除</Button>
+          <Popconfirm title={t('common.confirmDelete')} onConfirm={() => deleteRecord(record.id)}>
+            <Button type="link" danger>{t('common.delete')}</Button>
           </Popconfirm>
         }
       </>,

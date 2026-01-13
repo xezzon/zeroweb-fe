@@ -14,7 +14,7 @@ export default function DictEditor({ record, onClose }) {
    */
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)
-  const { t } = useTranslation(['error_code'])
+  const { t } = useTranslation(['error_code', 'translation'])
   const handleFinish = () => {
     const submit = record?.id ? adminApi.dict.modifyDict : adminApi.dict.addDict
     setConfirmLoading(true)
@@ -88,7 +88,7 @@ export default function DictEditor({ record, onClose }) {
       <Form.Item
         name="ordinal"
         label={t('dict.ordinal')}
-        tooltip="顺序越小越靠前"
+        tooltip={t('dict.tooltip.ordinal')}
         rules={[
           { required: true, },
         ]}
@@ -106,8 +106,8 @@ export default function DictEditor({ record, onClose }) {
         initialValue={true}
       >
         <Switch
-          checkedChildren="启用"
-          unCheckedChildren="禁用"
+          checkedChildren={t('common.enabled')}
+          unCheckedChildren={t('common.disabled')}
         />
       </Form.Item>
     </Modal>

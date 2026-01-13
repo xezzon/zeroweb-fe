@@ -3,6 +3,7 @@ import { MenuType, ZerowebMetadataClient } from '@xezzon/zeroweb-sdk';
 import { AuthContext, hasPermission } from '@zeroweb/auth';
 import { Modal, Transfer, Tree } from 'antd';
 import { useContext, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 /**
  * @param {object} param0
@@ -16,6 +17,7 @@ export default function BindToPermission({ role, onClose }) {
   const [loading, setLoading] = useState(false)
   const [confirmLoading, setConfirmLoading] = useState(false)
   const { permissions } = useContext(AuthContext)
+  const { t } = useTranslation('translation')
 
   useEffect(() => {
     if (!role) {
@@ -101,7 +103,7 @@ export default function BindToPermission({ role, onClose }) {
     <Modal
       open={!!role}
       destroyOnHidden
-      title="设置权限"
+      title={t('role.setPermission')}
       confirmLoading={confirmLoading}
       width="61%"
       onOk={handleOk}
@@ -110,7 +112,10 @@ export default function BindToPermission({ role, onClose }) {
       <Transfer
         dataSource={permissionList}
         targetKeys={boundPermission}
-        titles={['可选权限', '已有权限']}
+        titles={[
+          t('role.availablePermissions'), 
+          t('role.currentPermissions'),
+        ]}
         render={item => item.title}
         loading={loading}
         onChange={setBoundPermission}

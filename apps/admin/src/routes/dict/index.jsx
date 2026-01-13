@@ -7,7 +7,7 @@ import DictList from './DictList'
 import { PageContainer } from '@ant-design/pro-components'
 
 export default function DictTagPage() {
-  const { t } = useTranslation('field')
+  const { t } = useTranslation(['field', 'translation'])
   const [tag, setTag] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
 
@@ -24,23 +24,27 @@ export default function DictTagPage() {
       key: 'action',
       title: t('common.action'),
       render: (_, record) => <>
-        <Button type='link' onClick={() => setTag(record)}>查看</Button>
+        <Button type='link' onClick={() => setTag(record)}>
+          {t('common.view')}
+        </Button>
         <Button
           type='link'
           disabled={!record.editable}
           onClick={() => setRecord(record)}
         >
-          编辑
+          {t('common.edit')}
         </Button>
         <Popconfirm
-          title="确认删除"
+          title={t('common.confirmDelete')}
           onConfirm={() => adminApi.dict.removeDict([record.id])
             .then(() => {
               loadData()
             })
           }
         >
-          <Button type="link" danger disabled={!record.editable}>删除</Button>
+          <Button type="link" danger disabled={!record.editable}>
+            {t('common.delete')}
+          </Button>
         </Popconfirm>
       </>,
     },
@@ -90,7 +94,7 @@ export default function DictTagPage() {
           type='primary'
           onClick={() => setRecord({ tag: 'DICT', parentId: '0' })}
         >
-          新增字典
+          {t('dict.addDict')}
         </Button>
       }
     >
