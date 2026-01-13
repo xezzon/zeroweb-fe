@@ -14,7 +14,8 @@ export default function AppEditor({ record, onClose }) {
    */
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)
-  const { t } = useTranslation(['error_code'])
+  const { t } = useTranslation()
+  const { t: tErrorCode } = useTranslation('error_code')
   const onOk = () => {
     const submit = record?.id ? adminApi.app.updateApp : adminApi.app.addApp
     setConfirmLoading(true)
@@ -32,7 +33,7 @@ export default function AppEditor({ record, onClose }) {
         details.forEach(({ code, parameters }) => {
           fieldErrors[parameters.field] = [
             ...(fieldErrors[parameters.field] || []),
-            t(`detail.${code}`, parameters),
+            tErrorCode(`detail.${code}`, parameters),
           ]
         })
         form.setFields(
@@ -69,7 +70,7 @@ export default function AppEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="name"
-        label={t('app.name')}
+        label={t('app.field.name')}
         rules={[
           { required: true, },
         ]}
@@ -78,7 +79,7 @@ export default function AppEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="baseUrl"
-        label={t('app.baseUrl')}
+        label={t('app.field.baseUrl')}
         rules={[
           { required: true, },
         ]}
@@ -87,7 +88,7 @@ export default function AppEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="ordinal"
-        label={t('app.ordinal')}
+        label={t('app.field.ordinal')}
         rules={[
           { required: true, },
         ]}

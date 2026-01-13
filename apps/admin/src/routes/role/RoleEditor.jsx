@@ -15,7 +15,8 @@ export default function RoleEditor({ record, onClose }) {
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)
   const [roles, setRoles] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role[]} */([]))
-  const { t } = useTranslation(['error_code'])
+  const { t } = useTranslation()
+  const { t: tErrorCode } = useTranslation('error_code')
 
   useEffect(() => {
     adminApi.role.listAllRole()
@@ -46,7 +47,7 @@ export default function RoleEditor({ record, onClose }) {
         details.forEach(({ code, parameters }) => {
           fieldErrors[parameters.field] = [
             ...(fieldErrors[parameters.field] || []),
-            t(`detail.${code}`, parameters),
+            tErrorCode(`detail.${code}`, parameters),
           ]
         })
         form.setFields(
@@ -82,7 +83,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="code"
-        label={t('role.code')}
+        label={t('role.field.code')}
         rules={[
           { required: true, },
         ]}
@@ -91,7 +92,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="name"
-        label={t('role.name')}
+        label={t('role.field.name')}
         rules={[
           { required: true, },
         ]}
@@ -100,7 +101,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="parentId"
-        label={t('role.parentId')}
+        label={t('role.field.parentId')}
         hidden={true}
       >
         <Select allowClear>
@@ -109,7 +110,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="inheritable"
-        label={t('role.inheritable')}
+        label={t('role.field.inheritable')}
         valuePropName="checked"
         initialValue={false}
       >

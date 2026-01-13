@@ -8,7 +8,7 @@ import BindToUser from "./BindToUser";
 import RoleEditor from "./RoleEditor";
 
 export default function RolePage() {
-  const { t } = useTranslation(['field', 'translation'])
+  const { t } = useTranslation()
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
   const [bindToUser, setBindToUser] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
   const [bindToPermission, setBindToPermission] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role} */(null))
@@ -29,11 +29,11 @@ export default function RolePage() {
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Role>['columns']} */([
     {
       dataIndex: 'code',
-      title: t('role.code'),
+      title: t('role.field.code'),
     },
     {
       dataIndex: 'name',
-      title: t('role.name'),
+      title: t('role.field.name'),
     },
     {
       key: 'action',

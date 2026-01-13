@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import AppEditor from "./AppEditor";
 
 export default function AppPage() {
-  const { t } = useTranslation(['field', 'translation'])
+  const { t } = useTranslation()
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').App} */(null))
   const [serviceTypeDict, setServiceTypeDict] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict[]} */([]))
   const closeEditor = (refresh) => {
@@ -31,27 +31,27 @@ export default function AppPage() {
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').App>['columns']} */([
     {
       dataIndex: 'name',
-      title: t('app.name'),
+      title: t('app.field.name'),
     },
     {
       dataIndex: 'baseUrl',
-      title: t('app.baseUrl'),
+      title: t('app.field.baseUrl'),
     },
     {
       dataIndex: 'status',
-      title: t('app.status'),
+      title: t('app.field.status'),
       render: (status) => status
         ? <CheckCircleTwoTone twoToneColor={designToken.colorSuccess} />
         : <CloseCircleTwoTone twoToneColor={designToken.colorError} />,
     },
     {
       dataIndex: 'type',
-      title: t('app.type'),
+      title: t('app.field.type'),
       render: (type) => serviceTypeDict.find(({ code }) => type === code)?.label ?? type
     },
     {
       dataIndex: 'version',
-      title: t('app.version'),
+      title: t('app.field.version'),
     },
     {
       key: 'action',
@@ -74,7 +74,7 @@ export default function AppPage() {
       </>,
     },
     // oxlint-disable-next-line exhaustive-deps
-  ]), [serviceTypeDict, t])
+  ]), [serviceTypeDict])
   const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').App[]} */([]))
   const [loading, setLoading] = useState(false)
 

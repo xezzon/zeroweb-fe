@@ -17,7 +17,7 @@ export default function BindToPermission({ role, onClose }) {
   const [loading, setLoading] = useState(false)
   const [confirmLoading, setConfirmLoading] = useState(false)
   const { permissions } = useContext(AuthContext)
-  const { t } = useTranslation('translation')
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (!role) {

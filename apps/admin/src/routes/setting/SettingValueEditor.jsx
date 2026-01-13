@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function SettingValueEditor({ record, onClose }) {
-  const { t } = useTranslation('field')
+  const { t } = useTranslation()
   const schema = record?.schema ? JSON.parse(record?.schema) : {}
 
   const [confirmLoading, setConfirmLoading] = useState(false)
@@ -53,7 +53,7 @@ export default function SettingValueEditor({ record, onClose }) {
       >
         <Form.Item
           name="code"
-          label={t('setting.code')}
+          label={t('setting.field.code')}
         >
           <Input disabled />
         </Form.Item>

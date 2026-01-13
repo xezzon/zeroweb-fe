@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function SettingSchemaEditor({ record, onClose }) {
-  const { t } = useTranslation(['field', 'translation'])
+  const { t } = useTranslation()
   const exist = !!record?.id
   /**
    * @type {[import('antd').FormInstance<import('@xezzon/zeroweb-sdk').Setting>]}
@@ -51,7 +51,7 @@ export default function SettingSchemaEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="code"
-        label={t('setting.code')}
+        label={t('setting.field.code')}
         rules={[
           { required: true, message: t('setting.placeholder.enterCode') },
         ]}
@@ -60,7 +60,7 @@ export default function SettingSchemaEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="schema"
-        label={t('setting.schema')}
+        label={t('setting.field.schema')}
         rules={[
           { required: true, message: t('setting.placeholder.enterJsonSchema') },
           {

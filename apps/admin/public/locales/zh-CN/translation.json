@@ -7,7 +7,8 @@
     "enabled": "启用",
     "disabled": "禁用",
     "enable": "启用",
-    "disable": "禁用"
+    "disable": "禁用",
+    "action": "操作"
   },
   "loading": "加载中...",
   "error": {
@@ -18,15 +19,33 @@
   "logout": "退出登录",
   "app": {
     "viewMenu": "查看菜单",
-    "addApp": "新增应用"
+    "addApp": "新增应用",
+    "field": {
+      "name": "应用名称",
+      "baseUrl": "基础访问路径",
+      "status": "状态",
+      "type": "服务类型",
+      "version": "版本",
+      "ordinal": "应用顺序"
+    }
   },
   "menu": {
-    "internationalize": "国际化"
+    "internationalize": "国际化",
+    "field": {
+      "path": "资源编码",
+      "name": "资源名称"
+    }
   },
   "dict": {
     "addDict": "新增字典",
     "tooltip": {
       "ordinal": "顺序越小越靠前"
+    },
+    "field": {
+      "code": "字典键",
+      "label": "字典值",
+      "ordinal": "顺序",
+      "enabled": "启用状态"
     }
   },
   "role": {
@@ -37,7 +56,13 @@
     "availablePermissions": "可选权限",
     "currentPermissions": "已有权限",
     "availableUsers": "可选用户",
-    "boundUsers": "已绑定用户"
+    "boundUsers": "已绑定用户",
+    "field": {
+      "code": "角色简码",
+      "name": "角色名称",
+      "parentId": "上级角色",
+      "inheritable": "允许创建下级角色"
+    }
   },
   "setting": {
     "editSchema": "编辑约束",
@@ -49,6 +74,12 @@
     "placeholder": {
       "enterCode": "请输入参数标识",
       "enterJsonSchema": "请输入JSON Schema"
+    },
+    "field": {
+      "code": "参数标识",
+      "value": "参数值",
+      "updateTime": "更新时间",
+      "schema": "参数约束定义"
     }
   }
 }

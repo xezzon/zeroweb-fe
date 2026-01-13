@@ -10,21 +10,21 @@ import DictEditor from "./DictEditor";
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function DictList({ tag, onClose }) {
-  const { t } = useTranslation(['field', 'translation'])
+  const { t } = useTranslation()
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
 
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Dict>['columns']} */([
     {
       dataIndex: 'code',
-      title: t('dict.code'),
+      title: t('dict.field.code'),
     },
     {
       dataIndex: 'label',
-      title: t('dict.label'),
+      title: t('dict.field.label'),
     },
     {
       dataIndex: 'enabled',
-      title: t('dict.enabled'),
+      title: t('dict.field.enabled'),
       render: (enabled) => enabled
         ? <Tag color="success">{t('common.enabled')}</Tag>
         : <Tag color="error">{t('common.disabled')}</Tag>
@@ -57,7 +57,7 @@ export default function DictList({ tag, onClose }) {
           {record.enabled ? t('common.disable') : t('common.enable')}
         </Button>
         <Popconfirm
-          title="{t('common.confirmDelete')}"
+          title={t('common.confirmDelete')}
           onConfirm={() => adminApi.dict.removeDict([record.id])
             .then(() => fetchData())
           }

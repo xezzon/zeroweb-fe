@@ -14,7 +14,8 @@ export default function DictEditor({ record, onClose }) {
    */
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)
-  const { t } = useTranslation(['error_code', 'translation'])
+  const { t } = useTranslation()
+  const { t: tErrorCode } = useTranslation('error_code')
   const handleFinish = () => {
     const submit = record?.id ? adminApi.dict.modifyDict : adminApi.dict.addDict
     setConfirmLoading(true)
@@ -32,7 +33,7 @@ export default function DictEditor({ record, onClose }) {
         details.forEach(({ code, parameters }) => {
           fieldErrors[parameters.field] = [
             ...(fieldErrors[parameters.field] || []),
-            t(`detail.${code}`, parameters),
+            tErrorCode(`detail.${code}`, parameters),
           ]
         })
         form.setFields(
@@ -72,7 +73,7 @@ export default function DictEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="code"
-        label={t('dict.code')}
+        label={t('dict.field.code')}
         rules={[
           { required: true, },
         ]}
@@ -81,13 +82,13 @@ export default function DictEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="label"
-        label={t('dict.label')}
+        label={t('dict.field.label')}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="ordinal"
-        label={t('dict.ordinal')}
+        label={t('dict.field.ordinal')}
         tooltip={t('dict.tooltip.ordinal')}
         rules={[
           { required: true, },
@@ -98,7 +99,7 @@ export default function DictEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="enabled"
-        label={t('dict.enabled')}
+        label={t('dict.field.enabled')}
         rules={[
           { required: true, },
         ]}

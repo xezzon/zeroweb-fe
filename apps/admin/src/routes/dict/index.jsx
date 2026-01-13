@@ -7,18 +7,18 @@ import DictList from './DictList'
 import { PageContainer } from '@ant-design/pro-components'
 
 export default function DictTagPage() {
-  const { t } = useTranslation(['field', 'translation'])
+  const { t } = useTranslation()
   const [tag, setTag] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict} */(null))
 
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Dict>['columns']} */([
     {
       dataIndex: 'code',
-      title: t('dict.code'),
+      title: t('dict.field.code'),
     },
     {
       dataIndex: 'label',
-      title: t('dict.label'),
+      title: t('dict.field.label'),
     },
     {
       key: 'action',

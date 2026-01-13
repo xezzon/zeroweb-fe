@@ -9,23 +9,23 @@ import dayjs from 'dayjs'
 import { PageContainer } from '@ant-design/pro-components'
 
 export default function SettingPage() {
-  const { t } = useTranslation(['field', 'translation'])
+  const { t } = useTranslation()
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
   const [valueRecord, setValueRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
 
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Setting>['columns']} */([
     {
       dataIndex: 'code',
-      title: t('setting.code'),
+      title: t('setting.field.code'),
     },
     {
       dataIndex: 'value',
-      title: t('setting.value'),
+      title: t('setting.field.value'),
       render: (value) => value ? JSON.stringify(value) : '',
     },
     {
       dataIndex: 'updateTime',
-      title: t('setting.updateTime'),
+      title: t('setting.field.updateTime'),
       render: (updateTime) => updateTime ? dayjs(updateTime).format('YYYY-MM-DD HH:mm:ss') : '',
     },
     {

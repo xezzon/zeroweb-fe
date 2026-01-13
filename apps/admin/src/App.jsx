@@ -48,7 +48,8 @@ function AppWithResource() {
   const [loading, setLoading] = useState(true);
   const [resources, setResources] = useState(/** @type {import('@xezzon/zeroweb-sdk').MenuInfo[]} */(null));
   const { permissions } = useContext(AuthContext)
-  const { t } = useTranslation(['menu', 'translation'])
+  const { t } = useTranslation()
+  const { t: tMenu } = useTranslation('menu')
 
   useEffect(() => {
     selfApi.loadResourceInfo()
@@ -57,14 +58,15 @@ function AppWithResource() {
         .filter(menuInfo => hasPermission(permissions, menuInfo.permissions))
         .map(menuInfo => ({
           ...menuInfo,
-          name: t(menuInfo.path),
+          name: tMenu(menuInfo.path, { nsSeparator: false }),
         }))
       )
       .then(setResources)
       .finally(() => {
         setLoading(false);
       })
-  }, [permissions, t])
+    // oxlint-disable-next-line exhaustive-deps
+  }, [permissions])
 
   if (loading) {
     return <div>{t('loading')}</div>;
@@ -94,7 +96,7 @@ function MainPage() {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useContext(AuthContext)
-  const { t } = useTranslation('translation')
+  const { t } = useTranslation()
 
   return <>
     <RequireLogin fallback={
