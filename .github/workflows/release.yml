@@ -81,6 +81,9 @@ jobs:
           echo "Determined APP_NAME=$APP_NAME"
           echo "app_name=$APP_NAME" >> $GITHUB_OUTPUT
           echo "image_name=${{ github.repository_owner }}/zeroweb-app-$APP_NAME" >> $GITHUB_OUTPUT
+      - name: Set npm version
+        working-directory: apps/${{ steps.meta.outputs.app_name }}
+        run: npm version ${{ github.event.inputs.version }}
       - uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
