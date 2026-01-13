@@ -2,7 +2,7 @@ import { adminApi } from "@/api";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 import { PageContainer } from "@ant-design/pro-components";
 import { ZerowebMetadataClient } from "@xezzon/zeroweb-sdk";
-import { Button, Flex, Popconfirm, Table, theme } from "antd";
+import { Button, Popconfirm, Table, theme } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import AppEditor from "./AppEditor";
@@ -71,7 +71,8 @@ export default function AppPage() {
         </Popconfirm>
       </>,
     },
-  ]), [designToken, serviceTypeDict])
+    // oxlint-disable-next-line exhaustive-deps
+  ]), [serviceTypeDict])
   const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').App[]} */([]))
   const [loading, setLoading] = useState(false)
 

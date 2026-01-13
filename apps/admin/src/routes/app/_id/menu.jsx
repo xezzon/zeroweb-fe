@@ -31,7 +31,7 @@ export default function MenuPage() {
     }
   ]
 
-  const fetchData = () => {
+  useEffect(() => {
     adminApi.app.queryAppById(appId)
       .then(response => response.data)
       .then((app) => {
@@ -41,11 +41,7 @@ export default function MenuPage() {
       .then(app => ZerowebMetadataClient({ baseURL: app.baseUrl }).loadResourceInfo())
       .then(response => response.data)
       .then(setDataSource)
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
+  }, [appId])
 
   return <>
     <PageContainer subTitle={app?.name}>
