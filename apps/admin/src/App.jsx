@@ -4,6 +4,7 @@ import { MixLayout, NotFoundPage, ResourceContext, ResourceContextProvider } fro
 import { ConfigProvider, Dropdown, Space, Typography } from "antd";
 import zhCN from 'antd/es/locale/zh_CN';
 import { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { createBrowserRouter, Navigate, Outlet, RouterProvider, useLocation, useNavigate } from "react-router";
 
 /**
@@ -47,18 +48,23 @@ function AppWithResource() {
   const [loading, setLoading] = useState(true);
   const [resources, setResources] = useState(/** @type {import('@xezzon/zeroweb-sdk').MenuInfo[]} */(null));
   const { permissions } = useContext(AuthContext)
+  const { t } = useTranslation(['menu'])
 
   useEffect(() => {
     selfApi.loadResourceInfo()
       .then((response) => response.data)
       .then(menuInfos => menuInfos
         .filter(menuInfo => hasPermission(permissions, menuInfo.permissions))
+        .map(menuInfo => ({
+          ...menuInfo,
+          name: t(menuInfo.path),
+        }))
       )
       .then(setResources)
       .finally(() => {
         setLoading(false);
       })
-  }, [permissions])
+  }, [permissions, t])
 
   if (loading) {
     return <div>Loading...</div>;
