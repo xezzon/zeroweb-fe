@@ -20,8 +20,11 @@
     "@zeroweb/layout": "workspace:^",
     "antd": "catalog:",
     "dayjs": "catalog:",
+    "i18next": "catalog:",
+    "i18next-http-backend": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "react-i18next": "catalog:",
     "react-router": "catalog:"
   },
   "devDependencies": {
