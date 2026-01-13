@@ -16,7 +16,7 @@ i18next
     fallbackLng: {
       'default': ['zh-CN'],
     },
-    ns: ['translation'],
+    ns: ['translation', 'error_code'],
     defaultNS: 'translation',
     interpolation: {
       escapeValue: false,
