@@ -11,15 +11,15 @@ export enum SubscriptionStatus {
   /**
    * 未订阅
    */
-  NONE,
+  NONE = 'NONE',
   /**
    * 审核中
    */
-  AUDITING,
+  AUDITING = 'AUDITING',
   /**
    * 已订阅
    */
-  SUBSCRIBED,
+  SUBSCRIBED = 'SUBSCRIBED',
 }
 
 /**

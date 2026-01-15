@@ -7,11 +7,11 @@ export enum OpenapiStatus {
   /**
    * 草稿
    */
-  DRAFT,
+  DRAFT = 'DRAFT',
   /**
    * 已发布
    */
-  PUBLISHED,
+  PUBLISHED = 'PUBLISHED',
 }
 
 export interface Openapi {
