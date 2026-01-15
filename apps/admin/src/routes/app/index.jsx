@@ -2,16 +2,17 @@ import { adminApi } from "@/api";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 import { PageContainer } from "@ant-design/pro-components";
 import { ZerowebMetadataClient } from "@xezzon/zeroweb-sdk";
+import { useDict } from "@zeroweb/dict";
 import { Button, Popconfirm, Table, theme } from "antd";
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import AppEditor from "./AppEditor";
 
 export default function AppPage() {
   const { t } = useTranslation()
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').App} */(null))
-  const [serviceTypeDict, setServiceTypeDict] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict[]} */([]))
+  const { mapValue: mapServiceType } = useDict(adminApi.dict, 'ServiceType')
   const closeEditor = (refresh) => {
     setRecord(null)
     if (refresh) {
@@ -47,7 +48,7 @@ export default function AppPage() {
     {
       dataIndex: 'type',
       title: t('app.field.type'),
-      render: (type) => serviceTypeDict.find(({ code }) => type === code)?.label ?? type
+      render: mapServiceType,
     },
     {
       dataIndex: 'version',
@@ -73,8 +74,8 @@ export default function AppPage() {
         </Popconfirm>
       </>,
     },
-    // oxlint-disable-next-line exhaustive-deps
-  ]), [serviceTypeDict])
+    // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps
+  ]), [mapServiceType])
   const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').App[]} */([]))
   const [loading, setLoading] = useState(false)
 
@@ -94,11 +95,6 @@ export default function AppPage() {
       .finally(() => setLoading(false))
   }
   useEffect(fetchData, [])
-  useEffect(() => {
-    adminApi.dict.getDictTreeByTag('ServiceType')
-      .then(response => response.data)
-      .then(setServiceTypeDict)
-  }, [])
 
   return <>
     <PageContainer

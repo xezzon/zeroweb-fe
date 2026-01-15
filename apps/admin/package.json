@@ -17,6 +17,7 @@
     "@rjsf/validator-ajv8": "^6.1.2",
     "@xezzon/zeroweb-sdk": "workspace:^",
     "@zeroweb/auth": "workspace:^",
+    "@zeroweb/dict": "workspace:^",
     "@zeroweb/layout": "workspace:^",
     "antd": "catalog:",
     "dayjs": "catalog:",

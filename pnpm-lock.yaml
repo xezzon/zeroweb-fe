@@ -76,6 +76,9 @@ importers:
       '@zeroweb/auth':
         specifier: workspace:^
         version: link:../../packages/auth
+      '@zeroweb/dict':
+        specifier: workspace:^
+        version: link:../../packages/dict
       '@zeroweb/layout':
         specifier: workspace:^
         version: link:../../packages/layout
