@@ -5,9 +5,11 @@ import { ZerowebMetadataClient } from "@xezzon/zeroweb-sdk";
 import { Button, Popconfirm, Table, theme } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 import AppEditor from "./AppEditor";
 
 export default function AppPage() {
+  const { t } = useTranslation()
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').App} */(null))
   const [serviceTypeDict, setServiceTypeDict] = useState(/** @type {import('@xezzon/zeroweb-sdk').Dict[]} */([]))
   const closeEditor = (refresh) => {
@@ -29,31 +31,31 @@ export default function AppPage() {
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').App>['columns']} */([
     {
       dataIndex: 'name',
-      title: '应用名称',
+      title: t('app.field.name'),
     },
     {
       dataIndex: 'baseUrl',
-      title: '基础访问路径',
+      title: t('app.field.baseUrl'),
     },
     {
       dataIndex: 'status',
-      title: '状态',
+      title: t('app.field.status'),
       render: (status) => status
         ? <CheckCircleTwoTone twoToneColor={designToken.colorSuccess} />
         : <CloseCircleTwoTone twoToneColor={designToken.colorError} />,
     },
     {
       dataIndex: 'type',
-      title: '服务类型',
+      title: t('app.field.type'),
       render: (type) => serviceTypeDict.find(({ code }) => type === code)?.label ?? type
     },
     {
       dataIndex: 'version',
-      title: '版本',
+      title: t('app.field.version'),
     },
     {
       key: 'action',
-      title: '操作',
+      title: t('common.action'),
       render: (_, record) => <>
         {record.status &&
           <Button
@@ -62,12 +64,12 @@ export default function AppPage() {
               navigate(`/app/${record.id}/menu`)
             }}
           >
-            查看菜单
+            {t('app.viewMenu')}
           </Button>
         }
-        <Button type="link" onClick={() => setRecord(record)}>编辑</Button>
-        <Popconfirm title="确认删除" onConfirm={() => deleteRecord(record.id)}>
-          <Button type="link" danger>删除</Button>
+        <Button type="link" onClick={() => setRecord(record)}>{t('common.edit')}</Button>
+        <Popconfirm title={t('common.confirmDelete')} onConfirm={() => deleteRecord(record.id)}>
+          <Button type="link" danger>{t('common.delete')}</Button>
         </Popconfirm>
       </>,
     },
@@ -101,7 +103,7 @@ export default function AppPage() {
   return <>
     <PageContainer
       extra={
-        <Button type="primary" onClick={() => setRecord({})}>新增应用</Button>
+        <Button type="primary" onClick={() => setRecord({})}>{t('app.addApp')}</Button>
       }
     >
       <Table

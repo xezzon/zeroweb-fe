@@ -4,8 +4,10 @@ import { ZerowebMetadataClient } from "@xezzon/zeroweb-sdk";
 import { Button, Table } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useTranslation } from 'react-i18next'
 
 export default function MenuPage() {
+  const { t } = useTranslation()
   const { id: appId } = useParams()
   const [app, setApp] = useState(/** @type {import('@xezzon/zeroweb-sdk').App} */(null))
   const [dataSource, setDataSource] = useState(/** @type {import('@xezzon/zeroweb-sdk').MenuInfo[]} */([]))
@@ -16,17 +18,17 @@ export default function MenuPage() {
   const columns = [
     {
       dataIndex: 'path',
-      title: '资源编码',
+      title: t('menu.field.path'),
     },
     {
       dataIndex: 'name',
-      title: '资源名称',
+      title: t('menu.field.name'),
     },
     {
       key: 'action',
-      title: '操作',
+      title: t('common.action'),
       render: () => <>
-        <Button type="link">国际化</Button>
+        <Button type="link">{t('menu.internationalize')}</Button>
       </>,
     }
   ]

@@ -4,6 +4,7 @@ import { MixLayout, NotFoundPage, ResourceContext, ResourceContextProvider } fro
 import { ConfigProvider, Dropdown, Space, Typography } from "antd";
 import zhCN from 'antd/es/locale/zh_CN';
 import { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { createBrowserRouter, Navigate, Outlet, RouterProvider, useLocation, useNavigate } from "react-router";
 
 /**
@@ -47,23 +48,30 @@ function AppWithResource() {
   const [loading, setLoading] = useState(true);
   const [resources, setResources] = useState(/** @type {import('@xezzon/zeroweb-sdk').MenuInfo[]} */(null));
   const { permissions } = useContext(AuthContext)
+  const { t } = useTranslation()
+  const { t: tMenu } = useTranslation('menu')
 
   useEffect(() => {
     selfApi.loadResourceInfo()
       .then((response) => response.data)
       .then(menuInfos => menuInfos
         .filter(menuInfo => hasPermission(permissions, menuInfo.permissions))
+        .map(menuInfo => ({
+          ...menuInfo,
+          name: tMenu(menuInfo.path, { nsSeparator: false }),
+        }))
       )
       .then(setResources)
       .finally(() => {
         setLoading(false);
       })
+    // oxlint-disable-next-line exhaustive-deps
   }, [permissions])
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>{t('loading')}</div>;
   } else if (!resources) {
-    return <div>Error loading routes</div>;
+    return <div>{t('error.loadingRoutes')}</div>;
   } else {
     return <>
       <ResourceContextProvider resources={resources} modules={modules} rootRoutes={rootRoutes}>
@@ -88,6 +96,7 @@ function MainPage() {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useContext(AuthContext)
+  const { t } = useTranslation()
 
   return <>
     <RequireLogin fallback={
@@ -113,7 +122,7 @@ function MainPage() {
                 items: [
                   {
                     key: 'logout',
-                    label: '退出登录',
+                    label: t('logout'),
                     onClick: logout,
                   },
                 ],

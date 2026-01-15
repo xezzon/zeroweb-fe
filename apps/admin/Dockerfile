@@ -17,4 +17,4 @@ RUN pnpm build --base=${BASE_URL}
 FROM nginx:stable-alpine
 ARG BASE_URI
 COPY --from=builder /app/apps/admin/dist /usr/share/nginx/html/${BASE_URI}
-VOLUME [ "/etc/nginx/conf.d", "/usr/share/nginx/html/${BASE_URI}metadata" ]
+VOLUME [ "/etc/nginx/conf.d", "/usr/share/nginx/html/${BASE_URI}metadata", "/usr/share/nginx/html/${BASE_URI}locales" ]

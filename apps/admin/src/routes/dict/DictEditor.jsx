@@ -1,6 +1,7 @@
 import { adminApi } from "@/api";
 import { Form, Input, InputNumber, Modal, Switch } from "antd";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {Object} param0 
@@ -13,6 +14,8 @@ export default function DictEditor({ record, onClose }) {
    */
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)
+  const { t } = useTranslation()
+  const { t: tErrorCode } = useTranslation('error_code')
   const handleFinish = () => {
     const submit = record?.id ? adminApi.dict.modifyDict : adminApi.dict.addDict
     setConfirmLoading(true)
@@ -27,9 +30,11 @@ export default function DictEditor({ record, onClose }) {
           return Promise.reject(error)
         }
         const fieldErrors = {}
-        details.forEach(({ parameters: { field }, message }) => {
-          fieldErrors[field] = fieldErrors[field] || []
-          fieldErrors[field].push(message)
+        details.forEach(({ code, parameters }) => {
+          fieldErrors[parameters.field] = [
+            ...(fieldErrors[parameters.field] || []),
+            tErrorCode(`detail.${code}`, parameters),
+          ]
         })
         form.setFields(
           Object.entries(fieldErrors).map(([name, errors]) => ({ name, errors }))
@@ -68,7 +73,7 @@ export default function DictEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="code"
-        label="字典键"
+        label={t('dict.field.code')}
         rules={[
           { required: true, },
         ]}
@@ -77,14 +82,14 @@ export default function DictEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="label"
-        label="字典值"
+        label={t('dict.field.label')}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="ordinal"
-        label="顺序"
-        tooltip="顺序越小越靠前"
+        label={t('dict.field.ordinal')}
+        tooltip={t('dict.tooltip.ordinal')}
         rules={[
           { required: true, },
         ]}
@@ -94,7 +99,7 @@ export default function DictEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="enabled"
-        label="启用状态"
+        label={t('dict.field.enabled')}
         rules={[
           { required: true, },
         ]}
@@ -102,8 +107,8 @@ export default function DictEditor({ record, onClose }) {
         initialValue={true}
       >
         <Switch
-          checkedChildren="启用"
-          unCheckedChildren="禁用"
+          checkedChildren={t('common.enabled')}
+          unCheckedChildren={t('common.disabled')}
         />
       </Form.Item>
     </Modal>

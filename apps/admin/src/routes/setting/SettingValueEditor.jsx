@@ -3,6 +3,7 @@ import SchemaForm from '@rjsf/antd';
 import validator from '@rjsf/validator-ajv8';
 import { Form, Input, Modal } from "antd";
 import { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next'
 
 /**
  * @param {Object} param0
@@ -10,6 +11,7 @@ import { useEffect, useState } from "react";
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function SettingValueEditor({ record, onClose }) {
+  const { t } = useTranslation()
   const schema = record?.schema ? JSON.parse(record?.schema) : {}
 
   const [confirmLoading, setConfirmLoading] = useState(false)
@@ -51,7 +53,7 @@ export default function SettingValueEditor({ record, onClose }) {
       >
         <Form.Item
           name="code"
-          label="参数标识"
+          label={t('setting.field.code')}
         >
           <Input disabled />
         </Form.Item>

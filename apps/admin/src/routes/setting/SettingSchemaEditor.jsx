@@ -2,6 +2,7 @@ import { adminApi } from "@/api";
 import { Form, Input, Modal } from "antd";
 import validator from "@rjsf/validator-ajv8";
 import { useState } from "react";
+import { useTranslation } from 'react-i18next'
 
 /**
  * @param {Object} param0
@@ -9,6 +10,7 @@ import { useState } from "react";
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function SettingSchemaEditor({ record, onClose }) {
+  const { t } = useTranslation()
   const exist = !!record?.id
   /**
    * @type {[import('antd').FormInstance<import('@xezzon/zeroweb-sdk').Setting>]}
@@ -49,40 +51,40 @@ export default function SettingSchemaEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="code"
-        label="参数标识"
+        label={t('setting.field.code')}
         rules={[
-          { required: true, message: '请输入参数标识' },
+          { required: true, message: t('setting.placeholder.enterCode') },
         ]}
       >
-        <Input placeholder="请输入参数标识" disabled={exist} />
+        <Input placeholder={t('setting.placeholder.enterCode')} disabled={exist} />
       </Form.Item>
       <Form.Item
         name="schema"
-        label="参数约束定义"
+        label={t('setting.field.schema')}
         rules={[
-          { required: true, message: '请输入JSON Schema' },
+          { required: true, message: t('setting.placeholder.enterJsonSchema') },
           {
             validator: (_, value) => {
               try {
                 const schema = JSON.parse(value);
                 const valid = validator.ajv.validateSchema(schema);
                 if (!valid) {
-                  return Promise.reject(new Error('无效的 JSON Schema: ' + validator.ajv.errorsText(validator.ajv.errors)));
+                  return Promise.reject(new Error(t('error.invalidJsonSchema') + validator.ajv.errorsText(validator.ajv.errors)));
                 }
                 return Promise.resolve();
                 // oxlint-disable-next-line no-unused-vars
               } catch (e) {
-                return Promise.reject(new Error('无效的 JSON'));
+                return Promise.reject(new Error(t('error.invalidJson')));
               }
             },
           },
         ]}
         validateTrigger="onBlur"
-        tooltip="JSON Schema格式的参数约束定义"
+        tooltip={t('setting.tooltip.jsonSchema')}
       >
         <Input.TextArea
           rows={6}
-          placeholder="请输入JSON Schema"
+          placeholder={t('setting.placeholder.enterJsonSchema')}
         />
       </Form.Item>
       <Form.Item name="value" hidden>

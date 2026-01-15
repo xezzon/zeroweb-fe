@@ -1,6 +1,7 @@
 import { adminApi } from "@/api";
 import { Form, Input, Modal, Select, Switch } from "antd";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {Object} param0
@@ -14,6 +15,8 @@ export default function RoleEditor({ record, onClose }) {
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)
   const [roles, setRoles] = useState(/** @type {import('@xezzon/zeroweb-sdk').Role[]} */([]))
+  const { t } = useTranslation()
+  const { t: tErrorCode } = useTranslation('error_code')
 
   useEffect(() => {
     adminApi.role.listAllRole()
@@ -41,9 +44,11 @@ export default function RoleEditor({ record, onClose }) {
           return Promise.reject(error)
         }
         const fieldErrors = {}
-        details.forEach(({ parameters: { field }, message }) => {
-          fieldErrors[field] = fieldErrors[field] || []
-          fieldErrors[field].push(message)
+        details.forEach(({ code, parameters }) => {
+          fieldErrors[parameters.field] = [
+            ...(fieldErrors[parameters.field] || []),
+            tErrorCode(`detail.${code}`, parameters),
+          ]
         })
         form.setFields(
           Object.entries(fieldErrors).map(([name, errors]) => ({ name, errors }))
@@ -78,7 +83,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="code"
-        label="角色简码"
+        label={t('role.field.code')}
         rules={[
           { required: true, },
         ]}
@@ -87,7 +92,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="name"
-        label="角色名称"
+        label={t('role.field.name')}
         rules={[
           { required: true, },
         ]}
@@ -96,7 +101,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="parentId"
-        label="上级角色"
+        label={t('role.field.parentId')}
         hidden={true}
       >
         <Select allowClear>
@@ -105,7 +110,7 @@ export default function RoleEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="inheritable"
-        label="允许创建下级角色"
+        label={t('role.field.inheritable')}
         valuePropName="checked"
         initialValue={false}
       >

@@ -2,45 +2,53 @@
 import { adminApi } from '@/api'
 import { Button, Popconfirm, Table } from 'antd'
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import SettingSchemaEditor from './SettingSchemaEditor'
 import SettingValueEditor from './SettingValueEditor'
 import dayjs from 'dayjs'
 import { PageContainer } from '@ant-design/pro-components'
 
 export default function SettingPage() {
+  const { t } = useTranslation()
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
   const [valueRecord, setValueRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
 
   const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Setting>['columns']} */([
     {
       dataIndex: 'code',
-      title: '参数标识',
+      title: t('setting.field.code'),
     },
     {
       dataIndex: 'value',
-      title: '参数值',
+      title: t('setting.field.value'),
       render: (value) => value ? JSON.stringify(value) : '',
     },
     {
       dataIndex: 'updateTime',
-      title: '更新时间',
+      title: t('setting.field.updateTime'),
       render: (updateTime) => updateTime ? dayjs(updateTime).format('YYYY-MM-DD HH:mm:ss') : '',
     },
     {
       key: 'action',
-      title: '操作',
+      title: t('common.action'),
       render: (_, record) => <>
-        <Button type='link' onClick={() => setRecord(record)}>编辑约束</Button>
-        <Button type='link' onClick={() => setValueRecord(record)}>编辑值</Button>
+        <Button type='link' onClick={() => setRecord(record)}>
+          {t('setting.editSchema')}
+        </Button>
+        <Button type='link' onClick={() => setValueRecord(record)}>
+          {t('setting.editValue')}
+        </Button>
         <Popconfirm
-          title="确认删除"
+          title={t('common.confirmDelete')}
           onConfirm={() => adminApi.setting.deleteSetting(record.id)
             .then(() => {
               loadData()
             })
           }
         >
-          <Button type="link" danger>删除</Button>
+          <Button type="link" danger>
+            {t('common.delete')}
+          </Button>
         </Popconfirm>
       </>,
     },
@@ -90,7 +98,7 @@ export default function SettingPage() {
           type='primary'
           onClick={() => setRecord({ value: {} })}
         >
-          新增业务参数
+          {t('setting.addSetting')}
         </Button>
       }
     >

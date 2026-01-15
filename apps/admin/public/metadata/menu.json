@@ -2,44 +2,37 @@
   {
     "type": "ROUTE",
     "path": "/",
-    "name": "首页",
     "route": "_index"
   },
   {
     "type": "GROUP",
-    "path": "setting",
-    "name": "系统设置"
+    "path": "setting"
   },
   {
     "type": "ROUTE",
     "path": "/dict",
-    "name": "字典管理",
     "route": "dict/index",
     "parent": "setting"
   },
   {
     "type": "ROUTE",
     "path": "/parameter",
-    "name": "业务参数",
     "route": "setting/index",
     "parent": "setting"
   },
   {
     "type": "GROUP",
-    "path": "app-management",
-    "name": "应用管理"
+    "path": "app-management"
   },
   {
     "type": "ROUTE",
     "path": "/app",
-    "name": "应用列表",
     "route": "app/index",
     "parent": "app-management"
   },
   {
     "type": "ROUTE",
     "path": "/app/:id/menu",
-    "name": "菜单管理",
     "route": "app/_id/menu",
     "parent": "app-management",
     "hideInMenu": true
@@ -47,51 +40,43 @@
   {
     "type": "ROUTE",
     "path": "/role",
-    "name": "角色管理",
     "route": "role/index",
     "parent": "app-management"
   },
   {
     "type": "ROUTE",
     "path": "/attachment",
-    "name": "附件管理",
     "route": "attachment/index"
   },
   {
     "type": "GROUP",
-    "path": "open",
-    "name": "开放平台"
+    "path": "open"
   },
   {
     "type": "ROUTE",
     "path": "/openapi",
-    "name": "对外接口",
     "route": "openapi/index",
     "parent": "open"
   },
   {
     "type": "ROUTE",
     "path": "/third-party-app",
-    "name": "第三方应用管理",
     "route": "third-party-app/index",
     "parent": "open"
   },
   {
     "type": "GROUP",
-    "path": "i18n",
-    "name": "国际化管理"
+    "path": "i18n"
   },
   {
     "type": "ROUTE",
     "path": "/language",
-    "name": "语言管理",
     "route": "language/index",
     "parent": "i18n"
   },
   {
     "type": "ROUTE",
     "path": "/locale",
-    "name": "国际化文本",
     "route": "locale/index",
     "parent": "i18n"
   }

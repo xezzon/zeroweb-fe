@@ -1,6 +1,7 @@
 import { adminApi } from "@/api";
 import { Form, Input, InputNumber, Modal } from "antd";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {Object} param0
@@ -13,6 +14,8 @@ export default function AppEditor({ record, onClose }) {
    */
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false)
+  const { t } = useTranslation()
+  const { t: tErrorCode } = useTranslation('error_code')
   const onOk = () => {
     const submit = record?.id ? adminApi.app.updateApp : adminApi.app.addApp
     setConfirmLoading(true)
@@ -27,9 +30,11 @@ export default function AppEditor({ record, onClose }) {
           return Promise.reject(error)
         }
         const fieldErrors = {}
-        details.forEach(({ parameters: { field }, message }) => {
-          fieldErrors[field] = fieldErrors[field] || []
-          fieldErrors[field].push(message)
+        details.forEach(({ code, parameters }) => {
+          fieldErrors[parameters.field] = [
+            ...(fieldErrors[parameters.field] || []),
+            tErrorCode(`detail.${code}`, parameters),
+          ]
         })
         form.setFields(
           Object.entries(fieldErrors).map(([name, errors]) => ({ name, errors }))
@@ -65,7 +70,7 @@ export default function AppEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="name"
-        label="应用名称"
+        label={t('app.field.name')}
         rules={[
           { required: true, },
         ]}
@@ -74,7 +79,7 @@ export default function AppEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="baseUrl"
-        label="基础访问路径"
+        label={t('app.field.baseUrl')}
         rules={[
           { required: true, },
         ]}
@@ -83,7 +88,7 @@ export default function AppEditor({ record, onClose }) {
       </Form.Item>
       <Form.Item
         name="ordinal"
-        label="应用顺序"
+        label={t('app.field.ordinal')}
         rules={[
           { required: true, },
         ]}

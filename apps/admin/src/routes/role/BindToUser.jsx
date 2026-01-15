@@ -1,6 +1,7 @@
 import { adminApi } from "@/api";
 import { Modal, Transfer, message } from 'antd';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 /**
  * @param {object} param0 
@@ -13,6 +14,7 @@ export default function BindToUser({ role, onClose }) {
   const [initialBoundUsers, setInitialBoundUsers] = useState(/** @type {string[]} */([]))
   const [loading, setLoading] = useState(false)
   const [confirmLoading, setConfirmLoading] = useState(false)
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (!role) return;
@@ -57,7 +59,7 @@ export default function BindToUser({ role, onClose }) {
       toRelease.length ? adminApi.authz.releaseRoleUser(toRelease) : Promise.resolve(),
     ])
       .then(() => {
-        message.success('绑定用户成功')
+        message.success(t('role.bindUserSuccess'))
         onClose()
       })
       .finally(() => setConfirmLoading(false))
@@ -67,7 +69,7 @@ export default function BindToUser({ role, onClose }) {
     <Modal
       open={!!role}
       destroyOnHidden
-      title="绑定用户"
+      title={t('role.bindUser')}
       confirmLoading={confirmLoading}
       width="61%"
       onOk={handleOk}
@@ -76,7 +78,10 @@ export default function BindToUser({ role, onClose }) {
       <Transfer
         dataSource={userList}
         targetKeys={boundUsers}
-        titles={['可选用户', '已绑定用户']}
+        titles={[
+          t('role.availableUsers'),
+          t('role.boundUsers'),
+        ]}
         render={item => item.title}
         pagination={{ pageSize: 20 }}
         loading={loading}

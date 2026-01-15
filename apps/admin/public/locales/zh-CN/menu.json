@@ -1,0 +1,17 @@
+{
+  "/": "首页",
+  "setting": "系统设置",
+  "/dict": "字典管理",
+  "/parameter": "业务参数",
+  "app-management": "应用管理",
+  "/app": "应用列表",
+  "/app/:id/menu": "菜单管理",
+  "/role": "角色管理",
+  "/attachment": "附件管理",
+  "open": "开放平台",
+  "/openapi": "对外接口",
+  "/third-party-app": "第三方应用管理",
+  "i18n": "国际化管理",
+  "/language": "语言管理",
+  "/locale": "国际化文本"
+}
