@@ -124,22 +124,22 @@ export interface ThirdPartyAppAPI {
 }
 
 export default (client: HttpClient): ThirdPartyAppAPI => ({
-  addThirdPartyApp: (thirdPartyApp: AddThirdPartyAppReq) => client.request({
+  addThirdPartyApp: (thirdPartyApp) => client.request({
     url: `${BASE_URL}`,
     method: 'POST',
     data: thirdPartyApp,
   }),
-  listMyThirdPartyApp: (odata: OData) => client.request({
+  listMyThirdPartyApp: (odata) => client.request({
     url: `${BASE_URL}/mine`,
     method: 'GET',
     params: odata,
   }),
-  listThirdPartyApp: (odata: OData) => client.request({
+  listThirdPartyApp: (odata) => client.request({
     url: `${BASE_URL}`,
     method: 'GET',
     params: odata,
   }),
-  rollAccessSecret: (id: string) => client.request({
+  rollAccessSecret: (id) => client.request({
     url: `${BASE_URL}/${id}/roll`,
     method: 'PATCH',
   }),

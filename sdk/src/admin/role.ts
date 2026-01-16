@@ -61,7 +61,7 @@ export interface RoleAPI {
 }
 
 export default (client: HttpClient): RoleAPI => ({
-  addRole: (role: AddRoleReq) => client.request({
+  addRole: (role) => client.request({
     url: '/role',
     method: 'POST',
     data: role,
@@ -70,7 +70,7 @@ export default (client: HttpClient): RoleAPI => ({
     url: '/role',
     method: 'GET',
   }),
-  deleteRole: (id: string) => client.request({
+  deleteRole: (id) => client.request({
     url: `/role/${id}`,
     method: 'DELETE',
   }),

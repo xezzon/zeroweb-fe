@@ -57,7 +57,7 @@ export interface AppAPI {
 }
 
 export default (client: HttpClient): AppAPI => ({
-  addApp: (app: AddAppReq) => client.request({
+  addApp: (app) => client.request({
     url: '/app',
     method: 'POST',
     data: app,
@@ -70,12 +70,12 @@ export default (client: HttpClient): AppAPI => ({
     url: `/app/${id}`,
     method: 'GET',
   }),
-  updateApp: (app: UpdateAppReq) => client.request({
+  updateApp: (app) => client.request({
     url: '/app',
     method: 'PUT',
     data: app,
   }),
-  deleteApp: (id: string) => client.request({
+  deleteApp: (id) => client.request({
     url: `/app/${id}`,
     method: 'DELETE',
   }),
