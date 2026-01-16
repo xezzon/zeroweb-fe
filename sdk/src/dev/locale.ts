@@ -145,7 +145,7 @@ export interface LocaleAPI {
 }
 
 export default (client: HttpClient): LocaleAPI => ({
-  addLanguage: (language: AddLanguageReq) => client.request({
+  addLanguage: (language) => client.request({
     url: '/language',
     method: 'POST',
     data: language,
@@ -154,16 +154,16 @@ export default (client: HttpClient): LocaleAPI => ({
     url: '/language',
     method: 'GET',
   }),
-  updateLanguage: (language: Language) => client.request({
+  updateLanguage: (language) => client.request({
     url: '/language',
     method: 'PUT',
     data: language,
   }),
-  deleteLanguage: (id: string) => client.request({
+  deleteLanguage: (id) => client.request({
     url: `/language/${id}`,
     method: 'DELETE',
   }),
-  addI18nMessage: (i18nMessage: AddI18nMessageReq) => client.request({
+  addI18nMessage: (i18nMessage) => client.request({
     url: '/i18n',
     method: 'POST',
     data: i18nMessage,
@@ -172,30 +172,30 @@ export default (client: HttpClient): LocaleAPI => ({
     url: '/i18n',
     method: 'GET',
   }),
-  queryI18nMessageList: (namespace: string, odata: OData) => client.request({
+  queryI18nMessageList: (namespace, odata) => client.request({
     url: `/i18n/${namespace}`,
     method: 'GET',
     params: odata,
   }),
-  updateI18nMessage: (i18nMessage: I18nMessage) => client.request({
+  updateI18nMessage: (i18nMessage) => client.request({
     url: '/i18n',
     method: 'PUT',
     data: i18nMessage,
   }),
-  deleteI18nMessage: (id: string) => client.request({
+  deleteI18nMessage: (id) => client.request({
     url: `/i18n/${id}`,
     method: 'DELETE',
   }),
-  queryTranslation: (namespace: string, messageKey: string) => client.request({
+  queryTranslation: (namespace, messageKey) => client.request({
     url: `/i18n/${namespace}/${messageKey}`,
     method: 'GET',
   }),
-  upsertTranslation: (translation: UpsertTranslationReq) => client.request({
+  upsertTranslation: (translation) => client.request({
     url: '/locale',
     method: 'PUT',
     data: translation,
   }),
-  loadTranslation: (language: string, namespace: string) => client.request({
+  loadTranslation: (language, namespace) => client.request({
     url: `/locale/${language}/${namespace}`,
     method: 'GET',
   })

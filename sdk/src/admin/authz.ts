@@ -80,39 +80,39 @@ export interface AuthzAPI {
 }
 
 export default (client: HttpClient): AuthzAPI => ({
-  queryUserByRole: (roleId: string) => client.request({
+  queryUserByRole: (roleId) => client.request({
     url: `/auth/role/${roleId}/user`,
     method: 'GET',
   }),
-  bindUserToRole: (roleUsers: RoleUser[]) => client.request({
+  bindUserToRole: (roleUsers) => client.request({
     url: '/auth/role/-/user',
     method: 'PUT',
     data: roleUsers,
   }),
-  releaseRoleUser: (roleUsers: RoleUser[]) => client.request({
+  releaseRoleUser: (roleUsers) => client.request({
     url: '/auth/role/-/user',
     method: 'DELETE',
     data: roleUsers,
   }),
-  queryPermissionByRole: (roleId: string) => client.request({
+  queryPermissionByRole: (roleId) => client.request({
     url: `/auth/role/${roleId}/permission`,
     method: 'GET',
   }),
-  bindPermissionToRole: (rolePermissions: RolePermission[]) => client.request({
+  bindPermissionToRole: (rolePermissions) => client.request({
     url: '/auth/role/-/permission',
     method: 'PUT',
     data: rolePermissions,
   }),
-  releaseRolePermission: (rolePermissions: RolePermission[]) => client.request({
+  releaseRolePermission: (rolePermissions) => client.request({
     url: '/auth/role/-/permission',
     method: 'DELETE',
     data: rolePermissions,
   }),
-  queryRoleByUser: (userId: string) => client.request({
+  queryRoleByUser: (userId) => client.request({
     url: `/auth/user/${userId}/role`,
     method: 'GET',
   }),
-  queryRoleByPermission: (permission: string) => client.request({
+  queryRoleByPermission: (permission) => client.request({
     url: '/auth/permission/-/role',
     method: 'GET',
     params: { permission },

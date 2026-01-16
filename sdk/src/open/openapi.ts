@@ -69,23 +69,23 @@ export interface OpenapiAPI {
 }
 
 export default (client: HttpClient): OpenapiAPI => ({
-  addOpenapi: (openapi: AddOpenapiReq) => client.request({
+  addOpenapi: (openapi) => client.request({
     url: '/openapi',
     method: 'POST',
     data: openapi,
   }),
-  getOpenapiList: (odata: OData) => client.request({
+  getOpenapiList: (odata) => client.request({
     url: '/openapi',
     method: 'GET',
     params: odata,
   }),
-  modifyOpenapi: (openapi: ModifyOpenapiReq) => client.request({
+  modifyOpenapi: (openapi) => client.request({
     url: '/openapi',
     method: 'PUT',
     data: openapi,
   }),
-  publishOpenapi: (id: string) => client.request({
-    url: `/openapi/publish/${id}`,
+  publishOpenapi: (id) => client.request({
+    url: `/openapi/${id}/publish`,
     method: 'PUT',
   }),
 })
