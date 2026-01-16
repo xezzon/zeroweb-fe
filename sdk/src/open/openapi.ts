@@ -66,6 +66,11 @@ export interface OpenapiAPI {
    * @param id 对外接口ID
    */
   publishOpenapi: (id: string) => PResponse<void>;
+  /**
+   * 删除对外接口
+   * @param id 对外接口 ID
+   */
+  deleteOpenapi: (id: string) => PResponse<void>;
 }
 
 export default (client: HttpClient): OpenapiAPI => ({
@@ -87,5 +92,9 @@ export default (client: HttpClient): OpenapiAPI => ({
   publishOpenapi: (id) => client.request({
     url: `/openapi/${id}/publish`,
     method: 'PUT',
+  }),
+  deleteOpenapi: (id) => client.request({
+    url: `/openapi/${id}`,
+    method: 'DELETE',
   }),
 })
