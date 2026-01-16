@@ -7,11 +7,11 @@ export enum OpenapiStatus {
   /**
    * 草稿
    */
-  DRAFT,
+  DRAFT = 'DRAFT',
   /**
    * 已发布
    */
-  PUBLISHED,
+  PUBLISHED = 'PUBLISHED',
 }
 
 export interface Openapi {
@@ -66,26 +66,35 @@ export interface OpenapiAPI {
    * @param id 对外接口ID
    */
   publishOpenapi: (id: string) => PResponse<void>;
+  /**
+   * 删除对外接口
+   * @param id 对外接口 ID
+   */
+  deleteOpenapi: (id: string) => PResponse<void>;
 }
 
 export default (client: HttpClient): OpenapiAPI => ({
-  addOpenapi: (openapi: AddOpenapiReq) => client.request({
+  addOpenapi: (openapi) => client.request({
     url: '/openapi',
     method: 'POST',
     data: openapi,
   }),
-  getOpenapiList: (odata: OData) => client.request({
+  getOpenapiList: (odata) => client.request({
     url: '/openapi',
     method: 'GET',
     params: odata,
   }),
-  modifyOpenapi: (openapi: ModifyOpenapiReq) => client.request({
+  modifyOpenapi: (openapi) => client.request({
     url: '/openapi',
     method: 'PUT',
     data: openapi,
   }),
-  publishOpenapi: (id: string) => client.request({
-    url: `/openapi/publish/${id}`,
+  publishOpenapi: (id) => client.request({
+    url: `/openapi/${id}/publish`,
     method: 'PUT',
+  }),
+  deleteOpenapi: (id) => client.request({
+    url: `/openapi/${id}`,
+    method: 'DELETE',
   }),
 })

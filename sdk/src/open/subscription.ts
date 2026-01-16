@@ -11,15 +11,15 @@ export enum SubscriptionStatus {
   /**
    * 未订阅
    */
-  NONE,
+  NONE = 'NONE',
   /**
    * 审核中
    */
-  AUDITING,
+  AUDITING = 'AUDITING',
   /**
    * 已订阅
    */
-  SUBSCRIBED,
+  SUBSCRIBED = 'SUBSCRIBED',
 }
 
 /**
@@ -55,7 +55,7 @@ export interface SubscriptionAPI {
    * 订阅对外接口
    * @param subscription 接口订阅信息
    */
-  subscribe: (subscription: Subscription) => PResponse<Id>;
+  subscribe: (subscription: AddSubscriptionReq) => PResponse<Id>;
   /**
    * 查询应用订阅列表
    * @param appId 应用ID
@@ -72,18 +72,18 @@ export interface SubscriptionAPI {
 }
 
 export default (client: HttpClient): SubscriptionAPI => ({
-  subscribe: (subscription: AddSubscriptionReq) => client.request({
+  subscribe: (subscription) => client.request({
     url: `${BASE_URL}`,
     method: 'POST',
     data: subscription,
   }),
-  listSubscription: (appId: string, odata: OData) => client.request({
+  listSubscription: (appId, odata) => client.request({
     url: `${THIRD_PARTY_APP_URL}/${appId}/subscription`,
     method: 'GET',
     params: odata,
   }),
-  auditSubscription: (id: string) => client.request({
-    url: `${BASE_URL}/audit/${id}`,
+  auditSubscription: (id) => client.request({
+    url: `${BASE_URL}/${id}/audit`,
     method: 'PUT',
   }),
 })

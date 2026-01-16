@@ -79,7 +79,7 @@ export interface AuthnAPI {
 }
 
 export default (client: HttpClient): AuthnAPI => ({
-  basicLogin: (user: BasicAuth) => client.request({
+  basicLogin: (user) => client.request({
     url: '/auth/login/basic',
     method: 'POST',
     auth: {
