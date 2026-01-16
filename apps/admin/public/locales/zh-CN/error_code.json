@@ -16,6 +16,7 @@
   "CFE05": "邀请码已过期。",
   "CFC02": "请确认文件是否正确。",
   "detail": {
-    "Alphanumeric": "存在无效的字符：{{invalidCharacter}}"
+    "Alphanumeric": "存在无效的字符：{{invalidCharacter}}",
+    "URL": "需要是一个合法的URL"
   }
 }

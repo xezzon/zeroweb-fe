@@ -81,5 +81,19 @@
       "updateTime": "更新时间",
       "schema": "参数约束定义"
     }
+  },
+  "openapi": {
+    "add": "新增开放接口",
+    "publish": "发布",
+    "status": {
+      "draft": "草稿",
+      "published": "已发布"
+    },
+    "field": {
+      "code": "接口编码",
+      "destination": "后端地址",
+      "httpMethod": "HTTP方法",
+      "status": "状态"
+    }
   }
 }
