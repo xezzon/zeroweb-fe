@@ -63,21 +63,5 @@
     "path": "/third-party-app",
     "route": "third-party-app/index",
     "parent": "open"
-  },
-  {
-    "type": "GROUP",
-    "path": "i18n"
-  },
-  {
-    "type": "ROUTE",
-    "path": "/language",
-    "route": "language/index",
-    "parent": "i18n"
-  },
-  {
-    "type": "ROUTE",
-    "path": "/locale",
-    "route": "locale/index",
-    "parent": "i18n"
   }
 ]
