@@ -19,6 +19,7 @@ export default ({ children = <Outlet />, ...props }) => {
 
   return <>
     <ProLayout
+      logo={false}
       {...props}
       layout="mix"
       location={{ pathname: location.pathname }}
