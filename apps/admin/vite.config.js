@@ -1,7 +1,7 @@
 import react from '@vitejs/plugin-react';
 import { resolve } from "node:path";
 import { defineConfig, loadEnv } from 'rolldown-vite';
-import metadata from '@zeroweb/vite-plugin-metadata'
+import metadata from './plugins/metadata-plugin';
 
 const envPrefix = ['ZEROWEB_', 'VITE_']
 
