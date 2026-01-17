@@ -1,0 +1,31 @@
+{
+  "name": "zeroweb-app-open",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "lint": "oxlint",
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "@ant-design/icons": "catalog:",
+    "@ant-design/pro-components": "catalog:",
+    "@xezzon/zeroweb-sdk": "workspace:^",
+    "antd": "catalog:",
+    "i18next": "catalog:",
+    "i18next-http-backend": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-i18next": "catalog:",
+    "react-router": "catalog:"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^1.7.1",
+    "@rsbuild/plugin-react": "^1.4.2",
+    "@zeroweb/oxlint": "workspace:^",
+    "@zeroweb/typescript": "workspace:^",
+    "oxlint": "catalog:"
+  }
+}
