@@ -10,6 +10,24 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), envPrefix)
   const base = '/'
 
+  /**
+   * 向请求头添加 Token
+   * @param {import('http').ClientRequest} proxyReq 
+   */
+  const authProxy = (proxyReq) => {
+    if (proxyReq.path === '/auth/login/basic') {
+      return;
+    }
+    const idToken = env.VITE_TOKEN;
+    if (idToken) {
+      proxyReq.setHeader('Authorization', `Bearer ${idToken}`)
+    }
+    const publicKey = env.VITE_PUBLIC_KEY;
+    if (publicKey) {
+      proxyReq.setHeader('X-PUBLIC-KEY', publicKey)
+    }
+  }
+
   return {
     base: base,
     envPrefix,
@@ -31,14 +49,20 @@ export default defineConfig(({ mode }) => {
       host: true,
       proxy: {
         [env.ZEROWEB_ADMIN_API]: {
-          target: env.ZEROWEB_ADMIN_URL,
+          target: env.VITE_ADMIN_URL,
           changeOrigin: true,
           rewrite: (path) => path.replace(env.ZEROWEB_ADMIN_API, ''),
+          configure: (proxy) => {
+            proxy.on('proxyReq', authProxy)
+          },
         },
         [env.ZEROWEB_OPEN_API]: {
-          target: env.ZEROWEB_OPEN_URL,
+          target: env.VITE_OPEN_URL,
           changeOrigin: true,
           rewrite: (path) => path.replace(env.ZEROWEB_OPEN_API, ''),
+          configure: (proxy) => {
+            proxy.on('proxyReq', authProxy)
+          },
         },
       },
     },
