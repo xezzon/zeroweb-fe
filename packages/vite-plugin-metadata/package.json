@@ -1,9 +1,0 @@
-{
-  "name": "@zeroweb/vite-plugin-metadata",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "dependencies": {
-    "rolldown-vite": "^7.3.0"
-  }
-}
