@@ -21,6 +21,11 @@ export interface User {
  */
 declare type RegisterReq = Omit<User, 'id'>
 
+/**
+ * 用户公开信息
+ */
+declare type UserInfoResp = Pick<User, 'id' | 'username' | 'nickname'>;
+
 export interface UserAPI {
   /**
    * 用户注册
@@ -33,6 +38,12 @@ export interface UserAPI {
    * @returns 包含分页信息的用户列表
    */
   queryUserList: (odata: OData) => PResponse<Page<User>>;
+  /**
+   * 查询指定用户
+   * @param id 用户ID
+   * @returns 用户信息
+   */
+  queryUserById(id: string): PResponse<UserInfoResp>;
 }
 
 export default ({ request }: HttpClient): UserAPI => ({
@@ -45,5 +56,9 @@ export default ({ request }: HttpClient): UserAPI => ({
     url: '/user',
     method: 'GET',
     params: odata,
+  }),
+  queryUserById: (id) => request({
+    url: `/user/${id}`,
+    method: 'GET',
   }),
 })
