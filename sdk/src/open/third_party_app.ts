@@ -76,6 +76,12 @@ export interface ThirdPartyAppAPI {
    */
   listMyThirdPartyApp: (odata: OData) => PResponse<Page<ThirdPartyApp>>;
   /**
+   * 查询指定的第三方应用
+   * @param id 第三方应用 ID
+   * @returns 第三方应用信息
+   */
+  queryThirdPartyAppById: (id: string) => PResponse<ThirdPartyApp>;
+  /**
    * 获取所有的第三方应用列表（分页）
    * @param odata 分页参数
    * @returns 第三方应用列表
@@ -133,6 +139,10 @@ export default (client: HttpClient): ThirdPartyAppAPI => ({
     url: `${BASE_URL}/mine`,
     method: 'GET',
     params: odata,
+  }),
+  queryThirdPartyAppById: (id) => client.request({
+    url: `${BASE_URL}/${id}`,
+    method: 'GET',
   }),
   listThirdPartyApp: (odata) => client.request({
     url: `${BASE_URL}`,
