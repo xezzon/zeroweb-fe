@@ -57,12 +57,18 @@ export interface SubscriptionAPI {
    */
   subscribe: (subscription: AddSubscriptionReq) => PResponse<Id>;
   /**
-   * 查询应用订阅列表
-   * @param appId 应用ID
-   * @param odata 分页查询参数
+   * 查询已订阅的接口
+   * @param appId 第三方应用 ID
    * @returns 订阅列表
    */
-  listSubscription: (appId: string, odata: OData) => PResponse<Page<Subscription>>;
+  listSubscription: (appId: string) => PResponse<Subscription[]>;
+  /**
+   * 查询所有已发布的对外接口以及指定第三方应用的订阅情况
+   * @param appId 第三方应用ID
+   * @param odata 分页查询参数
+   * @returns 所有已发布的对外接口以及指定第三方应用的订阅情况
+   */
+  listSubscriptionWithOpenapi: (appId: string, odata: OData) => PResponse<Page<Subscription>>;
   /**
    * 审核订阅
    * 审核后第三方应用即可调用该接口
@@ -77,7 +83,12 @@ export default (client: HttpClient): SubscriptionAPI => ({
     method: 'POST',
     data: subscription,
   }),
-  listSubscription: (appId, odata) => client.request({
+  listSubscription: (appId) => client.request({
+    url: `${BASE_URL}`,
+    method: 'GET',
+    params: { appId },
+  }),
+  listSubscriptionWithOpenapi: (appId, odata) => client.request({
     url: `${THIRD_PARTY_APP_URL}/${appId}/subscription`,
     method: 'GET',
     params: odata,
