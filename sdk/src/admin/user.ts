@@ -10,16 +10,25 @@ export interface User {
    * 昵称
    */
   nickname: string;
-  /**
-   * 口令
-   */
-  password: string;
 }
 
 /**
  * 用户注册请求
  */
-declare type RegisterReq = Omit<User, 'id'>
+export interface RegisterReq {
+  /**
+   * 用户名
+   */
+  username: string;
+  /**
+   * 昵称
+   */
+  nickname: string;
+  /**
+   * 口令
+   */
+  password: string;
+}
 
 /**
  * 用户公开信息
@@ -32,6 +41,11 @@ export interface UserAPI {
    * @param user 用户
    */
   register: (user: RegisterReq) => PResponse<Id>;
+  /**
+   * 查询当前用户信息
+   * @returns 用户信息
+   */
+  getMyInfo: () => PResponse<User>;
   /**
    * 获取用户列表
    * @param odata 查询参数
@@ -51,6 +65,10 @@ export default ({ request }: HttpClient): UserAPI => ({
     url: '/user/register',
     method: 'POST',
     data: user,
+  }),
+  getMyInfo: () => request({
+    url: '/user/me',
+    method: 'GET',
   }),
   queryUserList: (odata) => request({
     url: '/user',
