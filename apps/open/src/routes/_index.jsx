@@ -10,7 +10,7 @@ export default function ThirdPartyAppPage() {
   const navigate = useNavigate();
 
   /**
-   * @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').App>['columns']}
+   * @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').ThirdPartyApp>['columns']}
    */
   const columns = [
     {
