@@ -42,7 +42,7 @@ export interface Subscription {
   /**
    * 对外接口详情
    */
-  openapi: Openapi,
+  openapi: Omit<Openapi, 'destination' | 'status'>,
 }
 
 /**
