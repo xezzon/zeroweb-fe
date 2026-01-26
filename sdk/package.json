@@ -4,6 +4,7 @@
   "repository": {
     "url": "https://github.com/xezzon/zeroweb-fe"
   },
+  "license": "LGPL-3.0-or-later",
   "types": "dist/typings/index.d.ts",
   "exports": {
     ".": {
