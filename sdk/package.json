@@ -4,13 +4,14 @@
   "repository": {
     "url": "https://github.com/xezzon/zeroweb-fe"
   },
+  "type": "module",
   "license": "LGPL-3.0-or-later",
-  "types": "dist/typings/index.d.ts",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/typings/index.d.ts"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [
@@ -18,12 +19,11 @@
   ],
   "scripts": {
     "lint": "oxlint",
-    "build": "pnpm run build:cjs && pnpm run build:esm",
-    "build:esm": "tsc --module esnext --outDir dist/esm",
-    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "build": "rslib build",
     "prepare": "pnpm run build"
   },
   "devDependencies": {
+    "@rslib/core": "^0.19.3",
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^25.0.1",
     "@zeroweb/oxlint": "workspace:^",
