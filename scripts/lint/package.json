@@ -1,0 +1,9 @@
+{
+  "name": "@zeroweb/lint",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ZeroWeb 项目 lint 配置",
+  "dependencies": {
+    "oxlint": "catalog:"
+  }
+}

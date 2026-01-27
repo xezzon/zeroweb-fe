@@ -10,5 +10,9 @@
   "description": "",
   "keywords": [],
   "author": "xezzon",
-  "license": "MulanPSL2"
+  "license": "MulanPSL2",
+  "devDependencies": {
+    "oxfmt": "^0.27.0",
+    "oxlint": "catalog:"
+  }
 }
