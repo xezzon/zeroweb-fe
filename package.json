@@ -2,17 +2,17 @@
   "name": "zeroweb",
   "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": ">=18.12",
-    "pnpm": ">=9"
-  },
-  "scripts": {},
   "description": "",
   "keywords": [],
-  "author": "xezzon",
   "license": "MulanPSL2",
+  "author": "xezzon",
+  "scripts": {},
   "devDependencies": {
     "oxfmt": "^0.27.0",
     "oxlint": "catalog:"
+  },
+  "engines": {
+    "node": ">=18.12",
+    "pnpm": ">=9"
   }
 }
