@@ -1,4 +1,4 @@
-import type { HttpClient, Id, PResponse } from "@/types";
+import type { HttpClient, Id, PResponse } from '@/types';
 
 /**
  * 角色
@@ -34,7 +34,7 @@ export interface Role {
   children?: Role[];
 }
 
-declare type AddRoleReq = Omit<Role, 'id' | 'value'>
+declare type AddRoleReq = Omit<Role, 'id' | 'value'>;
 
 export interface RoleAPI {
   /**
@@ -61,21 +61,25 @@ export interface RoleAPI {
 }
 
 export default (client: HttpClient): RoleAPI => ({
-  addRole: (role) => client.request({
-    url: '/role',
-    method: 'POST',
-    data: role,
-  }),
-  listAllRole: () => client.request({
-    url: '/role',
-    method: 'GET',
-  }),
-  deleteRole: (id) => client.request({
-    url: `/role/${id}`,
-    method: 'DELETE',
-  }),
-  listMyRole: () => client.request({
-    url: '/role/mine',
-    method: 'GET',
-  }),
-})
+  addRole: (role) =>
+    client.request({
+      url: '/role',
+      method: 'POST',
+      data: role,
+    }),
+  listAllRole: () =>
+    client.request({
+      url: '/role',
+      method: 'GET',
+    }),
+  deleteRole: (id) =>
+    client.request({
+      url: `/role/${id}`,
+      method: 'DELETE',
+    }),
+  listMyRole: () =>
+    client.request({
+      url: '/role/mine',
+      method: 'GET',
+    }),
+});

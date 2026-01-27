@@ -1,26 +1,31 @@
 {
   "name": "@xezzon/zeroweb-sdk",
   "version": "0.9.0",
+  "license": "LGPL-3.0-or-later",
   "repository": {
     "url": "https://github.com/xezzon/zeroweb-fe"
-  },
-  "type": "module",
-  "license": "LGPL-3.0-or-later",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
-    }
   },
   "files": [
     "dist"
   ],
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
   "scripts": {
     "lint": "oxlint",
     "build": "rslib build",
     "prepare": "pnpm run build"
+  },
+  "dependencies": {
+    "axios": "catalog:",
+    "crypto-js": "^4.2.0",
+    "js-crc": "^0.3.1"
   },
   "devDependencies": {
     "@rslib/core": "^0.19.3",
@@ -28,10 +33,5 @@
     "@types/node": "^25.0.1",
     "@zeroweb/lint": "workspace:^",
     "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "axios": "catalog:",
-    "crypto-js": "^4.2.0",
-    "js-crc": "^0.3.1"
   }
 }

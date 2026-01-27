@@ -1,4 +1,4 @@
-import type { HttpClient, PResponse } from "@/types";
+import type { HttpClient, PResponse } from '@/types';
 
 /**
  * 基础认证
@@ -79,25 +79,29 @@ export interface AuthnAPI {
 }
 
 export default (client: HttpClient): AuthnAPI => ({
-  basicLogin: (user) => client.request({
-    url: '/auth/login/basic',
-    method: 'POST',
-    auth: {
-      username: user.username,
-      password: user.password,
-    },
-    data: user,
-  }),
-  self: () => client.request({
-    url: '/auth/self',
-    method: 'GET',
-  }),
-  token: () => client.request({
-    url: '/auth/token',
-    method: 'GET',
-  }),
-  logout: () => client.request({
-    url: '/auth/logout',
-    method: 'PUT',
-  }),
-})
+  basicLogin: (user) =>
+    client.request({
+      url: '/auth/login/basic',
+      method: 'POST',
+      auth: {
+        username: user.username,
+        password: user.password,
+      },
+      data: user,
+    }),
+  self: () =>
+    client.request({
+      url: '/auth/self',
+      method: 'GET',
+    }),
+  token: () =>
+    client.request({
+      url: '/auth/token',
+      method: 'GET',
+    }),
+  logout: () =>
+    client.request({
+      url: '/auth/logout',
+      method: 'PUT',
+    }),
+});

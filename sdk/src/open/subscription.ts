@@ -1,8 +1,8 @@
-import type { HttpClient, Id, OData, Page, PResponse } from "@/types";
-import type { Openapi } from "./openapi";
+import type { HttpClient, Id, OData, Page, PResponse } from '@/types';
+import type { Openapi } from './openapi';
 import { BASE_URL as THIRD_PARTY_APP_URL } from './third_party_app';
 
-const BASE_URL = '/subscription'
+const BASE_URL = '/subscription';
 
 /**
  * 订阅状态
@@ -42,13 +42,13 @@ export interface Subscription {
   /**
    * 对外接口详情
    */
-  openapi: Omit<Openapi, 'destination' | 'status'>,
+  openapi: Omit<Openapi, 'destination' | 'status'>;
 }
 
 /**
  * 新增订阅请求
  */
-declare type AddSubscriptionReq = Omit<Subscription, 'id' | 'subscriptionStatus' | 'openapi'>
+declare type AddSubscriptionReq = Omit<Subscription, 'id' | 'subscriptionStatus' | 'openapi'>;
 
 export interface SubscriptionAPI {
   /**
@@ -78,23 +78,27 @@ export interface SubscriptionAPI {
 }
 
 export default (client: HttpClient): SubscriptionAPI => ({
-  subscribe: (subscription) => client.request({
-    url: `${BASE_URL}`,
-    method: 'POST',
-    data: subscription,
-  }),
-  listSubscription: (appId) => client.request({
-    url: `${BASE_URL}`,
-    method: 'GET',
-    params: { appId },
-  }),
-  listSubscriptionWithOpenapi: (appId, odata) => client.request({
-    url: `${THIRD_PARTY_APP_URL}/${appId}/subscription`,
-    method: 'GET',
-    params: odata,
-  }),
-  auditSubscription: (id) => client.request({
-    url: `${BASE_URL}/${id}/audit`,
-    method: 'PUT',
-  }),
-})
+  subscribe: (subscription) =>
+    client.request({
+      url: `${BASE_URL}`,
+      method: 'POST',
+      data: subscription,
+    }),
+  listSubscription: (appId) =>
+    client.request({
+      url: `${BASE_URL}`,
+      method: 'GET',
+      params: { appId },
+    }),
+  listSubscriptionWithOpenapi: (appId, odata) =>
+    client.request({
+      url: `${THIRD_PARTY_APP_URL}/${appId}/subscription`,
+      method: 'GET',
+      params: odata,
+    }),
+  auditSubscription: (id) =>
+    client.request({
+      url: `${BASE_URL}/${id}/audit`,
+      method: 'PUT',
+    }),
+});

@@ -1,4 +1,4 @@
-import type { HttpClient, Id, OData, Page, PResponse } from "@/types";
+import type { HttpClient, Id, OData, Page, PResponse } from '@/types';
 
 export interface User {
   id: string;
@@ -61,22 +61,26 @@ export interface UserAPI {
 }
 
 export default ({ request }: HttpClient): UserAPI => ({
-  register: (user) => request({
-    url: '/user/register',
-    method: 'POST',
-    data: user,
-  }),
-  getMyInfo: () => request({
-    url: '/user/me',
-    method: 'GET',
-  }),
-  queryUserList: (odata) => request({
-    url: '/user',
-    method: 'GET',
-    params: odata,
-  }),
-  queryUserById: (id) => request({
-    url: `/user/${id}`,
-    method: 'GET',
-  }),
-})
+  register: (user) =>
+    request({
+      url: '/user/register',
+      method: 'POST',
+      data: user,
+    }),
+  getMyInfo: () =>
+    request({
+      url: '/user/me',
+      method: 'GET',
+    }),
+  queryUserList: (odata) =>
+    request({
+      url: '/user',
+      method: 'GET',
+      params: odata,
+    }),
+  queryUserById: (id) =>
+    request({
+      url: `/user/${id}`,
+      method: 'GET',
+    }),
+});

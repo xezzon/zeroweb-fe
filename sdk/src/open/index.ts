@@ -1,15 +1,15 @@
-import axios from "axios";
-import { zerowebErrorHandler } from "@/interceptors";
-import type { InstanceConfig } from "@/types";
-import openapi from "./openapi";
-import subscription from "./subscription";
-import thirdPartyApp from "./third_party_app";
+import axios from 'axios';
+import { zerowebErrorHandler } from '@/interceptors';
+import type { InstanceConfig } from '@/types';
+import openapi from './openapi';
+import subscription from './subscription';
+import thirdPartyApp from './third_party_app';
 
 export default (config: InstanceConfig) => {
-  const instance = axios.create(config)
+  const instance = axios.create(config);
 
-  const interceptors = instance.interceptors
-  interceptors.response.use(null, zerowebErrorHandler)
+  const interceptors = instance.interceptors;
+  interceptors.response.use(null, zerowebErrorHandler);
 
   return {
     /**
@@ -28,8 +28,8 @@ export default (config: InstanceConfig) => {
      * 第三方应用相关接口
      */
     thirdPartyApp: thirdPartyApp(instance),
-  }
-}
+  };
+};
 
 export { OpenapiStatus } from './openapi';
 export { SubscriptionStatus } from './subscription';
@@ -37,4 +37,3 @@ export { SubscriptionStatus } from './subscription';
 export type * from './openapi';
 export type * from './subscription';
 export type * from './third_party_app';
-

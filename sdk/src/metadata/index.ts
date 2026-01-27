@@ -1,6 +1,6 @@
-import axios from "axios";
-import { zerowebErrorHandler } from "@/interceptors";
-import type { InstanceConfig } from "@/types";
+import axios from 'axios';
+import { zerowebErrorHandler } from '@/interceptors';
+import type { InstanceConfig } from '@/types';
 
 /**
  * 服务类型
@@ -110,10 +110,10 @@ export interface MenuInfo {
 }
 
 export default (config: InstanceConfig) => {
-  const instance = axios.create(config)
+  const instance = axios.create(config);
 
-  const interceptors = instance.interceptors
-  interceptors.response.use(null, zerowebErrorHandler)
+  const interceptors = instance.interceptors;
+  interceptors.response.use(null, zerowebErrorHandler);
 
   return {
     /**
@@ -128,7 +128,7 @@ export default (config: InstanceConfig) => {
       return instance.request<ServiceInfo>({
         url: '/metadata/info.json',
         method: 'GET',
-      })
+      });
     },
     /**
      * 获取菜单信息
@@ -138,7 +138,7 @@ export default (config: InstanceConfig) => {
       return instance.request<MenuInfo[]>({
         url: '/metadata/menu.json',
         method: 'GET',
-      })
+      });
     },
-  }
-}
+  };
+};

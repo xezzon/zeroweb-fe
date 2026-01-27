@@ -1,4 +1,4 @@
-import type { HttpClient, PResponse } from "@/types";
+import type { HttpClient, PResponse } from '@/types';
 
 /**
  * 口令强度评估结果
@@ -20,13 +20,17 @@ export interface CryptoAPI {
    * @param password 口令
    * @param username 用户名
    */
-  passwordStrength: (password: string, directory: { username?: string, }) => PResponse<PasswordStrength>;
+  passwordStrength: (
+    password: string,
+    directory: { username?: string },
+  ) => PResponse<PasswordStrength>;
 }
 
 export default ({ request }: HttpClient): CryptoAPI => ({
-  passwordStrength: (password, { username }) => request({
-    url: '/password-strength',
-    method: 'GET',
-    params: { password, username, },
-  }),
-})
+  passwordStrength: (password, { username }) =>
+    request({
+      url: '/password-strength',
+      method: 'GET',
+      params: { password, username },
+    }),
+});

@@ -1,4 +1,4 @@
-import type { HttpClient, Id, OData, Page, PResponse } from "@/types";
+import type { HttpClient, Id, OData, Page, PResponse } from '@/types';
 
 /**
  * 对外接口状态
@@ -34,7 +34,7 @@ export interface Openapi {
   /**
    * 对外接口状态
    */
-  status: OpenapiStatus,
+  status: OpenapiStatus;
 }
 
 /**
@@ -46,8 +46,8 @@ declare type ModifyOpenapiReq = Omit<Openapi, 'status'>;
 export interface OpenapiAPI {
   /**
    * 新增对外接口
-   * @param openapi 
-   * @returns 
+   * @param openapi
+   * @returns
    */
   addOpenapi: (Openapi: AddOpenapiReq) => PResponse<Id>;
   /**
@@ -74,27 +74,32 @@ export interface OpenapiAPI {
 }
 
 export default (client: HttpClient): OpenapiAPI => ({
-  addOpenapi: (openapi) => client.request({
-    url: '/openapi',
-    method: 'POST',
-    data: openapi,
-  }),
-  getOpenapiList: (odata) => client.request({
-    url: '/openapi',
-    method: 'GET',
-    params: odata,
-  }),
-  modifyOpenapi: (openapi) => client.request({
-    url: '/openapi',
-    method: 'PUT',
-    data: openapi,
-  }),
-  publishOpenapi: (id) => client.request({
-    url: `/openapi/${id}/publish`,
-    method: 'PUT',
-  }),
-  deleteOpenapi: (id) => client.request({
-    url: `/openapi/${id}`,
-    method: 'DELETE',
-  }),
-})
+  addOpenapi: (openapi) =>
+    client.request({
+      url: '/openapi',
+      method: 'POST',
+      data: openapi,
+    }),
+  getOpenapiList: (odata) =>
+    client.request({
+      url: '/openapi',
+      method: 'GET',
+      params: odata,
+    }),
+  modifyOpenapi: (openapi) =>
+    client.request({
+      url: '/openapi',
+      method: 'PUT',
+      data: openapi,
+    }),
+  publishOpenapi: (id) =>
+    client.request({
+      url: `/openapi/${id}/publish`,
+      method: 'PUT',
+    }),
+  deleteOpenapi: (id) =>
+    client.request({
+      url: `/openapi/${id}`,
+      method: 'DELETE',
+    }),
+});

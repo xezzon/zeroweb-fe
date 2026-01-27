@@ -1,20 +1,20 @@
-import axios from "axios"
-import { zerowebErrorHandler } from "@/interceptors"
-import type { InstanceConfig } from "@/types"
-import app from "./app"
-import authn from "./authn"
-import authz from "./authz"
-import crypto from "./crypto"
-import dict from "./dict"
-import role from "./role"
-import setting from "./setting"
-import user from "./user"
+import axios from 'axios';
+import { zerowebErrorHandler } from '@/interceptors';
+import type { InstanceConfig } from '@/types';
+import app from './app';
+import authn from './authn';
+import authz from './authz';
+import crypto from './crypto';
+import dict from './dict';
+import role from './role';
+import setting from './setting';
+import user from './user';
 
 export default (config: InstanceConfig) => {
-  const instance = axios.create(config)
+  const instance = axios.create(config);
 
-  const interceptors = instance.interceptors
-  interceptors.response.use(null, zerowebErrorHandler)
+  const interceptors = instance.interceptors;
+  interceptors.response.use(null, zerowebErrorHandler);
 
   return {
     /**
@@ -53,15 +53,14 @@ export default (config: InstanceConfig) => {
      * 用户相关接口
      */
     user: user(instance),
-  }
-}
+  };
+};
 
-export type * from './app'
-export type * from './authn'
-export type * from './authz'
-export type * from './crypto'
-export type * from './dict'
-export type * from './role'
-export type * from './setting'
-export type * from './user'
-
+export type * from './app';
+export type * from './authn';
+export type * from './authz';
+export type * from './crypto';
+export type * from './dict';
+export type * from './role';
+export type * from './setting';
+export type * from './user';
