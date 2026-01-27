@@ -16,8 +16,8 @@ export default function vitePluginMetadata(metadata) {
       this.emitFile({
         type: 'asset',
         fileName: 'metadata/info.json',
-        source: JSON.stringify(metadata, null, 2)
+        source: JSON.stringify(metadata, null, 2),
       });
-    }
+    },
   };
 }

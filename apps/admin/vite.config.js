@@ -1,15 +1,15 @@
 import react from '@vitejs/plugin-react';
-import { resolve } from "node:path";
+import { resolve } from 'node:path';
 import { defineConfig, loadEnv } from 'rolldown-vite';
 import authProxyPlugin from './plugins/auth-proxy-plugin';
 import metadata from './plugins/metadata-plugin';
 
-const envPrefix = ['ZEROWEB_', 'VITE_']
+const envPrefix = ['ZEROWEB_', 'VITE_'];
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), envPrefix)
-  const base = '/'
+  const env = loadEnv(mode, process.cwd(), envPrefix);
+  const base = '/';
 
   return {
     base: base,
@@ -47,5 +47,5 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-  }
-})
+  };
+});

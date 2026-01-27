@@ -1,134 +1,142 @@
-
-import { adminApi } from '@/api'
-import { Button, Popconfirm, Table } from 'antd'
-import { useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import SettingSchemaEditor from './SettingSchemaEditor'
-import SettingValueEditor from './SettingValueEditor'
-import dayjs from 'dayjs'
-import { PageContainer } from '@ant-design/pro-components'
+import { adminApi } from '@/api';
+import { Button, Popconfirm, Table } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import SettingSchemaEditor from './SettingSchemaEditor';
+import SettingValueEditor from './SettingValueEditor';
+import dayjs from 'dayjs';
+import { PageContainer } from '@ant-design/pro-components';
 
 export default function SettingPage() {
-  const { t } = useTranslation()
-  const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
-  const [valueRecord, setValueRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */(null))
+  const { t } = useTranslation();
+  const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting} */ (null));
+  const [valueRecord, setValueRecord] = useState(
+    /** @type {import('@xezzon/zeroweb-sdk').Setting} */ (null),
+  );
 
-  const columns = useMemo(() => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Setting>['columns']} */([
-    {
-      dataIndex: 'code',
-      title: t('setting.field.code'),
-    },
-    {
-      dataIndex: 'value',
-      title: t('setting.field.value'),
-      render: (value) => value ? JSON.stringify(value) : '',
-    },
-    {
-      dataIndex: 'updateTime',
-      title: t('setting.field.updateTime'),
-      render: (updateTime) => updateTime ? dayjs(updateTime).format('YYYY-MM-DD HH:mm:ss') : '',
-    },
-    {
-      key: 'action',
-      title: t('common.action'),
-      render: (_, record) => <>
-        <Button type='link' onClick={() => setRecord(record)}>
-          {t('setting.editSchema')}
-        </Button>
-        <Button type='link' onClick={() => setValueRecord(record)}>
-          {t('setting.editValue')}
-        </Button>
-        <Popconfirm
-          title={t('common.confirmDelete')}
-          onConfirm={() => adminApi.setting.deleteSetting(record.id)
-            .then(() => {
-              loadData()
-            })
-          }
-        >
-          <Button type="link" danger>
-            {t('common.delete')}
-          </Button>
-        </Popconfirm>
-      </>,
-    },
-    // oxlint-disable-next-line exhaustive-deps
-  ]), [])
-  const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting[]} */([]))
+  const columns = useMemo(
+    () => /** @type {import('antd').TableProps<import('@xezzon/zeroweb-sdk').Setting>['columns']} */ ([
+      {
+        dataIndex: 'code',
+        title: t('setting.field.code'),
+      },
+      {
+        dataIndex: 'value',
+        title: t('setting.field.value'),
+        render: (value) => (value ? JSON.stringify(value) : ''),
+      },
+      {
+        dataIndex: 'updateTime',
+        title: t('setting.field.updateTime'),
+        render: (updateTime) => (updateTime ? dayjs(updateTime).format('YYYY-MM-DD HH:mm:ss') : ''),
+      },
+      {
+        key: 'action',
+        title: t('common.action'),
+        render: (_, record) => (
+          <>
+            <Button type="link" onClick={() => setRecord(record)}>
+              {t('setting.editSchema')}
+            </Button>
+            <Button type="link" onClick={() => setValueRecord(record)}>
+              {t('setting.editValue')}
+            </Button>
+            <Popconfirm
+              title={t('common.confirmDelete')}
+              onConfirm={() =>
+                adminApi.setting.deleteSetting(record.id).then(() => {
+                  loadData();
+                })
+              }
+            >
+              <Button type="link" danger>
+                {t('common.delete')}
+              </Button>
+            </Popconfirm>
+          </>
+        ),
+      },
+      // oxlint-disable-next-line exhaustive-deps
+    ]),
+    [],
+  );
+  const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').Setting[]} */ ([]));
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
     total: 0,
-  })
-  const [loading, setLoading] = useState(false)
+  });
+  const [loading, setLoading] = useState(false);
 
   const loadData = () => {
-    setLoading(true)
+    setLoading(true);
     adminApi.setting
-      .listSetting({ top: pagination.pageSize, skip: (pagination.current - 1) * pagination.pageSize })
-      .then(response => response.data)
+      .listSetting({
+        top: pagination.pageSize,
+        skip: (pagination.current - 1) * pagination.pageSize,
+      })
+      .then((response) => response.data)
       .then(({ content, page }) => {
-        setData(content)
+        setData(content);
         setPagination({
           ...pagination,
           total: page.totalElements,
-        })
+        });
       })
       .finally(() => {
-        setLoading(false)
-      })
-  }
+        setLoading(false);
+      });
+  };
 
   const handleTableChange = (newPagination) => {
     if (pagination.pageSize != newPagination.pageSize) {
-      newPagination.current = 1
+      newPagination.current = 1;
     }
     setPagination(newPagination);
-  }
+  };
 
   useEffect(() => {
-    loadData()
+    loadData();
     // oxlint-disable-next-line exhaustive-deps
   }, [pagination.current, pagination.pageSize]);
 
-  return <>
-    <PageContainer
-      extra={
-        <Button
-          type='primary'
-          onClick={() => setRecord({ value: {} })}
-        >
-          {t('setting.addSetting')}
-        </Button>
-      }
-    >
-      <Table
-        columns={columns}
-        dataSource={data}
-        loading={loading}
-        rowKey="id"
-        search={false}
-        pagination={pagination}
-        onChange={handleTableChange}
+  return (
+    <>
+      <PageContainer
+        extra={
+          <Button type="primary" onClick={() => setRecord({ value: {} })}>
+            {t('setting.addSetting')}
+          </Button>
+        }
+      >
+        <Table
+          columns={columns}
+          dataSource={data}
+          loading={loading}
+          rowKey="id"
+          search={false}
+          pagination={pagination}
+          onChange={handleTableChange}
+        />
+      </PageContainer>
+      <SettingSchemaEditor
+        record={record}
+        onClose={(refresh) => {
+          setRecord(null);
+          if (refresh) {
+            loadData();
+          }
+        }}
       />
-    </PageContainer>
-    <SettingSchemaEditor
-      record={record}
-      onClose={(refresh) => {
-        setRecord(null)
-        if (refresh) {
-          loadData()
-        }
-      }}
-    />
-    <SettingValueEditor
-      record={valueRecord}
-      onClose={(refresh) => {
-        setValueRecord(null)
-        if (refresh) {
-          loadData()
-        }
-      }}
-    />
-  </>
+      <SettingValueEditor
+        record={valueRecord}
+        onClose={(refresh) => {
+          setValueRecord(null);
+          if (refresh) {
+            loadData();
+          }
+        }}
+      />
+    </>
+  );
 }

@@ -1,9 +1,9 @@
-import { adminApi } from "@/api";
+import { adminApi } from '@/api';
 import SchemaForm from '@rjsf/antd';
 import validator from '@rjsf/validator-ajv8';
-import { Form, Input, Modal } from "antd";
-import { useEffect, useState } from "react";
-import { useTranslation } from 'react-i18next'
+import { Form, Input, Modal } from 'antd';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 /**
  * @param {Object} param0
@@ -11,60 +11,56 @@ import { useTranslation } from 'react-i18next'
  * @param {(refresh: boolean) => void} param0.onClose
  */
 export default function SettingValueEditor({ record, onClose }) {
-  const { t } = useTranslation()
-  const schema = record?.schema ? JSON.parse(record?.schema) : {}
+  const { t } = useTranslation();
+  const schema = record?.schema ? JSON.parse(record?.schema) : {};
 
-  const [confirmLoading, setConfirmLoading] = useState(false)
-  const [value, setValue] = useState(record?.value)
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [value, setValue] = useState(record?.value);
 
   useEffect(() => {
-    setValue(record?.value)
-  }, [record?.value])
+    setValue(record?.value);
+  }, [record?.value]);
 
   const handleFinish = () => {
-    setConfirmLoading(true)
-    adminApi.setting.updateValue({
-      ...record,
-      value,
-    })
-      .then(() => {
-        onClose(true)
-        setValue(null)
+    setConfirmLoading(true);
+    adminApi.setting
+      .updateValue({
+        ...record,
+        value,
       })
-      .finally(() => setConfirmLoading(false))
-  }
+      .then(() => {
+        onClose(true);
+        setValue(null);
+      })
+      .finally(() => setConfirmLoading(false));
+  };
   const handleCancel = () => {
-    onClose(false)
-    setValue(null)
-  }
+    onClose(false);
+    setValue(null);
+  };
 
-  return <>
-    <Modal
-      open={!!record}
-      destroyOnHidden
-      confirmLoading={confirmLoading}
-      onOk={handleFinish}
-      onCancel={handleCancel}
-    >
-      <Form
-        layout="vertical"
-        initialValues={record}
-        clearOnDestroy
+  return (
+    <>
+      <Modal
+        open={!!record}
+        destroyOnHidden
+        confirmLoading={confirmLoading}
+        onOk={handleFinish}
+        onCancel={handleCancel}
       >
-        <Form.Item
-          name="code"
-          label={t('setting.field.code')}
-        >
-          <Input disabled />
-        </Form.Item>
-      </Form>
-      <SchemaForm
-        schema={schema}
-        formData={value}
-        validator={validator}
-        uiSchema={{ "ui:submitButtonOptions": { "norender": true } }}
-        onChange={(e) => setValue(e.formData)}
-      />
-    </Modal>
-  </>
+        <Form layout="vertical" initialValues={record} clearOnDestroy>
+          <Form.Item name="code" label={t('setting.field.code')}>
+            <Input disabled />
+          </Form.Item>
+        </Form>
+        <SchemaForm
+          schema={schema}
+          formData={value}
+          validator={validator}
+          uiSchema={{ 'ui:submitButtonOptions': { norender: true } }}
+          onChange={(e) => setValue(e.formData)}
+        />
+      </Modal>
+    </>
+  );
 }

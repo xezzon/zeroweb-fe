@@ -11,81 +11,90 @@ import { useTranslation } from 'react-i18next';
  * @param {() => void} param0.onClose
  */
 export default function BindToPermission({ role, onClose }) {
-  const [permissionList, setPermissionList] = useState([])
-  const [boundPermission, setBoundPermission] = useState([])
-  const [originalBoundPermission, setOriginalBoundPermission] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [confirmLoading, setConfirmLoading] = useState(false)
-  const { permissions } = useContext(AuthContext)
-  const { t } = useTranslation()
+  const [permissionList, setPermissionList] = useState([]);
+  const [boundPermission, setBoundPermission] = useState([]);
+  const [originalBoundPermission, setOriginalBoundPermission] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const { permissions } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!role) {
-      return
+      return;
     }
-    setLoading(true)
-    const queryPermissionListPromise = adminApi.app.listApp()
-      .then(response => response.data)
-      .then(apps => Promise.all(
-        apps.map(app =>
-          ZerowebMetadataClient({ baseURL: app.baseUrl })
-            .loadResourceInfo()
-            .then(response => response.data)
-            .catch(() => [])
-            .then(menuInfos => ([
-              { key: app.id, title: app.name, disabled: true },
-              ...menuInfos
-                .filter(({ type }) => type === MenuType.PERMISSION)
-                .filter(({ permissions: required }) => hasPermission(permissions, required))
-                .map(menuInfo => ({
-                  key: menuInfo.path,
-                  title: menuInfo.name || menuInfo.path,
-                  parentId: app.id,
-                }))
-            ]))
-        )
-      ))
-      .then(data => {
-        setPermissionList(data.flatMap(item => item))
-      })
-    const queryPermissionByRolePromise = adminApi.authz.queryPermissionByRole(role.id)
-      .then(response => response.data)
+    setLoading(true);
+    const queryPermissionListPromise = adminApi.app
+      .listApp()
+      .then((response) => response.data)
+      .then((apps) =>
+        Promise.all(
+          apps.map((app) =>
+            ZerowebMetadataClient({ baseURL: app.baseUrl })
+              .loadResourceInfo()
+              .then((response) => response.data)
+              .catch(() => [])
+              .then((menuInfos) => [
+                { key: app.id, title: app.name, disabled: true },
+                ...menuInfos
+                  .filter(({ type }) => type === MenuType.PERMISSION)
+                  .filter(({ permissions: required }) => hasPermission(permissions, required))
+                  .map((menuInfo) => ({
+                    key: menuInfo.path,
+                    title: menuInfo.name || menuInfo.path,
+                    parentId: app.id,
+                  })),
+              ]),
+          ),
+        ),
+      )
+      .then((data) => {
+        setPermissionList(data.flatMap((item) => item));
+      });
+    const queryPermissionByRolePromise = adminApi.authz
+      .queryPermissionByRole(role.id)
+      .then((response) => response.data)
       .then((boundPermissions) => {
-        setOriginalBoundPermission(boundPermissions)
-        setBoundPermission(boundPermissions)
-      })
-    Promise.all([queryPermissionListPromise, queryPermissionByRolePromise])
-      .finally(() => setConfirmLoading(false))
-  }, [role, permissions])
+        setOriginalBoundPermission(boundPermissions);
+        setBoundPermission(boundPermissions);
+      });
+    Promise.all([queryPermissionListPromise, queryPermissionByRolePromise]).finally(() =>
+      setConfirmLoading(false),
+    );
+  }, [role, permissions]);
 
   const treeData = useMemo(() => {
-    return permissionList.filter(({ parentId }) => !parentId)
+    return permissionList
+      .filter(({ parentId }) => !parentId)
       .map((app) => ({
         ...app,
         children: permissionList
           .filter(({ parentId }) => parentId === app.key)
-          .map((permission) => ({ ...permission, disabled: boundPermission.includes(permission.key) })),
+          .map((permission) => ({
+            ...permission,
+            disabled: boundPermission.includes(permission.key),
+          })),
       }))
-      .filter(({ children }) => children.length)
-  }, [permissionList, boundPermission])
+      .filter(({ children }) => children.length);
+  }, [permissionList, boundPermission]);
 
   const handleOk = () => {
-    setConfirmLoading(true)
+    setConfirmLoading(true);
     const toBind = boundPermission
-      .filter(p => !originalBoundPermission.includes(p))
-      .map(permission => ({
+      .filter((p) => !originalBoundPermission.includes(p))
+      .map((permission) => ({
         roleId: role.id,
         permission,
-      }))
+      }));
     const toRelease = originalBoundPermission
-      .filter(p => !boundPermission.includes(p))
-      .map(permission => ({
+      .filter((p) => !boundPermission.includes(p))
+      .map((permission) => ({
         roleId: role.id,
         permission,
-      }))
+      }));
 
     if (toBind.length === 0 && toRelease.length === 0) {
-      onClose()
+      onClose();
       return;
     }
 
@@ -94,61 +103,60 @@ export default function BindToPermission({ role, onClose }) {
       toRelease.length ? adminApi.authz.releaseRolePermission(toRelease) : Promise.resolve(),
     ])
       .then(() => {
-        onClose()
+        onClose();
       })
-      .finally(() => setConfirmLoading(false))
-  }
+      .finally(() => setConfirmLoading(false));
+  };
 
-  return <>
-    <Modal
-      open={!!role}
-      destroyOnHidden
-      title={t('role.setPermission')}
-      confirmLoading={confirmLoading}
-      width="61%"
-      onOk={handleOk}
-      onCancel={onClose}
-    >
-      <Transfer
-        dataSource={permissionList}
-        targetKeys={boundPermission}
-        titles={[
-          t('role.availablePermissions'), 
-          t('role.currentPermissions'),
-        ]}
-        render={item => item.title}
-        loading={loading}
-        onChange={setBoundPermission}
-        styles={{
-          section: {
-            width: '100%',
-            height: '61vh',
-          },
-        }}
+  return (
+    <>
+      <Modal
+        open={!!role}
+        destroyOnHidden
+        title={t('role.setPermission')}
+        confirmLoading={confirmLoading}
+        width="61%"
+        onOk={handleOk}
+        onCancel={onClose}
       >
-        {({ direction, onItemSelect, selectedKeys }) => {
-          if (direction === 'left') {
-            const checkedKeys = [...selectedKeys, ...boundPermission];
-            return (
-              <Tree
-                blockNode
-                checkable
-                checkStrictly
-                defaultExpandAll
-                checkedKeys={checkedKeys}
-                treeData={treeData}
-                onCheck={(_, { node: { key } }) => {
-                  console.debug(1, key, !checkedKeys.includes(key))
-                  onItemSelect(key, !checkedKeys.includes(key))
-                }}
-                onSelect={(_, { node: { key } }) => {
-                  onItemSelect(key, !checkedKeys.includes(key))
-                }}
-              />
-            );
-          }
-        }}
-      </Transfer>
-    </Modal>
-  </>
+        <Transfer
+          dataSource={permissionList}
+          targetKeys={boundPermission}
+          titles={[t('role.availablePermissions'), t('role.currentPermissions')]}
+          render={(item) => item.title}
+          loading={loading}
+          onChange={setBoundPermission}
+          styles={{
+            section: {
+              width: '100%',
+              height: '61vh',
+            },
+          }}
+        >
+          {({ direction, onItemSelect, selectedKeys }) => {
+            if (direction === 'left') {
+              const checkedKeys = [...selectedKeys, ...boundPermission];
+              return (
+                <Tree
+                  blockNode
+                  checkable
+                  checkStrictly
+                  defaultExpandAll
+                  checkedKeys={checkedKeys}
+                  treeData={treeData}
+                  onCheck={(_, { node: { key } }) => {
+                    console.debug(1, key, !checkedKeys.includes(key));
+                    onItemSelect(key, !checkedKeys.includes(key));
+                  }}
+                  onSelect={(_, { node: { key } }) => {
+                    onItemSelect(key, !checkedKeys.includes(key));
+                  }}
+                />
+              );
+            }
+          }}
+        </Transfer>
+      </Modal>
+    </>
+  );
 }
