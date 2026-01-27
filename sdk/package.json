@@ -26,8 +26,7 @@
     "@rslib/core": "^0.19.3",
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^25.0.1",
-    "@zeroweb/oxlint": "workspace:^",
-    "oxlint": "catalog:",
+    "@zeroweb/lint": "workspace:^",
     "typescript": "^5.9.3"
   },
   "dependencies": {

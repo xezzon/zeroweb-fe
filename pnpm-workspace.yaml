@@ -11,9 +11,14 @@ catalog:
   '@ant-design/pro-components': ^3.1.0-0
   '@types/react': ^19.2.7
   '@types/react-dom': ^19.2.3
-  antd: ^6.1.2
+  antd: ^6.2.0
   axios: ^1.13.2
-  oxlint: ^1.35.0
+  dayjs: ^1.11.19
+  i18next: ^25.7.3
+  i18next-http-backend: ^3.0.2
+  oxfmt: ^0.26.0
+  oxlint: ^1.39.0
   react: ^19.2.3
   react-dom: ^19.2.3
-  react-router: ^7.11.0
+  react-i18next: ^16.5.2
+  react-router: ^7.12.0
