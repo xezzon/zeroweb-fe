@@ -1,8 +1,8 @@
 /**
  * @typedef {Omit<import('@xezzon/zeroweb-sdk').JwtClaim, 'roles' | 'entitlements'>} User 用户
  */
-import { createContext, useEffect, useState } from "react";
-import { useToken } from "./token";
+import { createContext, useEffect, useState } from 'react';
+import { useToken } from './token';
 
 const defaultAuth = {
   /**
@@ -20,7 +20,7 @@ const defaultAuth = {
    * @type {string[]}
    */
   permissions: [],
-}
+};
 
 /**
  * @param {object} param0
@@ -28,57 +28,60 @@ const defaultAuth = {
  * @param {import('react').ReactElement} param0.children
  */
 export default function AuthContextProvider({ children, authnApi }) {
-
-  const { token, setToken, clearToken } = useToken()
-  const [auth, setAuth] = useState(defaultAuth)
-  const [loading, setLoading] = useState(true)
+  const { token, setToken, clearToken } = useToken();
+  const [auth, setAuth] = useState(defaultAuth);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!token?.access_token) {
-      setLoading(false)
-      return
+      setLoading(false);
+      return;
     }
-    authnApi.self()
-      .then(response => response.data)
+    authnApi
+      .self()
+      .then((response) => response.data)
       .then(({ roles, entitlements: permissions, ...user }) => {
-        setAuth({ user, roles, permissions })
+        setAuth({ user, roles, permissions });
       })
       .catch((err) => {
-        console.error(err)
-        clearToken()
+        console.error(err);
+        clearToken();
       })
       .finally(() => {
-        setLoading(false)
-      })
+        setLoading(false);
+      });
     // oxlint-disable-next-line exhaustive-deps
-  }, [token?.access_token])
+  }, [token?.access_token]);
 
   const afterLogin = (token, remember = false) => {
-    setToken(token, remember)
-    setLoading(true)
-  }
+    setToken(token, remember);
+    setLoading(true);
+  };
 
   const afterLogout = () => {
-    clearToken()
-    setAuth(defaultAuth)
-  }
+    clearToken();
+    setAuth(defaultAuth);
+  };
 
   const logout = () => {
-    authnApi.logout()
-      .finally(() => {
-        afterLogout()
-      })
-  }
+    authnApi.logout().finally(() => {
+      afterLogout();
+    });
+  };
 
-  return <AuthContext value={{
-    ...auth,
-    loading,
-    afterLogin,
-    afterLogout,
-    logout,
-  }}>
-    {children}
-  </AuthContext>
+  return (
+    <AuthContext
+      value={{
+        ...auth,
+        loading,
+        afterLogin,
+        afterLogout,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext>
+  );
 }
 
 export const AuthContext = createContext({
@@ -88,7 +91,7 @@ export const AuthContext = createContext({
    * @param {import("@xezzon/zeroweb-sdk").OidcToken} _claim
    * @param {boolean} _remember
    */
-  afterLogin: (_claim, _remember = false) => { },
-  afterLogout: () => { },
-  logout: () => { },
-})
+  afterLogin: (_claim, _remember = false) => {},
+  afterLogout: () => {},
+  logout: () => {},
+});

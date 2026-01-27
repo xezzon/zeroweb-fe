@@ -1,6 +1,6 @@
-import { getToken } from "./token";
+import { getToken } from './token';
 
-export const TOKEN_NAME = "X-SESSION-ID";
+export const TOKEN_NAME = 'X-SESSION-ID';
 
 /**
  * 认证拦截器。

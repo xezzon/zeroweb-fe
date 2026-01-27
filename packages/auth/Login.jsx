@@ -1,7 +1,7 @@
-import { Form, Input, Button, Card, Row, Col } from "antd"
-import { useContext } from "react"
-import { useNavigate, useSearchParams } from "react-router"
-import { AuthContext } from "./AuthContext"
+import { Form, Input, Button, Card, Row, Col } from 'antd';
+import { useContext } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
+import { AuthContext } from './AuthContext';
 
 /**
  * 登录页。
@@ -10,32 +10,40 @@ import { AuthContext } from "./AuthContext"
  * @param {string?} param0.homepageUrl 应用首页。登录成功后，如果没有指定跳转地址，则默认返回到首页。
  */
 export default ({ authnApi, homepageUrl }) => {
-
-  const { afterLogin } = useContext(AuthContext)
-  const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
+  const { afterLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   /**
-   * 
-   * @param {import('@xezzon/zeroweb-sdk').BasicAuth} basicToken 
-   * @returns 
+   *
+   * @param {import('@xezzon/zeroweb-sdk').BasicAuth} basicToken
+   * @returns
    */
-  const login = async (basicToken) => authnApi
-    .basicLogin(basicToken)
-    .then(response => response.data)
-    .then(afterLogin)
-    .then(() => {
-      const redirectTo = searchParams.get('redirectUrl') || homepageUrl
-      if (!redirectTo) {
-        return
-      }
-      navigate(redirectTo, {
-        replace: true,
-      })
-    })
+  const login = async (basicToken) =>
+    authnApi
+      .basicLogin(basicToken)
+      .then((response) => response.data)
+      .then(afterLogin)
+      .then(() => {
+        const redirectTo = searchParams.get('redirectUrl') || homepageUrl;
+        if (!redirectTo) {
+          return;
+        }
+        navigate(redirectTo, {
+          replace: true,
+        });
+      });
 
   return (
-    <div style={{ backgroundColor: 'white', height: 'calc(100vh - 16px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div
+      style={{
+        backgroundColor: 'white',
+        height: 'calc(100vh - 16px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <Row justify="center" align="middle" style={{ width: '100%' }}>
         <Col xs={24} sm={16} md={12} lg={8} xl={6}>
           <Card title="登录" style={{ boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
@@ -74,5 +82,5 @@ export default ({ authnApi, homepageUrl }) => {
         </Col>
       </Row>
     </div>
-  )
-}
+  );
+};
