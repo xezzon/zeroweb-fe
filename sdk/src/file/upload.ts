@@ -1,6 +1,6 @@
 import CryptoJS from "crypto-js";
 import { crc32 } from "js-crc";
-import type { HttpClient } from "../types";
+import type { HttpClient } from "@/types";
 import type { AttachmentAPI, UploadInfo } from "./attachment";
 
 /**

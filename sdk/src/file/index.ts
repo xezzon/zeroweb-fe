@@ -1,6 +1,6 @@
 import axios from "axios"
-import { zerowebErrorHandler } from "../interceptors"
-import type { InstanceConfig } from "../types"
+import { zerowebErrorHandler } from "@/interceptors"
+import type { InstanceConfig } from "@/types"
 import attachment from "./attachment"
 import { upload } from "./upload"
 

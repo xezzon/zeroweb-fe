@@ -1,4 +1,4 @@
-import type { HttpClient, PResponse } from "../types";
+import type { HttpClient, PResponse } from "@/types";
 import type { Role } from "./role";
 import type { User } from "./user";
 
