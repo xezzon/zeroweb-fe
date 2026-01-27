@@ -25,7 +25,7 @@
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^25.0.1",
-    "@zeroweb/oxlint": "workspace:^",
+    "@zeroweb/lint": "workspace:^",
     "oxlint": "catalog:",
     "typescript": "^5.9.3"
   },
