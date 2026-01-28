@@ -1,38 +1,104 @@
+import { AuthContext, AuthContextProvider, hasPermission } from '@zeroweb/auth';
+import { ResourceContext, ResourceContextProvider } from '@zeroweb/layout';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
+import { lazy, useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import MemberPage from './routes/_id/member';
-import SubscriptionPage from './routes/_id/subscription';
-import ThirdPartyAppPage from './routes/_index';
+import { adminApi, selfApi } from './api';
+
+const MixLayout = lazy(() => import('@/components/layout/MixLayout'));
+const TopLayout = lazy(() => import('@/components/layout/TopLayout'));
+const LoginPage = lazy(() => import('@zeroweb/auth/Login'));
+const RegisterPage = lazy(() => import('@zeroweb/auth/Register'));
+const NotFoundPage = lazy(() => import('@zeroweb/layout/404'));
+const context = import.meta.webpackContext('./routes', {
+  recursive: true,
+  regExp: /\.jsx$/,
+  mode: 'lazy',
+});
+/**
+ * @type {import('react-router').RouteObject[]}
+ */
+const rootRoutes = [
+  {
+    layout: 'MixLayout',
+    element: <MixLayout />,
+  },
+  {
+    layout: 'TopLayout',
+    element: <TopLayout />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage authnApi={adminApi.authn} homepageUrl={import.meta.env.BASE_URL} />,
+  },
+  {
+    path: '/register',
+    element: <RegisterPage userApi={adminApi.user} loginUrl="/login" />,
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
+  },
+];
 
 export default () => {
   return (
-    <>
-      <ConfigProvider locale={zhCN}>
-        <ZerowebAppOpen />
-      </ConfigProvider>
-    </>
+    <ConfigProvider locale={zhCN}>
+      <AuthContextProvider authnApi={adminApi.authn}>
+        <AppWithResource />
+      </AuthContextProvider>
+    </ConfigProvider>
   );
 };
 
+function AppWithResource() {
+  const [loading, setLoading] = useState(true);
+  const [resources, setResources] = useState(
+    /** @type {import('@xezzon/zeroweb-sdk').MenuInfo[]} */ (null),
+  );
+  const { permissions } = useContext(AuthContext);
+  const { t } = useTranslation();
+  const { t: tMenu } = useTranslation('menu');
+
+  useEffect(() => {
+    selfApi
+      .loadResourceInfo()
+      .then((response) => response.data)
+      .then((menuInfos) =>
+        menuInfos
+          .filter((menuInfo) => hasPermission(permissions, menuInfo.permissions))
+          .map((menuInfo) => ({
+            ...menuInfo,
+            name: tMenu(menuInfo.path, { nsSeparator: false }),
+          })),
+      )
+      .then(setResources)
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [permissions]);
+
+  if (loading) {
+    return <div>{t('loading')}</div>;
+  } else if (!resources) {
+    return <div>{t('error.loadingRoutes')}</div>;
+  } else {
+    return (
+      <ResourceContextProvider
+        resources={resources}
+        component={(name) => () => context(`./${name}.jsx`)}
+        rootRoutes={rootRoutes}
+      >
+        <ZerowebAppOpen />
+      </ResourceContextProvider>
+    );
+  }
+}
+
 function ZerowebAppOpen() {
-  /**
-   * @type {import('react-router').RouteObject[]}
-   */
-  const routes = [
-    {
-      path: '/',
-      Component: ThirdPartyAppPage,
-    },
-    {
-      path: '/:id/member',
-      Component: MemberPage,
-    },
-    {
-      path: '/:id/subscription',
-      Component: SubscriptionPage,
-    },
-  ];
+  const { routes } = useContext(ResourceContext);
 
   return (
     <RouterProvider

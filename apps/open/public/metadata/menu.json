@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "type": "ROUTE",
+    "path": "/",
+    "route": "_index",
+    "layout": "TopLayout",
+    "hideInMenu": true
+  },
+  {
+    "type": "ROUTE",
+    "path": "/:thirdPartyAppId/member",
+    "route": "_id/member"
+  },
+  {
+    "type": "ROUTE",
+    "path": "/:thirdPartyAppId/subscription",
+    "route": "_id/subscription"
+  }
+]

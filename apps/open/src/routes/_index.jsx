@@ -92,13 +92,20 @@ export default function ThirdPartyAppPage() {
   return (
     <>
       <PageContainer
+        title="应用管理"
         extra={
           <Button type="primary" onClick={() => setRecord({})}>
             新增应用
           </Button>
         }
       >
-        <Table columns={columns} dataSource={dataSource} rowKey="id" />
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          rowKey="id"
+          loading={loading}
+          onChange={handleTableChange}
+        />
       </PageContainer>
       <ThirdPartyAppEditor
         record={record}
@@ -201,7 +208,11 @@ function AccessSecretModal({ accessSecret, onClose }) {
         title="新密钥"
         closable={false}
         destroyOnHidden
-        footer={[<Button onClick={onClose}>关闭 ({countdown})</Button>]}
+        footer={[
+          <Button onClick={onClose} key="close">
+            关闭 ({countdown})
+          </Button>,
+        ]}
       >
         <Typography.Paragraph>
           <Typography.Text>Access Key: </Typography.Text>
