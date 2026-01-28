@@ -1,4 +1,4 @@
-import type { HttpClient, Id, OData, Page, PResponse } from "../types";
+import type { HttpClient, Id, OData, Page, PResponse } from '@/types';
 
 /**
  * 业务参数
@@ -35,7 +35,7 @@ export interface SettingAPI {
   /**
    * 新增业务参数
    * @param setting 业务参数
-   * @returns 业务参数ID 
+   * @returns 业务参数ID
    */
   addSetting: (setting: AddSettingReq) => PResponse<Id>;
   /**
@@ -67,31 +67,37 @@ export interface SettingAPI {
 }
 
 export default (client: HttpClient): SettingAPI => ({
-  addSetting: (setting) => client.request({
-    url: '/setting',
-    method: 'POST',
-    data: setting,
-  }),
-  listSetting: () => client.request({
-    url: '/setting',
-    method: 'GET',
-  }),
-  querySettingByCode: (code) => client.request({
-    url: `/setting/${code}`,
-    method: 'GET',
-  }),
-  updateSchema: (setting) => client.request({
-    url: '/setting/schema',
-    method: 'PUT',
-    data: setting,
-  }),
-  updateValue: (setting) => client.request({
-    url: '/setting/value',
-    method: 'PUT',
-    data: setting,
-  }),
-  deleteSetting: (id) => client.request({
-    url: `/setting/${id}`,
-    method: 'DELETE',
-  }),
-})
+  addSetting: (setting) =>
+    client.request({
+      url: '/setting',
+      method: 'POST',
+      data: setting,
+    }),
+  listSetting: () =>
+    client.request({
+      url: '/setting',
+      method: 'GET',
+    }),
+  querySettingByCode: (code) =>
+    client.request({
+      url: `/setting/${code}`,
+      method: 'GET',
+    }),
+  updateSchema: (setting) =>
+    client.request({
+      url: '/setting/schema',
+      method: 'PUT',
+      data: setting,
+    }),
+  updateValue: (setting) =>
+    client.request({
+      url: '/setting/value',
+      method: 'PUT',
+      data: setting,
+    }),
+  deleteSetting: (id) =>
+    client.request({
+      url: `/setting/${id}`,
+      method: 'DELETE',
+    }),
+});

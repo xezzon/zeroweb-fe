@@ -1,16 +1,16 @@
-import axios from "axios"
-import { zerowebErrorHandler } from "../interceptors"
-import type { InstanceConfig } from "../types"
-import attachment from "./attachment"
-import { upload } from "./upload"
+import axios from 'axios';
+import { zerowebErrorHandler } from '@/interceptors';
+import type { InstanceConfig } from '@/types';
+import attachment from './attachment';
+import { upload } from './upload';
 
 export default (config: InstanceConfig) => {
-  const instance = axios.create(config)
+  const instance = axios.create(config);
 
-  const interceptors = instance.interceptors
-  interceptors.response.use(null, zerowebErrorHandler)
+  const interceptors = instance.interceptors;
+  interceptors.response.use(null, zerowebErrorHandler);
 
-  const attachmentApi = attachment(instance)
+  const attachmentApi = attachment(instance);
 
   return {
     /**
@@ -28,14 +28,14 @@ export default (config: InstanceConfig) => {
      * @param bizId 业务编码
      */
     upload: upload(instance, attachmentApi),
-  }
-}
+  };
+};
 
 export enum FileProvider {
   FS = 'FS',
   S3 = 'S3',
 }
 
-export { AttachmentStatus } from './attachment'
+export { AttachmentStatus } from './attachment';
 
-export type * from './attachment'
+export type * from './attachment';

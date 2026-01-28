@@ -1,4 +1,4 @@
-import type { HttpClient, Id, OData, Page, PResponse } from "../types";
+import type { HttpClient, Id, OData, Page, PResponse } from '@/types';
 
 /**
  * 字典
@@ -70,7 +70,7 @@ export interface DictAPI {
   /**
    * 更新字典目/字典项
    * @param dict 字典
-   * @returns 
+   * @returns
    */
   modifyDict: (dict: ModifyDictReq) => PResponse<void>;
   /**
@@ -87,36 +87,42 @@ export interface DictAPI {
 }
 
 export default (client: HttpClient): DictAPI => ({
-  addDict: (dict) => client.request({
-    url: '/dict',
-    method: 'POST',
-    data: dict,
-  }),
-  getDictTagList: (odata) => client.request({
-    url: '/dict',
-    method: 'GET',
-    params: odata,
-  }),
-  getDictTreeByTag: (tag) => client.request({
-    url: `/dict/tag/${tag}`,
-    method: 'GET',
-  }),
-  modifyDict: (dict: ModifyDictReq) => client.request({
-    url: '/dict',
-    method: 'PUT',
-    data: dict,
-  }),
-  updateDictStatus: (ids, enabled) => client.request({
-    url: '/dict/update-status',
-    method: 'PUT',
-    params: {
-      enabled,
-    },
-    data: ids,
-  }),
-  removeDict: (ids) => client.request({
-    url: '/dict',
-    method: 'DELETE',
-    data: ids,
-  }),
-})
+  addDict: (dict) =>
+    client.request({
+      url: '/dict',
+      method: 'POST',
+      data: dict,
+    }),
+  getDictTagList: (odata) =>
+    client.request({
+      url: '/dict',
+      method: 'GET',
+      params: odata,
+    }),
+  getDictTreeByTag: (tag) =>
+    client.request({
+      url: `/dict/tag/${tag}`,
+      method: 'GET',
+    }),
+  modifyDict: (dict: ModifyDictReq) =>
+    client.request({
+      url: '/dict',
+      method: 'PUT',
+      data: dict,
+    }),
+  updateDictStatus: (ids, enabled) =>
+    client.request({
+      url: '/dict/update-status',
+      method: 'PUT',
+      params: {
+        enabled,
+      },
+      data: ids,
+    }),
+  removeDict: (ids) =>
+    client.request({
+      url: '/dict',
+      method: 'DELETE',
+      data: ids,
+    }),
+});
