@@ -1,11 +1,11 @@
 import { adminApi } from '@/api';
-import { Button, Popconfirm, Table } from 'antd';
+import { PageContainer } from '@ant-design/pro-components';
+import SchemaForm from '@rjsf/antd';
+import validator from '@rjsf/validator-ajv8';
+import { Button, Form, Input, Modal, Popconfirm, Table } from 'antd';
+import dayjs from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import SettingSchemaEditor from './SettingSchemaEditor';
-import SettingValueEditor from './SettingValueEditor';
-import dayjs from 'dayjs';
-import { PageContainer } from '@ant-design/pro-components';
 
 export default function SettingPage() {
   const { t } = useTranslation();
@@ -137,6 +137,161 @@ export default function SettingPage() {
           }
         }}
       />
+    </>
+  );
+}
+
+/**
+ * @param {Object} param0
+ * @param {import('@xezzon/zeroweb-sdk').Setting} param0.record
+ * @param {(refresh: boolean) => void} param0.onClose
+ */
+function SettingSchemaEditor({ record, onClose }) {
+  const { t } = useTranslation();
+  const exist = !!record?.id;
+  /**
+   * @type {[import('antd').FormInstance<import('@xezzon/zeroweb-sdk').Setting>]}
+   */
+  const [form] = Form.useForm();
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const handleFinish = () => {
+    const submit = exist ? adminApi.setting.updateSchema : adminApi.setting.addSetting;
+    setConfirmLoading(true);
+    form
+      .validateFields()
+      .then(submit)
+      .then(() => onClose(true))
+      .finally(() => setConfirmLoading(false));
+  };
+  const handleCancel = () => onClose(false);
+
+  return (
+    <>
+      <Modal
+        open={!!record}
+        destroyOnHidden
+        confirmLoading={confirmLoading}
+        onOk={handleFinish}
+        onCancel={handleCancel}
+        modalRender={(dom) => (
+          <>
+            <Form
+              layout="vertical"
+              initialValues={record}
+              clearOnDestroy
+              onFinish={handleFinish}
+              form={form}
+            >
+              {dom}
+            </Form>
+          </>
+        )}
+      >
+        <Form.Item name="id" hidden>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="code"
+          label={t('setting.field.code')}
+          rules={[{ required: true, message: t('setting.placeholder.enterCode') }]}
+        >
+          <Input placeholder={t('setting.placeholder.enterCode')} disabled={exist} />
+        </Form.Item>
+        <Form.Item
+          name="schema"
+          label={t('setting.field.schema')}
+          rules={[
+            { required: true, message: t('setting.placeholder.enterJsonSchema') },
+            {
+              validator: (_, value) => {
+                try {
+                  const schema = JSON.parse(value);
+                  const valid = validator.ajv.validateSchema(schema);
+                  if (!valid) {
+                    return Promise.reject(
+                      new Error(
+                        t('error.invalidJsonSchema') +
+                          validator.ajv.errorsText(validator.ajv.errors),
+                      ),
+                    );
+                  }
+                  return Promise.resolve();
+                  // oxlint-disable-next-line no-unused-vars
+                } catch (e) {
+                  return Promise.reject(new Error(t('error.invalidJson')));
+                }
+              },
+            },
+          ]}
+          validateTrigger="onBlur"
+          tooltip={t('setting.tooltip.jsonSchema')}
+        >
+          <Input.TextArea rows={6} placeholder={t('setting.placeholder.enterJsonSchema')} />
+        </Form.Item>
+        <Form.Item name="value" hidden>
+          <Input />
+        </Form.Item>
+      </Modal>
+    </>
+  );
+}
+
+/**
+ * @param {Object} param0
+ * @param {import('@xezzon/zeroweb-sdk').Setting} param0.record
+ * @param {(refresh: boolean) => void} param0.onClose
+ */
+function SettingValueEditor({ record, onClose }) {
+  const { t } = useTranslation();
+  const schema = record?.schema ? JSON.parse(record?.schema) : {};
+
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [value, setValue] = useState(record?.value);
+
+  useEffect(() => {
+    setValue(record?.value);
+  }, [record?.value]);
+
+  const handleFinish = () => {
+    setConfirmLoading(true);
+    adminApi.setting
+      .updateValue({
+        ...record,
+        value,
+      })
+      .then(() => {
+        onClose(true);
+        setValue(null);
+      })
+      .finally(() => setConfirmLoading(false));
+  };
+  const handleCancel = () => {
+    onClose(false);
+    setValue(null);
+  };
+
+  return (
+    <>
+      <Modal
+        open={!!record}
+        destroyOnHidden
+        confirmLoading={confirmLoading}
+        onOk={handleFinish}
+        onCancel={handleCancel}
+      >
+        <Form layout="vertical" initialValues={record} clearOnDestroy>
+          <Form.Item name="code" label={t('setting.field.code')}>
+            <Input disabled />
+          </Form.Item>
+        </Form>
+        <SchemaForm
+          schema={schema}
+          formData={value}
+          validator={validator}
+          uiSchema={{ 'ui:submitButtonOptions': { norender: true } }}
+          onChange={(e) => setValue(e.formData)}
+        />
+      </Modal>
     </>
   );
 }
