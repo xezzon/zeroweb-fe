@@ -1,6 +1,6 @@
-import type { FileProvider } from "..";
-import type { HttpClient, PResponse } from "../types";
-import { checksum } from "./upload";
+import type { FileProvider } from '..';
+import type { HttpClient, PResponse } from '@/types';
+import { checksum } from './upload';
 
 export enum AttachmentStatus {
   UPLOADING = 'UPLOADING',
@@ -55,7 +55,10 @@ export interface Attachment {
   createTime: Date;
 }
 
-declare type AddAttachmentReq = Omit<Attachment, 'id' | 'provider' | 'status' | 'createTime' | 'ownerId'>;
+declare type AddAttachmentReq = Omit<
+  Attachment,
+  'id' | 'provider' | 'status' | 'createTime' | 'ownerId'
+>;
 
 export interface UploadInfo {
   /**
@@ -129,7 +132,11 @@ export interface AttachmentAPI {
    * @param partNumber 分段序号
    * @returns 上传地址
    */
-  getMultipartUploadEndpoint: (id: string, partNumber: number, crc?: string) => PResponse<UploadAddress>;
+  getMultipartUploadEndpoint: (
+    id: string,
+    partNumber: number,
+    crc?: string,
+  ) => PResponse<UploadAddress>;
   /**
    * 文件上传完成后，将其状态变更为已完成
    * @param id 附件ID
@@ -157,7 +164,7 @@ export interface AttachmentAPI {
 
 export default (client: HttpClient): AttachmentAPI => ({
   addAttachment: async (file, bizType, bizId) => {
-    await checksum(file)
+    await checksum(file);
     const req: AddAttachmentReq = {
       name: file.name,
       checksum: file.checksum!,
@@ -173,36 +180,43 @@ export default (client: HttpClient): AttachmentAPI => ({
       params: { crc: file.crc },
     });
   },
-  getUploadInfo: (id, checksum, fileSize) => client.request({
-    url: `/attachment/${id}/resume`,
-    method: 'GET',
-    params: { checksum, fileSize },
-  }),
-  getUploadEndpoint: (id) => client.request({
-    url: `/attachment/${id}/endpoint/upload`,
-    method: 'GET',
-    params: { partNumber: 0 },
-  }),
-  getMultipartUploadEndpoint: (id, partNumber, crc) => client.request({
-    url: `/attachment/${id}/endpoint/upload`,
-    method: 'GET',
-    params: { partNumber, crc },
-  }),
-  finishUpload: (id) => client.request({
-    url: `/attachment/${id}/status/done`,
-    method: 'PUT',
-  }),
-  queryAttachmentByBiz: (bizType, bizId) => client.request({
-    url: `/attachment/list`,
-    method: 'GET',
-    params: { bizType, bizId, },
-  }),
-  getDownloadEndpoint: (id) => client.request({
-    url: `/attachment/${id}/endpoint/download`,
-    method: 'GET',
-  }),
-  deleteAttachment: (id) => client.request({
-    url: `/attachment/${id}`,
-    method: 'DELETE',
-  }),
-})
+  getUploadInfo: (id, checksum, fileSize) =>
+    client.request({
+      url: `/attachment/${id}/resume`,
+      method: 'GET',
+      params: { checksum, fileSize },
+    }),
+  getUploadEndpoint: (id) =>
+    client.request({
+      url: `/attachment/${id}/endpoint/upload`,
+      method: 'GET',
+      params: { partNumber: 0 },
+    }),
+  getMultipartUploadEndpoint: (id, partNumber, crc) =>
+    client.request({
+      url: `/attachment/${id}/endpoint/upload`,
+      method: 'GET',
+      params: { partNumber, crc },
+    }),
+  finishUpload: (id) =>
+    client.request({
+      url: `/attachment/${id}/status/done`,
+      method: 'PUT',
+    }),
+  queryAttachmentByBiz: (bizType, bizId) =>
+    client.request({
+      url: `/attachment/list`,
+      method: 'GET',
+      params: { bizType, bizId },
+    }),
+  getDownloadEndpoint: (id) =>
+    client.request({
+      url: `/attachment/${id}/endpoint/download`,
+      method: 'GET',
+    }),
+  deleteAttachment: (id) =>
+    client.request({
+      url: `/attachment/${id}`,
+      method: 'DELETE',
+    }),
+});

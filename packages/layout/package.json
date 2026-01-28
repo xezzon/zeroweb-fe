@@ -13,8 +13,8 @@
     "react-router": "catalog:"
   },
   "devDependencies": {
-    "@zeroweb/oxlint": "workspace:^",
-    "@zeroweb/typescript": "workspace:^",
+    "@zeroweb/lint": "workspace:^",
+    "@zeroweb/tsconfig": "workspace:^",
     "oxlint": "catalog:"
   }
 }

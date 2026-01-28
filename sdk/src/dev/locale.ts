@@ -1,4 +1,4 @@
-import type { HttpClient, Id, OData, Page, PResponse } from "../types";
+import type { HttpClient, Id, OData, Page, PResponse } from '@/types';
 
 /**
  * 语言
@@ -145,58 +145,70 @@ export interface LocaleAPI {
 }
 
 export default (client: HttpClient): LocaleAPI => ({
-  addLanguage: (language) => client.request({
-    url: '/language',
-    method: 'POST',
-    data: language,
-  }),
-  queryLanguageList: () => client.request({
-    url: '/language',
-    method: 'GET',
-  }),
-  updateLanguage: (language) => client.request({
-    url: '/language',
-    method: 'PUT',
-    data: language,
-  }),
-  deleteLanguage: (id) => client.request({
-    url: `/language/${id}`,
-    method: 'DELETE',
-  }),
-  addI18nMessage: (i18nMessage) => client.request({
-    url: '/i18n',
-    method: 'POST',
-    data: i18nMessage,
-  }),
-  listI18nNamespace: () => client.request({
-    url: '/i18n',
-    method: 'GET',
-  }),
-  queryI18nMessageList: (namespace, odata) => client.request({
-    url: `/i18n/${namespace}`,
-    method: 'GET',
-    params: odata,
-  }),
-  updateI18nMessage: (i18nMessage) => client.request({
-    url: '/i18n',
-    method: 'PUT',
-    data: i18nMessage,
-  }),
-  deleteI18nMessage: (id) => client.request({
-    url: `/i18n/${id}`,
-    method: 'DELETE',
-  }),
-  queryTranslation: (namespace, messageKey) => client.request({
-    url: `/i18n/${namespace}/${messageKey}`,
-    method: 'GET',
-  }),
-  upsertTranslation: (translation) => client.request({
-    url: '/locale',
-    method: 'PUT',
-    data: translation,
-  }),
-  loadTranslation: (language, namespace) => client.request({
-    url: `/locale/${language}/${namespace}`,
-    method: 'GET',
-  })
-})
+  addLanguage: (language) =>
+    client.request({
+      url: '/language',
+      method: 'POST',
+      data: language,
+    }),
+  queryLanguageList: () =>
+    client.request({
+      url: '/language',
+      method: 'GET',
+    }),
+  updateLanguage: (language) =>
+    client.request({
+      url: '/language',
+      method: 'PUT',
+      data: language,
+    }),
+  deleteLanguage: (id) =>
+    client.request({
+      url: `/language/${id}`,
+      method: 'DELETE',
+    }),
+  addI18nMessage: (i18nMessage) =>
+    client.request({
+      url: '/i18n',
+      method: 'POST',
+      data: i18nMessage,
+    }),
+  listI18nNamespace: () =>
+    client.request({
+      url: '/i18n',
+      method: 'GET',
+    }),
+  queryI18nMessageList: (namespace, odata) =>
+    client.request({
+      url: `/i18n/${namespace}`,
+      method: 'GET',
+      params: odata,
+    }),
+  updateI18nMessage: (i18nMessage) =>
+    client.request({
+      url: '/i18n',
+      method: 'PUT',
+      data: i18nMessage,
+    }),
+  deleteI18nMessage: (id) =>
+    client.request({
+      url: `/i18n/${id}`,
+      method: 'DELETE',
+    }),
+  queryTranslation: (namespace, messageKey) =>
+    client.request({
+      url: `/i18n/${namespace}/${messageKey}`,
+      method: 'GET',
+    }),
+  upsertTranslation: (translation) =>
+    client.request({
+      url: '/locale',
+      method: 'PUT',
+      data: translation,
+    }),
+  loadTranslation: (language, namespace) =>
+    client.request({
+      url: `/locale/${language}/${namespace}`,
+      method: 'GET',
+    }),
+});

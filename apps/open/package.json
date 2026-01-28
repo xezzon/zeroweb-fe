@@ -1,7 +1,7 @@
 {
   "name": "zeroweb-app-open",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "lint": "oxlint",
@@ -24,8 +24,8 @@
   "devDependencies": {
     "@rsbuild/core": "^1.7.1",
     "@rsbuild/plugin-react": "^1.4.2",
-    "@zeroweb/oxlint": "workspace:^",
-    "@zeroweb/typescript": "workspace:^",
+    "@zeroweb/lint": "workspace:^",
+    "@zeroweb/tsconfig": "workspace:^",
     "oxlint": "catalog:"
   }
 }

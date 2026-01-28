@@ -1,9 +1,0 @@
-{
-  "extends": [
-    "./.oxlintrc.json"
-  ],
-  "plugins": [
-    "react",
-    "react-perf"
-  ]
-}

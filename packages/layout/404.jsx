@@ -1,5 +1,5 @@
-import { Result } from "antd";
-import { NavLink } from "react-router";
+import { Result } from 'antd';
+import { NavLink } from 'react-router';
 
 export default ({ home = '/' }) => (
   <Result
@@ -8,4 +8,4 @@ export default ({ home = '/' }) => (
     subTitle="The page you are looking for does not exist."
     extra={<NavLink to={home}>Back to Home</NavLink>}
   />
-)
+);
