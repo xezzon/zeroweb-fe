@@ -1,37 +1,37 @@
 {
   "name": "@xezzon/zeroweb-sdk",
-  "version": "0.8.5",
+  "version": "0.9.0",
+  "license": "LGPL-3.0-or-later",
   "repository": {
     "url": "https://github.com/xezzon/zeroweb-fe"
-  },
-  "types": "dist/typings/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/typings/index.d.ts"
-    }
   },
   "files": [
     "dist"
   ],
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
   "scripts": {
     "lint": "oxlint",
-    "build": "pnpm run build:cjs && pnpm run build:esm",
-    "build:esm": "tsc --module esnext --outDir dist/esm",
-    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "build": "rslib build",
     "prepare": "pnpm run build"
-  },
-  "devDependencies": {
-    "@types/crypto-js": "^4.2.2",
-    "@types/node": "^25.0.1",
-    "@zeroweb/oxlint": "workspace:^",
-    "oxlint": "catalog:",
-    "typescript": "^5.9.3"
   },
   "dependencies": {
     "axios": "catalog:",
     "crypto-js": "^4.2.0",
     "js-crc": "^0.3.1"
+  },
+  "devDependencies": {
+    "@rslib/core": "^0.19.3",
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^25.0.1",
+    "@zeroweb/lint": "workspace:^",
+    "typescript": "^5.9.3"
   }
 }

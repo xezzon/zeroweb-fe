@@ -11,8 +11,8 @@
   },
   "devDependencies": {
     "@xezzon/zeroweb-sdk": "workspace:^",
-    "@zeroweb/oxlint": "workspace:^",
-    "@zeroweb/typescript": "workspace:^",
+    "@zeroweb/lint": "workspace:^",
+    "@zeroweb/tsconfig": "workspace:^",
     "axios": "catalog:",
     "oxlint": "catalog:"
   }

@@ -1,5 +1,3 @@
 {
-  "extends": [
-    "./node_modules/@zeroweb/oxlint/.oxlintrc.react.json"
-  ]
+  "extends": ["./node_modules/@zeroweb/lint/.oxlintrc.react.json"]
 }

@@ -1,4 +1,4 @@
-import type { HttpClient, Id, PResponse } from "../types";
+import type { HttpClient, Id, PResponse } from '@/types';
 
 /**
  * 应用
@@ -30,7 +30,7 @@ export interface AppAPI {
   /**
    * 新增应用
    * @param app 应用
-   * @returns 应用ID 
+   * @returns 应用ID
    */
   addApp: (app: AddAppReq) => PResponse<Id>;
   /**
@@ -57,26 +57,31 @@ export interface AppAPI {
 }
 
 export default (client: HttpClient): AppAPI => ({
-  addApp: (app) => client.request({
-    url: '/app',
-    method: 'POST',
-    data: app,
-  }),
-  listApp: () => client.request({
-    url: '/app',
-    method: 'GET',
-  }),
-  queryAppById: (id) => client.request({
-    url: `/app/${id}`,
-    method: 'GET',
-  }),
-  updateApp: (app) => client.request({
-    url: '/app',
-    method: 'PUT',
-    data: app,
-  }),
-  deleteApp: (id) => client.request({
-    url: `/app/${id}`,
-    method: 'DELETE',
-  }),
-})
+  addApp: (app) =>
+    client.request({
+      url: '/app',
+      method: 'POST',
+      data: app,
+    }),
+  listApp: () =>
+    client.request({
+      url: '/app',
+      method: 'GET',
+    }),
+  queryAppById: (id) =>
+    client.request({
+      url: `/app/${id}`,
+      method: 'GET',
+    }),
+  updateApp: (app) =>
+    client.request({
+      url: '/app',
+      method: 'PUT',
+      data: app,
+    }),
+  deleteApp: (id) =>
+    client.request({
+      url: `/app/${id}`,
+      method: 'DELETE',
+    }),
+});

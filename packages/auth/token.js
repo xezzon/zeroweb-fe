@@ -1,47 +1,47 @@
 import { useState } from 'react';
 
-const TOKEN_VALUE = 'AccessToken'
+const TOKEN_VALUE = 'AccessToken';
 
 /**
- * @param {import('@xezzon/zeroweb-sdk').OidcToken} token 
- * @param {boolean} remember 
+ * @param {import('@xezzon/zeroweb-sdk').OidcToken} token
+ * @param {boolean} remember
  */
 export function setToken({ access_token }, remember) {
   if (remember) {
-    localStorage.setItem(TOKEN_VALUE, access_token)
-    sessionStorage.removeItem(TOKEN_VALUE)
+    localStorage.setItem(TOKEN_VALUE, access_token);
+    sessionStorage.removeItem(TOKEN_VALUE);
   } else {
-    sessionStorage.setItem(TOKEN_VALUE, access_token)
-    localStorage.removeItem(TOKEN_VALUE)
+    sessionStorage.setItem(TOKEN_VALUE, access_token);
+    localStorage.removeItem(TOKEN_VALUE);
   }
 }
 
 export function clearToken() {
-  localStorage.removeItem(TOKEN_VALUE)
-  sessionStorage.removeItem(TOKEN_VALUE)
+  localStorage.removeItem(TOKEN_VALUE);
+  sessionStorage.removeItem(TOKEN_VALUE);
 }
 
 /**
- * @returns {import('@xezzon/zeroweb-sdk').OidcToken?} 
+ * @returns {import('@xezzon/zeroweb-sdk').OidcToken?}
  */
 export function getToken() {
-  let access_token = sessionStorage.getItem(TOKEN_VALUE)
+  let access_token = sessionStorage.getItem(TOKEN_VALUE);
   if (access_token) {
-    return { access_token }
+    return { access_token };
   }
-  access_token = localStorage.getItem(TOKEN_VALUE)
+  access_token = localStorage.getItem(TOKEN_VALUE);
   if (access_token) {
-    return { access_token }
+    return { access_token };
   }
-  return null
+  return null;
 }
 
 /**
  * Custom React Hook for managing token state
- * @returns {{ 
- * token: import('@xezzon/zeroweb-sdk').OidcToken?, 
- * setToken: (tokenInfo: import('@xezzon/zeroweb-sdk').OidcToken, remember: boolean) => void, 
- * clearToken: () => void 
+ * @returns {{
+ * token: import('@xezzon/zeroweb-sdk').OidcToken?,
+ * setToken: (tokenInfo: import('@xezzon/zeroweb-sdk').OidcToken, remember: boolean) => void,
+ * clearToken: () => void
  * }}
  */
 export function useToken() {

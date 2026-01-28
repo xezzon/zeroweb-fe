@@ -1,6 +1,6 @@
-import type { HttpClient, PResponse } from "../types";
-import type { Role } from "./role";
-import type { User } from "./user";
+import type { HttpClient, PResponse } from '@/types';
+import type { Role } from './role';
+import type { User } from './user';
 
 /**
  * 角色-用户
@@ -80,41 +80,49 @@ export interface AuthzAPI {
 }
 
 export default (client: HttpClient): AuthzAPI => ({
-  queryUserByRole: (roleId) => client.request({
-    url: `/auth/role/${roleId}/user`,
-    method: 'GET',
-  }),
-  bindUserToRole: (roleUsers) => client.request({
-    url: '/auth/role/-/user',
-    method: 'PUT',
-    data: roleUsers,
-  }),
-  releaseRoleUser: (roleUsers) => client.request({
-    url: '/auth/role/-/user',
-    method: 'DELETE',
-    data: roleUsers,
-  }),
-  queryPermissionByRole: (roleId) => client.request({
-    url: `/auth/role/${roleId}/permission`,
-    method: 'GET',
-  }),
-  bindPermissionToRole: (rolePermissions) => client.request({
-    url: '/auth/role/-/permission',
-    method: 'PUT',
-    data: rolePermissions,
-  }),
-  releaseRolePermission: (rolePermissions) => client.request({
-    url: '/auth/role/-/permission',
-    method: 'DELETE',
-    data: rolePermissions,
-  }),
-  queryRoleByUser: (userId) => client.request({
-    url: `/auth/user/${userId}/role`,
-    method: 'GET',
-  }),
-  queryRoleByPermission: (permission) => client.request({
-    url: '/auth/permission/-/role',
-    method: 'GET',
-    params: { permission },
-  }),
-})
+  queryUserByRole: (roleId) =>
+    client.request({
+      url: `/auth/role/${roleId}/user`,
+      method: 'GET',
+    }),
+  bindUserToRole: (roleUsers) =>
+    client.request({
+      url: '/auth/role/-/user',
+      method: 'PUT',
+      data: roleUsers,
+    }),
+  releaseRoleUser: (roleUsers) =>
+    client.request({
+      url: '/auth/role/-/user',
+      method: 'DELETE',
+      data: roleUsers,
+    }),
+  queryPermissionByRole: (roleId) =>
+    client.request({
+      url: `/auth/role/${roleId}/permission`,
+      method: 'GET',
+    }),
+  bindPermissionToRole: (rolePermissions) =>
+    client.request({
+      url: '/auth/role/-/permission',
+      method: 'PUT',
+      data: rolePermissions,
+    }),
+  releaseRolePermission: (rolePermissions) =>
+    client.request({
+      url: '/auth/role/-/permission',
+      method: 'DELETE',
+      data: rolePermissions,
+    }),
+  queryRoleByUser: (userId) =>
+    client.request({
+      url: `/auth/user/${userId}/role`,
+      method: 'GET',
+    }),
+  queryRoleByPermission: (permission) =>
+    client.request({
+      url: '/auth/permission/-/role',
+      method: 'GET',
+      params: { permission },
+    }),
+});

@@ -5,10 +5,10 @@
  */
 export function hasPermission(permissions, required) {
   if (!required) {
-    return true
+    return true;
   }
-  if (permissions.some(p => p === '*')) {
-    return true
+  if (permissions.some((p) => p === '*')) {
+    return true;
   }
-  return required.every(p => permissions.includes(p))
+  return required.every((p) => permissions.includes(p));
 }

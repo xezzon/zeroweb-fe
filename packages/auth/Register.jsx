@@ -1,5 +1,5 @@
-import { Button, Card, Col, Form, Input, Row } from "antd"
-import { useNavigate } from "react-router"
+import { Button, Card, Col, Form, Input, Row } from 'antd';
+import { useNavigate } from 'react-router';
 
 /**
  * 注册页。
@@ -8,26 +8,34 @@ import { useNavigate } from "react-router"
  * @param {string?} param0.loginUrl 登录页面 URL。注册成功后跳转到登录页。
  */
 export default ({ userApi, loginUrl = '/login' }) => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   /**
    *
    * @param {import('@xezzon/zeroweb-sdk').User} user
    * @returns
    */
-  const register = async (user) => userApi
-    .register(user)
-    .then(response => response.data)
-    .then(() => {
-      // 注册成功，跳转到登录页
-      navigate(loginUrl, {
-        replace: true,
-      })
-    })
+  const register = async (user) =>
+    userApi
+      .register(user)
+      .then((response) => response.data)
+      .then(() => {
+        // 注册成功，跳转到登录页
+        navigate(loginUrl, {
+          replace: true,
+        });
+      });
 
   return (
-    <div style={{ backgroundColor: 'white', height: 'calc(100vh - 16px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div
+      style={{
+        backgroundColor: 'white',
+        height: 'calc(100vh - 16px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <Row justify="center" align="middle" style={{ width: '100%' }}>
         <Col xs={24} sm={16} md={12} lg={8} xl={6}>
           <Card title="注册" style={{ boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
@@ -78,5 +86,5 @@ export default ({ userApi, loginUrl = '/login' }) => {
         </Col>
       </Row>
     </div>
-  )
-}
+  );
+};

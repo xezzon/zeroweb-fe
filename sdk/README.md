@@ -88,4 +88,4 @@ adminClient.interceptors.response.use(
 
 ## 许可证
 
-SDK 部分采用 [LGPL-2.1 license](https://www.gnu.org/licenses/lgpl-3.0.html)。
+SDK 部分采用 [LGPL-3.0 license](https://www.gnu.org/licenses/lgpl-3.0.html)。

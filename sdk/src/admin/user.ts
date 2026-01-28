@@ -1,7 +1,21 @@
-import type { HttpClient, Id, OData, Page, PResponse } from "../types";
+import type { HttpClient, Id, OData, Page, PResponse } from '@/types';
 
 export interface User {
   id: string;
+  /**
+   * 用户名
+   */
+  username: string;
+  /**
+   * 昵称
+   */
+  nickname: string;
+}
+
+/**
+ * 用户注册请求
+ */
+export interface RegisterReq {
   /**
    * 用户名
    */
@@ -17,9 +31,9 @@ export interface User {
 }
 
 /**
- * 用户注册请求
+ * 用户公开信息
  */
-declare type RegisterReq = Omit<User, 'id'>
+declare type UserInfoResp = Pick<User, 'id' | 'username' | 'nickname'>;
 
 export interface UserAPI {
   /**
@@ -28,22 +42,45 @@ export interface UserAPI {
    */
   register: (user: RegisterReq) => PResponse<Id>;
   /**
+   * 查询当前用户信息
+   * @returns 用户信息
+   */
+  getMyInfo: () => PResponse<User>;
+  /**
    * 获取用户列表
    * @param odata 查询参数
    * @returns 包含分页信息的用户列表
    */
   queryUserList: (odata: OData) => PResponse<Page<User>>;
+  /**
+   * 查询指定用户
+   * @param id 用户ID
+   * @returns 用户信息
+   */
+  queryUserById(id: string): PResponse<UserInfoResp>;
 }
 
 export default ({ request }: HttpClient): UserAPI => ({
-  register: (user) => request({
-    url: '/user/register',
-    method: 'POST',
-    data: user,
-  }),
-  queryUserList: (odata) => request({
-    url: '/user',
-    method: 'GET',
-    params: odata,
-  }),
-})
+  register: (user) =>
+    request({
+      url: '/user/register',
+      method: 'POST',
+      data: user,
+    }),
+  getMyInfo: () =>
+    request({
+      url: '/user/me',
+      method: 'GET',
+    }),
+  queryUserList: (odata) =>
+    request({
+      url: '/user',
+      method: 'GET',
+      params: odata,
+    }),
+  queryUserById: (id) =>
+    request({
+      url: `/user/${id}`,
+      method: 'GET',
+    }),
+});

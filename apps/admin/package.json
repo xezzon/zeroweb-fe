@@ -1,7 +1,7 @@
 {
   "name": "zeroweb-app-admin",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "lint": "oxlint",
@@ -32,8 +32,8 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "^5.1.2",
-    "@zeroweb/oxlint": "workspace:^",
-    "@zeroweb/typescript": "workspace:^",
+    "@zeroweb/lint": "workspace:^",
+    "@zeroweb/tsconfig": "workspace:^",
     "oxlint": "catalog:",
     "rolldown-vite": "^7.3.0"
   }

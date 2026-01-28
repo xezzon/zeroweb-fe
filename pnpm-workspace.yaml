@@ -16,6 +16,7 @@ catalog:
   dayjs: ^1.11.19
   i18next: ^25.7.3
   i18next-http-backend: ^3.0.2
+  oxfmt: ^0.26.0
   oxlint: ^1.39.0
   react: ^19.2.3
   react-dom: ^19.2.3

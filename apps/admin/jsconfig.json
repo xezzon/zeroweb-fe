@@ -1,17 +1,11 @@
 {
-  "extends": "@zeroweb/typescript/jsconfig.json",
+  "extends": "@zeroweb/tsconfig/jsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@zeroweb/*": [
-        "node_modules/@zeroweb/*"
-      ]
+      "@/*": ["./src/*"],
+      "@zeroweb/*": ["node_modules/@zeroweb/*"]
     }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

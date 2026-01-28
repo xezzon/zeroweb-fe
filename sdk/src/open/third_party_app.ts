@@ -1,6 +1,6 @@
-import type { HttpClient, Id, OData, Page, PResponse } from "../types";
+import type { HttpClient, Id, OData, Page, PResponse } from '@/types';
 
-export const BASE_URL = '/third-party-app'
+export const BASE_URL = '/third-party-app';
 
 /**
  * 第三方应用
@@ -76,6 +76,12 @@ export interface ThirdPartyAppAPI {
    */
   listMyThirdPartyApp: (odata: OData) => PResponse<Page<ThirdPartyApp>>;
   /**
+   * 查询指定的第三方应用
+   * @param id 第三方应用 ID
+   * @returns 第三方应用信息
+   */
+  queryThirdPartyAppById: (id: string) => PResponse<ThirdPartyApp>;
+  /**
    * 获取所有的第三方应用列表（分页）
    * @param odata 分页参数
    * @returns 第三方应用列表
@@ -124,47 +130,61 @@ export interface ThirdPartyAppAPI {
 }
 
 export default (client: HttpClient): ThirdPartyAppAPI => ({
-  addThirdPartyApp: (thirdPartyApp) => client.request({
-    url: `${BASE_URL}`,
-    method: 'POST',
-    data: thirdPartyApp,
-  }),
-  listMyThirdPartyApp: (odata) => client.request({
-    url: `${BASE_URL}/mine`,
-    method: 'GET',
-    params: odata,
-  }),
-  listThirdPartyApp: (odata) => client.request({
-    url: `${BASE_URL}`,
-    method: 'GET',
-    params: odata,
-  }),
-  rollAccessSecret: (id) => client.request({
-    url: `${BASE_URL}/${id}/roll`,
-    method: 'PATCH',
-  }),
-  inviteMember: (appId, timeout) => client.request({
-    url: `/third-party-app/${appId}/member`,
-    method: 'POST',
-    params: { timeout, },
-  }),
-  inviteParticularMember: (appId, userId, timeout) => client.request({
-    url: `/third-party-app/${appId}/member`,
-    method: 'POST',
-    params: { userId, timeout, },
-  }),
-  addThirdPartyAppMember: (token) => client.request({
-    url: `/third-party-app/-/member`,
-    method: 'PUT',
-    params: { token, },
-  }),
-  listThirdPartyAppMember: (appId) => client.request({
-    url: `/third-party-app/${appId}/member`,
-    method: 'GET',
-  }),
-  moveOwnerShip: (appId, userId) => client.request({
-    url: `/third-party-app/${appId}/owner`,
-    method: 'PATCH',
-    params: { userId, },
-  }),
-})
+  addThirdPartyApp: (thirdPartyApp) =>
+    client.request({
+      url: `${BASE_URL}`,
+      method: 'POST',
+      data: thirdPartyApp,
+    }),
+  listMyThirdPartyApp: (odata) =>
+    client.request({
+      url: `${BASE_URL}/mine`,
+      method: 'GET',
+      params: odata,
+    }),
+  queryThirdPartyAppById: (id) =>
+    client.request({
+      url: `${BASE_URL}/${id}`,
+      method: 'GET',
+    }),
+  listThirdPartyApp: (odata) =>
+    client.request({
+      url: `${BASE_URL}`,
+      method: 'GET',
+      params: odata,
+    }),
+  rollAccessSecret: (id) =>
+    client.request({
+      url: `${BASE_URL}/${id}/roll`,
+      method: 'PATCH',
+    }),
+  inviteMember: (appId, timeout) =>
+    client.request({
+      url: `/third-party-app/${appId}/member`,
+      method: 'POST',
+      params: { timeout },
+    }),
+  inviteParticularMember: (appId, userId, timeout) =>
+    client.request({
+      url: `/third-party-app/${appId}/member`,
+      method: 'POST',
+      params: { userId, timeout },
+    }),
+  addThirdPartyAppMember: (token) =>
+    client.request({
+      url: `/third-party-app/-/member`,
+      method: 'PUT',
+      params: { token },
+    }),
+  listThirdPartyAppMember: (appId) =>
+    client.request({
+      url: `/third-party-app/${appId}/member`,
+      method: 'GET',
+    }),
+  moveOwnerShip: (appId, userId) =>
+    client.request({
+      url: `/third-party-app/${appId}/owner`,
+      method: 'PATCH',
+      params: { userId },
+    }),
+});
