@@ -4,6 +4,7 @@
     "loadingRoutes": "路由加载失败"
   },
   "logout": "退出登录",
+  "switchApp": "切换应用",
   "app": {
     "column": {
       "name": "应用名称",

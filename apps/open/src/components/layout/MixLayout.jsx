@@ -1,6 +1,6 @@
 import { AuthContext, RequireLogin } from '@zeroweb/auth';
 import { MixLayout } from '@zeroweb/layout';
-import { Dropdown, Space, Typography } from 'antd';
+import { Button, Dropdown, Space, Typography } from 'antd';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, Outlet, useNavigate } from 'react-router';
@@ -33,6 +33,9 @@ export default () => {
           }}
           actionsRender={() => (
             <Space>
+              <Button color="default" variant="link" onClick={() => navigate('/')}>
+                {t('switchApp')}
+              </Button>
               <Dropdown
                 menu={{
                   items: [
