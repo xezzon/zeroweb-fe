@@ -1,26 +1,17 @@
 import { adminApi, selfApi } from '@/api';
-import {
-  AuthContext,
-  AuthContextProvider,
-  hasPermission,
-  LoginPage,
-  RegisterPage,
-  RequireLogin,
-} from '@zeroweb/auth';
-import { MixLayout, NotFoundPage, ResourceContext, ResourceContextProvider } from '@zeroweb/layout';
-import { ConfigProvider, Dropdown, Space, Typography } from 'antd';
+import { AuthContext, AuthContextProvider, hasPermission } from '@zeroweb/auth';
+import { ResourceContext, ResourceContextProvider } from '@zeroweb/layout';
+import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
+import { lazy } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  createBrowserRouter,
-  Navigate,
-  Outlet,
-  RouterProvider,
-  useLocation,
-  useNavigate,
-} from 'react-router';
+import { createBrowserRouter, RouterProvider } from 'react-router';
 
+const MixLayout = lazy(() => import('@/components/layout/MixLayout'));
+const LoginPage = lazy(() => import('@zeroweb/auth/Login'));
+const RegisterPage = lazy(() => import('@zeroweb/auth/Register'));
+const NotFoundPage = lazy(() => import('@zeroweb/layout/404'));
 /**
  * @type {Record<string, () => Promise<{ default: React.ComponentType }>>}
  */
@@ -31,7 +22,7 @@ const modules = import.meta.glob('./routes/**/*.jsx');
 const rootRoutes = [
   {
     layout: 'MixLayout',
-    element: <MainPage />,
+    element: <MixLayout />,
   },
   {
     path: '/login',
@@ -49,13 +40,11 @@ const rootRoutes = [
 
 export default () => {
   return (
-    <>
-      <ConfigProvider locale={zhCN}>
-        <AuthContextProvider authnApi={adminApi.authn}>
-          <AppWithResource />
-        </AuthContextProvider>
-      </ConfigProvider>
-    </>
+    <ConfigProvider locale={zhCN}>
+      <AuthContextProvider authnApi={adminApi.authn}>
+        <AppWithResource />
+      </AuthContextProvider>
+    </ConfigProvider>
   );
 };
 
@@ -84,7 +73,6 @@ function AppWithResource() {
       .finally(() => {
         setLoading(false);
       });
-    // oxlint-disable-next-line exhaustive-deps
   }, [permissions]);
 
   if (loading) {
@@ -93,11 +81,13 @@ function AppWithResource() {
     return <div>{t('error.loadingRoutes')}</div>;
   } else {
     return (
-      <>
-        <ResourceContextProvider resources={resources} modules={modules} rootRoutes={rootRoutes}>
-          <ZerowebAppAdmin />
-        </ResourceContextProvider>
-      </>
+      <ResourceContextProvider
+        resources={resources}
+        component={(name) => modules[`./routes/${name}.jsx`]}
+        rootRoutes={rootRoutes}
+      >
+        <ZerowebAppAdmin />
+      </ResourceContextProvider>
     );
   }
 }
@@ -111,57 +101,5 @@ function ZerowebAppAdmin() {
         basename: import.meta.env.BASE_URL,
       })}
     />
-  );
-}
-
-function MainPage() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { user, logout } = useContext(AuthContext);
-  const { t } = useTranslation();
-
-  return (
-    <>
-      <RequireLogin
-        fallback={
-          <Navigate
-            to={{
-              pathname: '/login',
-              search: new URLSearchParams({
-                redirectUrl: location.pathname + location.search,
-              }).toString(),
-            }}
-          />
-        }
-      >
-        <MixLayout
-          title={import.meta.env.VITE_APP_TITLE}
-          breadcrumbProps={{
-            itemRender: ({ linkPath, title }) => (
-              <Typography.Link onClick={() => navigate(linkPath)}>{title}</Typography.Link>
-            ),
-          }}
-          actionsRender={() => (
-            <Space>
-              <Dropdown
-                menu={{
-                  items: [
-                    {
-                      key: 'logout',
-                      label: t('logout'),
-                      onClick: logout,
-                    },
-                  ],
-                }}
-              >
-                {user?.nickname}
-              </Dropdown>
-            </Space>
-          )}
-        >
-          <Outlet />
-        </MixLayout>
-      </RequireLogin>
-    </>
   );
 }
