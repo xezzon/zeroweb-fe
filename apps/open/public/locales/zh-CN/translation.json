@@ -1,1 +1,31 @@
-{}
+{
+  "loading": "加载中...",
+  "error": {
+    "loadingRoutes": "路由加载失败"
+  },
+  "logout": "退出登录",
+  "app": {
+    "column": {
+      "name": "应用名称",
+      "action": "操作"
+    },
+    "action": {
+      "manageMember": "管理成员",
+      "subscribeApi": "订阅接口",
+      "resetSecret": "重置密钥",
+      "addApp": "新增应用"
+    },
+    "confirm": {
+      "resetSecret": "重置密钥后，原密钥将无法使用"
+    },
+    "modal": {
+      "newSecret": "新密钥"
+    },
+    "button": {
+      "closeWithCount": "关闭 ({{count}})"
+    },
+    "alert": {
+      "secretWarning": "密钥仅显示一次，请妥善保管。"
+    }
+  }
+}

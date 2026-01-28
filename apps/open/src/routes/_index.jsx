@@ -2,9 +2,11 @@ import { openApi } from '@/api/open';
 import { PageContainer } from '@ant-design/pro-components';
 import { Alert, Button, Form, Input, Modal, Popconfirm, Table, Typography } from 'antd';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 export default function ThirdPartyAppPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   /**
@@ -13,21 +15,21 @@ export default function ThirdPartyAppPage() {
   const columns = [
     {
       dataIndex: 'name',
-      title: '应用名称',
+      title: t('app.column.name'),
     },
     {
       key: 'action',
-      title: '操作',
+      title: t('app.column.action'),
       render: (_, record) => (
         <>
           <Button type="link" onClick={() => navigate(`/${record.id}/member`)}>
-            管理成员
+            {t('app.action.manageMember')}
           </Button>
           <Button type="link" onClick={() => navigate(`/${record.id}/subscription`)}>
-            订阅接口
+            {t('app.action.subscribeApi')}
           </Button>
           <Popconfirm
-            title="重置密钥后，原密钥将无法使用"
+            title={t('app.confirm.resetSecret')}
             onConfirm={() => {
               setLoading(true);
               openApi.thirdPartyApp
@@ -39,7 +41,7 @@ export default function ThirdPartyAppPage() {
                 });
             }}
           >
-            <Button type="link">重置密钥</Button>
+            <Button type="link">{t('app.action.resetSecret')}</Button>
           </Popconfirm>
         </>
       ),
@@ -92,10 +94,9 @@ export default function ThirdPartyAppPage() {
   return (
     <>
       <PageContainer
-        title="应用管理"
         extra={
           <Button type="primary" onClick={() => setRecord({})}>
-            新增应用
+            {t('app.action.addApp')}
           </Button>
         }
       >
@@ -130,6 +131,7 @@ export default function ThirdPartyAppPage() {
  * @param {(refresh: boolean, accessSecret: import('@xezzon/zeroweb-sdk').AccessSecret) => void} param0.onClose
  */
 function ThirdPartyAppEditor({ record, onClose }) {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -168,7 +170,7 @@ function ThirdPartyAppEditor({ record, onClose }) {
           </>
         )}
       >
-        <Form.Item name="name" label="应用名称" rules={[{ required: true }]}>
+        <Form.Item name="name" label={t('app.column.name')} rules={[{ required: true }]}>
           <Input />
         </Form.Item>
       </Modal>
@@ -185,6 +187,7 @@ function ThirdPartyAppEditor({ record, onClose }) {
  */
 function AccessSecretModal({ accessSecret, onClose }) {
   const [countdown, setCountdown] = useState(0);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (accessSecret) {
@@ -205,12 +208,12 @@ function AccessSecretModal({ accessSecret, onClose }) {
     <>
       <Modal
         open={!!accessSecret}
-        title="新密钥"
+        title={t('app.modal.newSecret')}
         closable={false}
         destroyOnHidden
         footer={[
           <Button onClick={onClose} key="close">
-            关闭 ({countdown})
+            {t('app.button.closeWithCount', { count: countdown })}
           </Button>,
         ]}
       >
@@ -226,7 +229,7 @@ function AccessSecretModal({ accessSecret, onClose }) {
             {accessSecret?.secretKey}
           </Typography.Text>
         </Typography.Paragraph>
-        <Alert type="info" title={`密钥仅显示一次，请妥善保管。`} />
+        <Alert type="info" title={t('app.alert.secretWarning')} />
       </Modal>
     </>
   );

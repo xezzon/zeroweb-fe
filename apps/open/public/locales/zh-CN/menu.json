@@ -1,0 +1,5 @@
+{
+  "/": "应用管理",
+  "/:thirdPartyAppId/member": "成员管理",
+  "/:thirdPartyAppId/subscription": "订阅管理"
+}
