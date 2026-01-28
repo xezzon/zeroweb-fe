@@ -5,10 +5,17 @@ import { createContext, Fragment, lazy, useMemo } from 'react';
  * @param {object} param0
  * @param {import("react").ReactElement} param0.children
  * @param {import('@xezzon/zeroweb-sdk').MenuInfo[]} param0.resources
- * @param {Record<string, () => Promise<{ default: React.ComponentType }>>} param0.modules
+ * @param {(string) => Promise<{ default: React.ComponentType }>} param0.component
  * @param {import('react-router').RouteObject[]} param0.rootRoutes
+ * @param {string} param0.defaultLayout
  */
-export default function ResourceContextProvider({ children, resources, modules, rootRoutes }) {
+export default function ResourceContextProvider({
+  children,
+  resources,
+  component,
+  rootRoutes,
+  defaultLayout = 'MixLayout',
+}) {
   const menus = useMemo(() => {
     const menus = resources
       .filter((resource) =>
@@ -30,7 +37,7 @@ export default function ResourceContextProvider({ children, resources, modules, 
         if (resource.type === MenuType.EMBEDDED) {
           return {
             path: resource.path,
-            layout: resource.layout || 'MixLayout',
+            layout: resource.layout || defaultLayout,
             element: (
               <iframe
                 src={resource.route}
@@ -42,10 +49,10 @@ export default function ResourceContextProvider({ children, resources, modules, 
             ),
           };
         } else {
-          const module = modules[`./routes/${resource.route}.jsx`];
+          const module = component(resource.route);
           return {
             path: resource.path,
-            layout: resource.layout || 'MixLayout',
+            layout: resource.layout || defaultLayout,
             lazy: async () => ({
               Component: module ? lazy(module) : Fragment,
             }),
@@ -56,7 +63,7 @@ export default function ResourceContextProvider({ children, resources, modules, 
       ...rootRoute,
       children: routes.filter((route) => route.layout === rootRoute.layout),
     }));
-  }, [rootRoutes, modules, resources]);
+  }, [resources]);
 
   return <ResourceContext value={{ routes, menus }}>{children}</ResourceContext>;
 }
