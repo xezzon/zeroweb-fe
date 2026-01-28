@@ -6,15 +6,16 @@ import SubscriptionPage from './routes/_id/subscription';
 import ThirdPartyAppPage from './routes/_index';
 
 export default () => {
-  return <>
-    <ConfigProvider locale={zhCN}>
-      <ZerowebAppOpen />
-    </ConfigProvider>
-  </>
-}
+  return (
+    <>
+      <ConfigProvider locale={zhCN}>
+        <ZerowebAppOpen />
+      </ConfigProvider>
+    </>
+  );
+};
 
 function ZerowebAppOpen() {
-
   /**
    * @type {import('react-router').RouteObject[]}
    */
@@ -31,11 +32,13 @@ function ZerowebAppOpen() {
       path: '/:id/subscription',
       Component: SubscriptionPage,
     },
-  ]
-  
-  return <RouterProvider
-    router={createBrowserRouter(routes, {
-      basename: import.meta.env.BASE_URL,
-    })}
-  />
+  ];
+
+  return (
+    <RouterProvider
+      router={createBrowserRouter(routes, {
+        basename: import.meta.env.BASE_URL,
+      })}
+    />
+  );
 }

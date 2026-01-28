@@ -7,32 +7,28 @@
  * @returns {import('@rsbuild/core').RsbuildPlugin} Rsbuild 插件
  */
 export function authProxyPlugin(options = {}) {
-  const {
-    token: idToken,
-    jwk,
-    excludePaths = ['/auth/login/basic']
-  } = options
+  const { token: idToken, jwk, excludePaths = ['/auth/login/basic'] } = options;
   /**
    * 向请求头添加 Token
    * @param {import('http').ClientRequest} proxyReq
    */
   const authProxy = (proxyReq) => {
     if (excludePaths.includes(proxyReq.path)) {
-      return
+      return;
     }
     if (idToken) {
-      proxyReq.setHeader('Authorization', `Bearer ${idToken}`)
+      proxyReq.setHeader('Authorization', `Bearer ${idToken}`);
     }
     if (jwk) {
-      proxyReq.setHeader('X-PUBLIC-KEY', jwk)
+      proxyReq.setHeader('X-PUBLIC-KEY', jwk);
     }
-  }
+  };
   return {
     name: 'auth-proxy-plugin',
     setup(api) {
       api.modifyRsbuildConfig((config) => {
         // 如果已有代理配置，则为其添加 onProxyReq
-        const proxies = config.server?.proxy
+        const proxies = config.server?.proxy;
         if (!proxies) {
           return;
         }
@@ -40,12 +36,12 @@ export function authProxyPlugin(options = {}) {
           /**
            * @type {import('@rsbuild/core').ProxyOptions}
            */
-          const proxyConfig = proxies[key]
+          const proxyConfig = proxies[key];
           if (proxyConfig && typeof proxyConfig === 'object' && !proxyConfig.onProxyReq) {
-            proxyConfig.onProxyReq = authProxy
+            proxyConfig.onProxyReq = authProxy;
           }
-        })
-      })
+        });
+      });
     },
-  }
+  };
 }

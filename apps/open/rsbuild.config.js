@@ -5,8 +5,8 @@ import { authProxyPlugin } from './plugins/auth-proxy-plugin.js';
 import { metadataPlugin } from './plugins/metadata-plugin.js';
 
 const { publicVars, parsed } = loadEnv({
-  prefixes: ['PUBLIC_', 'ZEROWEB_']
-})
+  prefixes: ['PUBLIC_', 'ZEROWEB_'],
+});
 
 // Docs: https://rsbuild.rs/config/
 export default defineConfig({

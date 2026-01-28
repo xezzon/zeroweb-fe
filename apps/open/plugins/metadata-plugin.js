@@ -1,18 +1,22 @@
-import { ServiceType } from '@xezzon/zeroweb-sdk'
+import { ServiceType } from '@xezzon/zeroweb-sdk';
 
-const pluginName = 'MetadataPlugin'
+const pluginName = 'MetadataPlugin';
 
 /**
  * Rsbuild 插件：在构建输出中添加 metadata/info.json 文件
  * @returns {import('@rsbuild/core').RsbuildPlugin} Rsbuild 插件
  */
 export function metadataPlugin() {
-  const content = JSON.stringify({
-    name: process.env.npm_package_name,
-    version: process.env.npm_package_version,
-    type: ServiceType.CLIENT,
-    hidden: true,
-  }, null, 2)
+  const content = JSON.stringify(
+    {
+      name: process.env.npm_package_name,
+      version: process.env.npm_package_version,
+      type: ServiceType.CLIENT,
+      hidden: true,
+    },
+    null,
+    2,
+  );
   return {
     name: 'metadata-plugin',
     setup(api) {
@@ -33,13 +37,13 @@ export function metadataPlugin() {
                   assets['metadata/info.json'] = {
                     source: () => content,
                     size: () => content.length,
-                  }
+                  };
                 },
-              )
-            })
-          }
-        })
-      })
+              );
+            });
+          },
+        });
+      });
     },
-  }
+  };
 }
