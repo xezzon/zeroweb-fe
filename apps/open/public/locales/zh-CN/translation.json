@@ -28,5 +28,15 @@
     "alert": {
       "secretWarning": "密钥仅显示一次，请妥善保管。"
     }
+  },
+  "subscription": {
+    "title": "订阅管理",
+    "column": {
+      "openapiCode": "接口编码",
+      "status": "订阅状态"
+    },
+    "action": {
+      "subscribe": "订阅"
+    }
   }
 }
