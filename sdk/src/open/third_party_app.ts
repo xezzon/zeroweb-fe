@@ -127,6 +127,12 @@ export interface ThirdPartyAppAPI {
    * @param userId 用户ID
    */
   moveOwnerShip: (appId: string, userId: string) => PResponse<void>;
+  /**
+   * 将成员从第三方应用的成员中移除
+   * @param appId 第三方应用ID
+   * @param memberId 成员ID
+   */
+  deleteMember: (appId: string, memberId: string) => PResponse<void>;
 }
 
 export default (client: HttpClient): ThirdPartyAppAPI => ({
@@ -186,5 +192,10 @@ export default (client: HttpClient): ThirdPartyAppAPI => ({
       url: `/third-party-app/${appId}/owner`,
       method: 'PATCH',
       params: { userId },
+    }),
+  deleteMember: (appId, memberId) =>
+    client.request({
+      url: `/third-party-app/${appId}/member/${memberId}`,
+      method: 'DELETE',
     }),
 });
