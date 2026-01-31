@@ -5,16 +5,49 @@
   },
   "logout": "退出登录",
   "switchApp": "切换应用",
+  "member": {
+    "column": {
+      "nickname": "用户昵称",
+      "role": "角色",
+      "joinTime": "加入时间"
+    },
+    "role": {
+      "owner": "所有者",
+      "member": "普通成员"
+    },
+    "action": {
+      "transferOwner": "移交应用",
+      "removeMember": "移除成员",
+      "inviteMember": "邀请成员"
+    },
+    "confirm": {
+      "transferOwner": {
+        "title": "确定将应用移交给该成员吗？",
+        "description": "移交后，您将不再拥有当前应用的所有权。"
+      },
+      "removeMember": "确定要将该成员移除吗？"
+    },
+    "inviteMember": {
+      "title": "邀请成员",
+      "timeout": "有效期",
+      "timeoutUnit": "小时"
+    },
+    "inviteCode": {
+      "title": "邀请码"
+    }
+  },
   "app": {
     "column": {
       "name": "应用名称",
-      "action": "操作"
+      "action": "操作",
+      "inviteToken": "邀请码"
     },
     "action": {
       "manageMember": "管理成员",
       "subscribeApi": "订阅接口",
       "resetSecret": "重置密钥",
-      "addApp": "新增应用"
+      "addApp": "新增应用",
+      "joinApp": "加入应用"
     },
     "confirm": {
       "resetSecret": "重置密钥后，原密钥将无法使用"
@@ -23,7 +56,8 @@
       "newSecret": "新密钥"
     },
     "button": {
-      "closeWithCount": "关闭 ({{count}})"
+      "closeWithCount": "关闭 ({{count}})",
+      "close": "关闭"
     },
     "alert": {
       "secretWarning": "密钥仅显示一次，请妥善保管。"
