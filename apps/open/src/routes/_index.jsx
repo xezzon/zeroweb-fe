@@ -63,6 +63,7 @@ export default function ThirdPartyAppPage() {
   const [accessSecret, setAccessSecret] = useState(
     /** @type {import('@xezzon/zeroweb-sdk').AccessSecret} */ (null),
   );
+  const [joinAppModalVisible, setJoinAppModalVisible] = useState(false);
 
   const handleTableChange = (newPagination) => {
     if (pagination.pageSize != newPagination.pageSize) {
@@ -95,9 +96,12 @@ export default function ThirdPartyAppPage() {
     <>
       <PageContainer
         extra={
-          <Button type="primary" onClick={() => setRecord({})}>
-            {t('app.action.addApp')}
-          </Button>
+          <>
+            <Button type="primary" onClick={() => setRecord({})}>
+              {t('app.action.addApp')}
+            </Button>
+            <Button onClick={() => setJoinAppModalVisible(true)}>{t('app.action.joinApp')}</Button>
+          </>
         }
       >
         <Table
@@ -122,6 +126,13 @@ export default function ThirdPartyAppPage() {
         }}
       />
       <AccessSecretModal accessSecret={accessSecret} onClose={() => setAccessSecret(null)} />
+      <JoinAppModal
+        open={joinAppModalVisible}
+        onClose={() => {
+          setCount(count + 1);
+          setJoinAppModalVisible(false);
+        }}
+      />
     </>
   );
 }
@@ -233,5 +244,49 @@ function AccessSecretModal({ accessSecret, onClose }) {
         <Alert type="info" title={t('app.alert.secretWarning')} />
       </Modal>
     </>
+  );
+}
+
+/**
+ * @param {object} param0
+ * @param {boolean} param0.open
+ * @param {() => void} param0.onClose
+ */
+function JoinAppModal({ open, onClose }) {
+  const { t } = useTranslation();
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [token, setToken] = useState('');
+  const handleJoinApp = () => {
+    setConfirmLoading(true);
+    openApi.thirdPartyApp
+      .addThirdPartyAppMember(token)
+      .then(() => onClose())
+      .finally(() => {
+        setConfirmLoading(false);
+      });
+  };
+
+  return (
+    <Modal
+      open={open}
+      closable={false}
+      destroyOnHidden
+      confirmLoading={confirmLoading}
+      onCancel={onClose}
+      onOk={handleJoinApp}
+      modalRender={(dom) => (
+        <Form layout="vertical" clearOnDestroy>
+          {dom}
+        </Form>
+      )}
+    >
+      <Form.Item name="inviteToken" label={t('app.column.inviteToken')} required>
+        <Input.TextArea
+          value={token}
+          autoSize={{ minRows: 3 }}
+          onChange={(e) => setToken(e.target.value)}
+        />
+      </Form.Item>
+    </Modal>
   );
 }

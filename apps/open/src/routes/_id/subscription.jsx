@@ -92,7 +92,7 @@ export default function SubscriptionPage() {
 
   return (
     <>
-      <PageContainer title={t('subscription.title')} subTitle={thirdPartyApp?.name}>
+      <PageContainer subTitle={thirdPartyApp?.name}>
         <Table
           columns={columns}
           dataSource={subscriptions}
