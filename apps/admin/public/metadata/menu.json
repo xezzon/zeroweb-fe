@@ -63,5 +63,12 @@
     "path": "/third-party-app",
     "route": "third-party-app/index",
     "parent": "open"
+  },
+  {
+    "type": "ROUTE",
+    "path": "/third-party-app/:id/subscription",
+    "route": "third-party-app/_id/subscription",
+    "parent": "open",
+    "hideInMenu": true
   }
 ]
