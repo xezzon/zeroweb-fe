@@ -11,6 +11,7 @@
   "open": "开放平台",
   "/openapi": "对外接口",
   "/third-party-app": "第三方应用管理",
+  "/third-party-app/:id/subscription": "订阅管理",
   "i18n": "国际化管理",
   "/language": "语言管理",
   "/locale": "国际化文本"

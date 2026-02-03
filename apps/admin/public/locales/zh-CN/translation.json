@@ -95,5 +95,18 @@
       "httpMethod": "HTTP方法",
       "status": "状态"
     }
+  },
+  "third-party-app": {
+    "field": {
+      "name": "第三方应用名称"
+    },
+    "subscription": "查看订阅"
+  },
+  "subscription": {
+    "field": {
+      "openapiCode": "接口编码",
+      "status": "订阅状态"
+    },
+    "audit": "审核"
   }
 }
