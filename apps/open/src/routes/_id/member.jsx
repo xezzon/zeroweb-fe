@@ -86,7 +86,7 @@ export default function MemberPage() {
     },
     {
       key: 'action',
-      title: t('app.column.action'),
+      title: t('common.action'),
       render: (_, record) => (
         <>
           {thirdPartyApp?.ownerId === user?.sub && !record.owner && (

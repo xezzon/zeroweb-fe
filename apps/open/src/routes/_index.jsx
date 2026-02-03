@@ -19,7 +19,7 @@ export default function ThirdPartyAppPage() {
     },
     {
       key: 'action',
-      title: t('app.column.action'),
+      title: t('common.action'),
       render: (_, record) => (
         <>
           <Button type="link" onClick={() => navigate(`/${record.id}/member`)}>

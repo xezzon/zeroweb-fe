@@ -5,6 +5,9 @@
   },
   "logout": "退出登录",
   "switchApp": "切换应用",
+  "common": {
+    "action": "操作"
+  },
   "member": {
     "column": {
       "nickname": "用户昵称",

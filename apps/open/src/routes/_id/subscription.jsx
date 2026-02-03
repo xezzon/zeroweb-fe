@@ -77,7 +77,7 @@ export default function SubscriptionPage() {
     },
     {
       key: 'action',
-      title: t('app.column.action'),
+      title: t('common.action'),
       render: (_, record) => (
         <>
           {record.subscriptionStatus === SubscriptionStatus.NONE && (
