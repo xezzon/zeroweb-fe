@@ -1,10 +1,14 @@
 import { adminApi, openApi } from '@/api';
+import { fileApi } from '@/api/file';
 import { PageContainer } from '@ant-design/pro-components';
-import { OpenapiStatus } from '@xezzon/zeroweb-sdk';
+import { AttachmentStatus, checksum, OpenapiStatus } from '@xezzon/zeroweb-sdk';
 import { useDict } from '@zeroweb/dict';
+import { Upload } from 'antd';
 import { Button, Form, Input, Modal, Popconfirm, Select, Table } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+const DOCUMENT_ATTACHMENT_KEY = 'openapi-document';
 
 export default function OpenapiPage() {
   const { t } = useTranslation();
@@ -31,42 +35,82 @@ export default function OpenapiPage() {
         render: mapOpenapiStatus,
       },
       {
+        key: 'document',
+        title: t('openapi.field.document'),
+        render: (_, record) => {
+          /**
+           * @type {import('@xezzon/zeroweb-sdk').Attachment[]}
+           */
+          const attachments = record.document;
+          return attachments.map((attachment) => (
+            <Button
+              type="link"
+              key={attachment.id}
+              onClick={() => {
+                fileApi.resolveDownloadUrl(attachment).then(({ endpoint, filename }) => {
+                  const link = document.createElement('a');
+                  link.href = endpoint;
+                  link.download = filename;
+                  link.target = '_blank';
+                  link.click();
+                });
+              }}
+            >
+              {attachment.name}
+            </Button>
+          ));
+        },
+      },
+      {
         key: 'action',
         title: t('common.action'),
-        render: (_, record) => (
+        render: (_, record, index) => (
           <>
             <Button type="link" onClick={() => setRecord(record)}>
               {t('common.edit')}
             </Button>
+            <DocumentUpload
+              record={record}
+              afterUpload={() => {
+                fileApi.attachment
+                  .queryAttachmentByBiz(DOCUMENT_ATTACHMENT_KEY, record.id)
+                  .then((response) => response.data)
+                  .then((attachments) => {
+                    const openapi = { ...record, document: attachments };
+                    dataSource.splice(index, 1, openapi);
+                    setDataSource(dataSource);
+                  });
+              }}
+            />
             {record.status === OpenapiStatus.DRAFT && (
-              <>
-                <Button
-                  type="link"
-                  onClick={() => {
-                    setLoading(true);
-                    openApi.openapi
-                      .publishOpenapi(record.id)
-                      .then(loadData)
-                      .finally(() => setLoading(false));
-                  }}
-                >
-                  {t('openapi.publish')}
+              <Button
+                type="link"
+                onClick={() => {
+                  setLoading(true);
+                  openApi.openapi
+                    .publishOpenapi(record.id)
+                    .then(fetchData)
+                    .finally(() => setLoading(false));
+                }}
+              >
+                {t('openapi.publish')}
+              </Button>
+            )}
+            {record.status === OpenapiStatus.DRAFT && (
+              <Popconfirm
+                title={t('common.confirmDelete')}
+                onConfirm={() => {
+                  setLoading(true);
+                  openApi.openapi
+                    .deleteOpenapi(record.id)
+                    .then(fetchData)
+                    .finally(() => setLoading(false));
+                }}
+              >
+                <Button type="link" danger>
+                  {t('common.delete')}
                 </Button>
-                <Popconfirm
-                  title={t('common.confirmDelete')}
-                  onConfirm={() => {
-                    setLoading(true);
-                    openApi.openapi
-                      .deleteOpenapi(record.id)
-                      .then(loadData)
-                      .finally(() => setLoading(false));
-                  }}
-                >
-                  <Button type="link" danger>
-                    {t('common.delete')}
-                  </Button>
-                </Popconfirm>
-              </>
+              </Popconfirm>
             )}
           </>
         ),
@@ -75,7 +119,9 @@ export default function OpenapiPage() {
     ]),
     [mapOpenapiStatus],
   );
-  const [data, setData] = useState(/** @type {import('@xezzon/zeroweb-sdk').Openapi[]} */ ([]));
+  const [dataSource, setDataSource] = useState(
+    /** @type {import('@xezzon/zeroweb-sdk').Openapi[]} */ ([]),
+  );
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
@@ -90,7 +136,7 @@ export default function OpenapiPage() {
     setPagination(newPagination);
   };
 
-  const loadData = async () => {
+  const fetchData = async () => {
     setLoading(true);
     return openApi.openapi
       .getOpenapiList({
@@ -99,19 +145,30 @@ export default function OpenapiPage() {
       })
       .then((response) => response.data)
       .then(({ content, page }) => {
-        setData(content);
         setPagination({
           ...pagination,
           total: page.totalElements,
         });
+        return content;
       })
+      .then(async (openapiList) =>
+        Promise.all(
+          openapiList.map((openapi) =>
+            fileApi.attachment
+              .queryAttachmentByBiz(DOCUMENT_ATTACHMENT_KEY, openapi.id)
+              .then((response) => response.data)
+              .then((attachments) => ({ ...openapi, document: attachments })),
+          ),
+        ),
+      )
+      .then(setDataSource)
       .finally(() => {
         setLoading(false);
       });
   };
 
   useEffect(() => {
-    loadData();
+    fetchData();
     // oxlint-disable-next-line exhaustive-deps
   }, [pagination.current, pagination.pageSize]);
 
@@ -126,7 +183,7 @@ export default function OpenapiPage() {
       >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={dataSource}
           loading={loading}
           rowKey="id"
           search={false}
@@ -139,7 +196,7 @@ export default function OpenapiPage() {
         onClose={(refresh) => {
           setRecord(null);
           if (refresh) {
-            loadData();
+            fetchData();
           }
         }}
       />
@@ -231,5 +288,80 @@ function OpenapiEditor({ record, onClose }) {
         </Form.Item>
       </Modal>
     </>
+  );
+}
+
+/**
+ * @param {object} param0
+ * @param {import('@xezzon/zeroweb-sdk').Openapi} param0.record
+ * @param {() => void} param0.afterUpload
+ */
+function DocumentUpload({ record, afterUpload }) {
+  const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
+
+  // 从 record 中获取附件信息，避免重复查询
+  /**
+   * @type {import('@xezzon/zeroweb-sdk').Attachment[]}
+   */
+  const existingAttachments = record.document || [];
+
+  /**
+   * 处理上传逻辑
+   * @param {File} file
+   */
+  const handleUpload = (file) => {
+    setLoading(true);
+
+    // 处理多个附件的情况：保留最后一个，其他删除
+    const attachmentsToDelete = existingAttachments.slice(0, -1);
+    attachmentsToDelete.forEach((attachment) => {
+      fileApi.attachment.deleteAttachment(attachment.id);
+    });
+
+    // 如果存在附件且状态不是上传中，则将其删除
+    const lastAttachment = existingAttachments[existingAttachments.length - 1];
+    if (lastAttachment && lastAttachment?.status !== AttachmentStatus.UPLOADING) {
+      fileApi.attachment.deleteAttachment(lastAttachment.id);
+    }
+
+    /**
+     * @type {Promise<import('@xezzon/zeroweb-sdk').UploadInfo>}
+     */
+    let getUploadInfo = Promise.resolve();
+    if (lastAttachment?.status === AttachmentStatus.UPLOADING) {
+      // 文件已在上传，断点续传
+      getUploadInfo = fileApi.attachment
+        .getUploadInfo(lastAttachment.id, file.checksum, file.size)
+        .then((response) => response.data);
+    } else {
+      // 文件为空，新增附件后上传
+      getUploadInfo = fileApi.attachment
+        .addAttachment(file, DOCUMENT_ATTACHMENT_KEY, record.id)
+        .then((response) => response.data);
+    }
+    setLoading(true);
+    getUploadInfo
+      .then((uploadInfo) => fileApi.upload(file, uploadInfo))
+      .then(afterUpload)
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  return (
+    <Upload
+      showUploadList={false}
+      maxCount={1}
+      accept=".json,.yaml,.yml"
+      beforeUpload={(file) => checksum(file)}
+      customRequest={({ file }) => {
+        handleUpload(file);
+      }}
+    >
+      <Button type="link" loading={loading}>
+        {t('openapi.uploadDocument')}
+      </Button>
+    </Upload>
   );
 }

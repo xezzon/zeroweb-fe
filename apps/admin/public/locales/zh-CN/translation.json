@@ -85,6 +85,7 @@
   "openapi": {
     "add": "新增开放接口",
     "publish": "发布",
+    "uploadDocument": "上传文档",
     "status": {
       "draft": "草稿",
       "published": "已发布"
@@ -93,7 +94,8 @@
       "code": "接口编码",
       "destination": "后端地址",
       "httpMethod": "HTTP方法",
-      "status": "状态"
+      "status": "状态",
+      "document": "文档"
     }
   },
   "third-party-app": {
