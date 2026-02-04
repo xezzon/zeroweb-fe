@@ -2,7 +2,7 @@ import axios from 'axios';
 import { zerowebErrorHandler } from '@/interceptors';
 import type { InstanceConfig } from '@/types';
 import attachment from './attachment';
-import { upload } from './upload';
+import { checksum, upload } from './upload';
 
 export default (config: InstanceConfig) => {
   const instance = axios.create(config);
@@ -30,6 +30,8 @@ export default (config: InstanceConfig) => {
     upload: upload(instance, attachmentApi),
   };
 };
+
+export { checksum } from './upload';
 
 export enum FileProvider {
   FS = 'FS',
