@@ -1,7 +1,8 @@
 import { ProLayout } from '@ant-design/pro-components';
 import { useContext } from 'react';
-import { Link, Outlet, useLocation, useSearchParams } from 'react-router';
+import { Link, Outlet, useLocation, useParams, useSearchParams } from 'react-router';
 import { ResourceContext } from './ResourceContext';
+import { resolveRouteParam } from './util';
 
 /**
  * @param {import("@ant-design/pro-components").ProLayoutProps} param0
@@ -10,6 +11,7 @@ import { ResourceContext } from './ResourceContext';
 export default ({ children = <Outlet />, ...props }) => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
+  const params = useParams();
   const { menus } = useContext(ResourceContext);
 
   if (searchParams.has('hideMenu')) {
@@ -20,16 +22,16 @@ export default ({ children = <Outlet />, ...props }) => {
     <>
       <ProLayout
         logo={false}
-        {...props}
         layout="mix"
         location={{ pathname: location.pathname }}
         menu={{ request: () => menus }}
         menuItemRender={(item, dom) => (
-          <Link to={item.path} target={item.target}>
+          <Link to={resolveRouteParam(item.path, params)} target={item.target}>
             {dom}
           </Link>
         )}
         style={{ height: 'calc(100vh - 16px)' }}
+        {...props}
       >
         {children}
       </ProLayout>

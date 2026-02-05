@@ -2,7 +2,7 @@ import axios from 'axios';
 import { zerowebErrorHandler } from '@/interceptors';
 import type { InstanceConfig } from '@/types';
 import attachment from './attachment';
-import { upload } from './upload';
+import { checksum, resolveDownloadUrl, upload } from './upload';
 
 export default (config: InstanceConfig) => {
   const instance = axios.create(config);
@@ -23,13 +23,16 @@ export default (config: InstanceConfig) => {
     attachment: attachmentApi,
     /**
      * 文件上传
-     * @param file 文件
-     * @param bizType 业务类型
-     * @param bizId 业务编码
      */
     upload: upload(instance, attachmentApi),
+    /**
+     * 将获取并解析下载地址
+     */
+    resolveDownloadUrl: resolveDownloadUrl(attachmentApi, config.baseURL),
   };
 };
+
+export { checksum } from './upload';
 
 export enum FileProvider {
   FS = 'FS',
