@@ -7,7 +7,7 @@ export type * from './admin';
 export { default as ZerowebOpenClient, OpenapiStatus, SubscriptionStatus } from './open';
 export type * from './open';
 
-export { default as ZerowebFileClient, FileProvider, AttachmentStatus } from './file';
+export { default as ZerowebFileClient, checksum, FileProvider, AttachmentStatus } from './file';
 export type * from './file';
 
 export { default as ZerowebDevClient } from './dev';
