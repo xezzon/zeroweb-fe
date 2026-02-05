@@ -44,11 +44,6 @@
     "parent": "app-management"
   },
   {
-    "type": "ROUTE",
-    "path": "/attachment",
-    "route": "attachment/index"
-  },
-  {
     "type": "GROUP",
     "path": "open"
   },

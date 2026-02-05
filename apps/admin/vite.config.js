@@ -45,6 +45,11 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(env.ZEROWEB_OPEN_API, ''),
         },
+        [env.ZEROWEB_FILE_API]: {
+          target: env.VITE_FILE_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(env.ZEROWEB_FILE_API, ''),
+        },
       },
     },
   };
