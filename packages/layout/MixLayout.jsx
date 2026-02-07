@@ -27,7 +27,7 @@ export default ({ children = <Outlet />, ...props }) => {
         menu={{ request: () => menus }}
         menuItemRender={(item, dom) => (
           <Link to={resolveRouteParam(item.path, params)} target={item.target}>
-            {dom}
+            {cloneElement(dom, { 'data-perms': item.permissions?.toString() })}
           </Link>
         )}
         style={{ height: 'calc(100vh - 16px)' }}
