@@ -14,7 +14,6 @@
   },
   "devDependencies": {
     "@zeroweb/lint": "workspace:^",
-    "@zeroweb/tsconfig": "workspace:^",
-    "oxlint": "catalog:"
+    "@zeroweb/tsconfig": "workspace:^"
   }
 }

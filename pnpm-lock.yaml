@@ -63,9 +63,6 @@ importers:
       axios:
         specifier: 'catalog:'
         version: 1.13.2
-      oxlint:
-        specifier: 'catalog:'
-        version: 1.42.0
 
   packages/dict:
     dependencies:
@@ -88,9 +85,6 @@ importers:
       axios:
         specifier: 'catalog:'
         version: 1.13.2
-      oxlint:
-        specifier: 'catalog:'
-        version: 1.42.0
 
   packages/layout:
     dependencies:
@@ -116,9 +110,15 @@ importers:
       '@zeroweb/tsconfig':
         specifier: workspace:^
         version: link:../../scripts/tsconfig
-      oxlint:
-        specifier: 'catalog:'
-        version: 1.42.0
+
+  packages/uuid:
+    devDependencies:
+      '@zeroweb/lint':
+        specifier: workspace:^
+        version: link:../../scripts/lint
+      '@zeroweb/tsconfig':
+        specifier: workspace:^
+        version: link:../../scripts/tsconfig
 
   scripts/lint:
     dependencies:
