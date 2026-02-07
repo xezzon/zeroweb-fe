@@ -2,6 +2,7 @@ import { adminApi, openApi } from '@/api';
 import { fileApi } from '@/api/file';
 import { PageContainer } from '@ant-design/pro-components';
 import { AttachmentStatus, checksum, OpenapiStatus } from '@xezzon/zeroweb-sdk';
+import { RequirePermissions } from '@zeroweb/auth';
 import { useDict } from '@zeroweb/dict';
 import { Upload } from 'antd';
 import { Button, Form, Input, Modal, Popconfirm, Select, Table } from 'antd';
@@ -66,9 +67,11 @@ export default function OpenapiPage() {
         title: t('common.action'),
         render: (_, record, index) => (
           <>
-            <Button type="link" onClick={() => setRecord(record)}>
-              {t('common.edit')}
-            </Button>
+            <RequirePermissions required={['openapi:write']}>
+              <Button type="link" onClick={() => setRecord(record)}>
+                {t('common.edit')}
+              </Button>
+            </RequirePermissions>
             <DocumentUpload
               record={record}
               afterUpload={() => {
@@ -83,18 +86,20 @@ export default function OpenapiPage() {
               }}
             />
             {record.status === OpenapiStatus.DRAFT && (
-              <Button
-                type="link"
-                onClick={() => {
-                  setLoading(true);
-                  openApi.openapi
-                    .publishOpenapi(record.id)
-                    .then(fetchData)
-                    .finally(() => setLoading(false));
-                }}
-              >
-                {t('openapi.publish')}
-              </Button>
+              <RequirePermissions required={['openapi:publish']}>
+                <Button
+                  type="link"
+                  onClick={() => {
+                    setLoading(true);
+                    openApi.openapi
+                      .publishOpenapi(record.id)
+                      .then(fetchData)
+                      .finally(() => setLoading(false));
+                  }}
+                >
+                  {t('openapi.publish')}
+                </Button>
+              </RequirePermissions>
             )}
             {record.status === OpenapiStatus.DRAFT && (
               <Popconfirm
@@ -107,9 +112,11 @@ export default function OpenapiPage() {
                     .finally(() => setLoading(false));
                 }}
               >
-                <Button type="link" danger>
-                  {t('common.delete')}
-                </Button>
+                <RequirePermissions required={['openapi:write']}>
+                  <Button type="link" danger>
+                    {t('common.delete')}
+                  </Button>
+                </RequirePermissions>
               </Popconfirm>
             )}
           </>
@@ -176,9 +183,11 @@ export default function OpenapiPage() {
     <>
       <PageContainer
         extra={
-          <Button type="primary" onClick={() => setRecord({ status: OpenapiStatus.DRAFT })}>
-            {t('openapi.add')}
-          </Button>
+          <RequirePermissions required={['openapi:write']}>
+            <Button type="primary" onClick={() => setRecord({ status: OpenapiStatus.DRAFT })}>
+              {t('openapi.add')}
+            </Button>
+          </RequirePermissions>
         }
       >
         <Table
@@ -248,46 +257,42 @@ function OpenapiEditor({ record, onClose }) {
   const handleCancel = () => onClose(false);
 
   return (
-    <>
-      <Modal
-        open={!!record}
-        destroyOnHidden
-        confirmLoading={confirmLoading}
-        onOk={handleFinish}
-        onCancel={handleCancel}
-        modalRender={(dom) => (
-          <>
-            <Form
-              layout="vertical"
-              initialValues={record}
-              clearOnDestroy
-              onFinish={handleFinish}
-              form={form}
-            >
-              {dom}
-            </Form>
-          </>
-        )}
+    <Modal
+      open={!!record}
+      destroyOnHidden
+      confirmLoading={confirmLoading}
+      onOk={handleFinish}
+      onCancel={handleCancel}
+      modalRender={(dom) => (
+        <Form
+          layout="vertical"
+          initialValues={record}
+          clearOnDestroy
+          onFinish={handleFinish}
+          form={form}
+        >
+          {dom}
+        </Form>
+      )}
+    >
+      <Form.Item name="code" label={t('openapi.field.code')} rules={[{ required: true }]}>
+        <Input disabled={record?.status !== OpenapiStatus.DRAFT} />
+      </Form.Item>
+      <Form.Item
+        name="destination"
+        label={t('openapi.field.destination')}
+        rules={[{ required: true }]}
       >
-        <Form.Item name="code" label={t('openapi.field.code')} rules={[{ required: true }]}>
-          <Input disabled={record?.status !== OpenapiStatus.DRAFT} />
-        </Form.Item>
-        <Form.Item
-          name="destination"
-          label={t('openapi.field.destination')}
-          rules={[{ required: true }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="httpMethod"
-          label={t('openapi.field.httpMethod')}
-          rules={[{ required: true }]}
-        >
-          <Select options={httpMethodDict.map(({ code, label }) => ({ value: code, label }))} />
-        </Form.Item>
-      </Modal>
-    </>
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="httpMethod"
+        label={t('openapi.field.httpMethod')}
+        rules={[{ required: true }]}
+      >
+        <Select options={httpMethodDict.map(({ code, label }) => ({ value: code, label }))} />
+      </Form.Item>
+    </Modal>
   );
 }
 
@@ -359,9 +364,11 @@ function DocumentUpload({ record, afterUpload }) {
         handleUpload(file);
       }}
     >
-      <Button type="link" loading={loading}>
-        {t('openapi.uploadDocument')}
-      </Button>
+      <RequirePermissions required={['openapi:write']}>
+        <Button type="link" loading={loading}>
+          {t('openapi.uploadDocument')}
+        </Button>
+      </RequirePermissions>
     </Upload>
   );
 }

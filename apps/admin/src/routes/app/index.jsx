@@ -2,6 +2,7 @@ import { adminApi } from '@/api';
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { ZerowebMetadataClient } from '@xezzon/zeroweb-sdk';
+import { RequirePermissions } from '@zeroweb/auth';
 import { useDict } from '@zeroweb/dict';
 import { Button, Form, Input, InputNumber, Modal, Popconfirm, Table, theme } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
@@ -72,13 +73,17 @@ export default function AppPage() {
                 {t('app.viewMenu')}
               </Button>
             )}
-            <Button type="link" onClick={() => setRecord(record)}>
-              {t('common.edit')}
-            </Button>
-            <Popconfirm title={t('common.confirmDelete')} onConfirm={() => deleteRecord(record.id)}>
-              <Button type="link" danger>
-                {t('common.delete')}
+            <RequirePermissions required={['app:write']}>
+              <Button type="link" onClick={() => setRecord(record)}>
+                {t('common.edit')}
               </Button>
+            </RequirePermissions>
+            <Popconfirm title={t('common.confirmDelete')} onConfirm={() => deleteRecord(record.id)}>
+              <RequirePermissions required={['app:write']}>
+                <Button type="link" danger>
+                  {t('common.delete')}
+                </Button>
+              </RequirePermissions>
             </Popconfirm>
           </>
         ),
@@ -115,9 +120,13 @@ export default function AppPage() {
     <>
       <PageContainer
         extra={
-          <Button type="primary" onClick={() => setRecord({})}>
-            {t('app.addApp')}
-          </Button>
+          <>
+            <RequirePermissions required={['app:write']}>
+              <Button type="primary" onClick={() => setRecord({})}>
+                {t('app.addApp')}
+              </Button>
+            </RequirePermissions>
+          </>
         }
       >
         <Table columns={columns} dataSource={data} loading={loading} rowKey="id" search={false} />

@@ -1,5 +1,6 @@
 import { openApi } from '@/api';
 import { PageContainer } from '@ant-design/pro-components';
+import { RequirePermissions } from '@zeroweb/auth';
 import { Button, Table } from 'antd';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,14 +22,16 @@ export default function ThirdPartyAppPage() {
       title: t('common.action'),
       render: (_, record) => (
         <>
-          <Button
-            type="link"
-            onClick={() => {
-              navigate(`/third-party-app/${record.id}/subscription`);
-            }}
-          >
-            {t('third-party-app.subscription')}
-          </Button>
+          <RequirePermissions required={['subscription:audit']}>
+            <Button
+              type="link"
+              onClick={() => {
+                navigate(`/third-party-app/${record.id}/subscription`);
+              }}
+            >
+              {t('third-party-app.subscription')}
+            </Button>
+          </RequirePermissions>
         </>
       ),
     },
