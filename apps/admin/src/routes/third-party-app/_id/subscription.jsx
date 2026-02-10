@@ -1,6 +1,7 @@
 import { openApi } from '@/api';
 import { PageContainer } from '@ant-design/pro-components';
 import { SubscriptionStatus } from '@xezzon/zeroweb-sdk';
+import { RequirePermissions } from '@zeroweb/auth';
 import { Button, Table } from 'antd';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -28,14 +29,16 @@ export default function SubscriptionPage() {
       render: (_, record) => (
         <>
           {record.subscriptionStatus === SubscriptionStatus.AUDITING && (
-            <Button
-              type="link"
-              onClick={() => {
-                openApi.subscription.auditSubscription(record.id).then(fetchData);
-              }}
-            >
-              {t('subscription.audit')}
-            </Button>
+            <RequirePermissions required={['subscription:audit']}>
+              <Button
+                type="link"
+                onClick={() => {
+                  openApi.subscription.auditSubscription(record.id).then(fetchData);
+                }}
+              >
+                {t('subscription.audit')}
+              </Button>
+            </RequirePermissions>
           )}
         </>
       ),

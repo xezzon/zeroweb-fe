@@ -1,5 +1,6 @@
 import { adminApi } from '@/api';
 import { PageContainer } from '@ant-design/pro-components';
+import { RequirePermissions } from '@zeroweb/auth';
 import {
   Button,
   Drawer,
@@ -36,12 +37,16 @@ export default function DictTagPage() {
         title: t('common.action'),
         render: (_, record) => (
           <>
-            <Button type="link" onClick={() => setTag(record)}>
-              {t('common.view')}
-            </Button>
-            <Button type="link" disabled={!record.editable} onClick={() => setRecord(record)}>
-              {t('common.edit')}
-            </Button>
+            <RequirePermissions required={['dict:read']}>
+              <Button type="link" onClick={() => setTag(record)}>
+                {t('common.view')}
+              </Button>
+            </RequirePermissions>
+            <RequirePermissions required={['dict:write']}>
+              <Button type="link" disabled={!record.editable} onClick={() => setRecord(record)}>
+                {t('common.edit')}
+              </Button>
+            </RequirePermissions>
             <Popconfirm
               title={t('common.confirmDelete')}
               onConfirm={() =>
@@ -50,9 +55,11 @@ export default function DictTagPage() {
                 })
               }
             >
-              <Button type="link" danger disabled={!record.editable}>
-                {t('common.delete')}
-              </Button>
+              <RequirePermissions required={['dict:write']}>
+                <Button type="link" danger disabled={!record.editable}>
+                  {t('common.delete')}
+                </Button>
+              </RequirePermissions>
             </Popconfirm>
           </>
         ),
@@ -105,9 +112,13 @@ export default function DictTagPage() {
     <>
       <PageContainer
         extra={
-          <Button type="primary" onClick={() => setRecord({ tag: 'DICT', parentId: '0' })}>
-            {t('dict.addDict')}
-          </Button>
+          <>
+            <RequirePermissions required={['dict:write']}>
+              <Button type="primary" onClick={() => setRecord({ tag: 'DICT', parentId: '0' })}>
+                {t('dict.addDict')}
+              </Button>
+            </RequirePermissions>
+          </>
         }
       >
         <Table
@@ -267,31 +278,41 @@ function DictList({ tag, onClose }) {
         title: t('common.action'),
         render: (_, record) => (
           <>
-            <Button type="link" disabled={!record.editable} onClick={() => setRecord(record)}>
-              {t('common.edit')}
-            </Button>
-            <Button
-              type="link"
-              disabled={!record.editable}
-              onClick={() => setRecord({ tag: tag?.code, parentId: record.id })}
-            >
-              {t('dict.addDict')}
-            </Button>
-            <Button
-              type="link"
-              onClick={() =>
-                adminApi.dict.updateDictStatus([record.id], !record.enabled).then(() => fetchData())
-              }
-            >
-              {record.enabled ? t('common.disable') : t('common.enable')}
-            </Button>
+            <RequirePermissions required={['dict:write']}>
+              <Button type="link" disabled={!record.editable} onClick={() => setRecord(record)}>
+                {t('common.edit')}
+              </Button>
+            </RequirePermissions>
+            <RequirePermissions required={['dict:write']}>
+              <Button
+                type="link"
+                disabled={!record.editable}
+                onClick={() => setRecord({ tag: tag?.code, parentId: record.id })}
+              >
+                {t('dict.addDict')}
+              </Button>
+            </RequirePermissions>
+            <RequirePermissions required={['dict:write']}>
+              <Button
+                type="link"
+                onClick={() =>
+                  adminApi.dict
+                    .updateDictStatus([record.id], !record.enabled)
+                    .then(() => fetchData())
+                }
+              >
+                {record.enabled ? t('common.disable') : t('common.enable')}
+              </Button>
+            </RequirePermissions>
             <Popconfirm
               title={t('common.confirmDelete')}
               onConfirm={() => adminApi.dict.removeDict([record.id]).then(() => fetchData())}
             >
-              <Button type="link" danger disabled={!record.editable}>
-                {t('common.delete')}
-              </Button>
+              <RequirePermissions required={['dict:write']}>
+                <Button type="link" danger disabled={!record.editable}>
+                  {t('common.delete')}
+                </Button>
+              </RequirePermissions>
             </Popconfirm>
           </>
         ),
@@ -323,13 +344,15 @@ function DictList({ tag, onClose }) {
           search={false}
           title={() => (
             <Flex justify="flex-end">
-              <Button
-                type="primary"
-                disabled={!tag?.editable}
-                onClick={() => setRecord({ tag: tag.code, parentId: tag.id })}
-              >
-                {t('dict.addDict')}
-              </Button>
+              <RequirePermissions required={['dict:write']}>
+                <Button
+                  type="primary"
+                  disabled={!tag?.editable}
+                  onClick={() => setRecord({ tag: tag.code, parentId: tag.id })}
+                >
+                  {t('dict.addDict')}
+                </Button>
+              </RequirePermissions>
             </Flex>
           )}
         />

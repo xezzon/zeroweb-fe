@@ -1,7 +1,7 @@
 import { adminApi } from '@/api';
 import { PageContainer } from '@ant-design/pro-components';
 import { MenuType, ZerowebMetadataClient } from '@xezzon/zeroweb-sdk';
-import { AuthContext, hasPermission } from '@zeroweb/auth';
+import { AuthContext, hasPermission, RequirePermissions } from '@zeroweb/auth';
 import {
   Button,
   Form,
@@ -57,9 +57,11 @@ export default function RolePage() {
         render: (_, record) => (
           <>
             {record.inheritable && (
-              <Button type="link" onClick={() => setRecord({ parentId: record.id })}>
-                {t('role.addSubRole')}
-              </Button>
+              <RequirePermissions required={['role:write']}>
+                <Button type="link" onClick={() => setRecord({ parentId: record.id })}>
+                  {t('role.addSubRole')}
+                </Button>
+              </RequirePermissions>
             )}
             <Button type="link" onClick={() => setBindToUser(record)}>
               {t('role.bindUser')}
@@ -74,9 +76,11 @@ export default function RolePage() {
                 title={t('common.confirmDelete')}
                 onConfirm={() => deleteRecord(record.id)}
               >
-                <Button type="link" danger>
-                  {t('common.delete')}
-                </Button>
+                <RequirePermissions required={['role:write']}>
+                  <Button type="link" danger>
+                    {t('common.delete')}
+                  </Button>
+                </RequirePermissions>
               </Popconfirm>
             )}
           </>

@@ -12,13 +12,15 @@
     "type": "ROUTE",
     "path": "/dict",
     "route": "dict/index",
-    "parent": "setting"
+    "parent": "setting",
+    "permissions": ["dict:read"]
   },
   {
     "type": "ROUTE",
     "path": "/parameter",
     "route": "setting/index",
-    "parent": "setting"
+    "parent": "setting",
+    "permissions": ["setting:read"]
   },
   {
     "type": "GROUP",
@@ -41,7 +43,8 @@
     "type": "ROUTE",
     "path": "/role",
     "route": "role/index",
-    "parent": "app-management"
+    "parent": "app-management",
+    "permissions": ["role:read"]
   },
   {
     "type": "GROUP",
@@ -57,13 +60,15 @@
     "type": "ROUTE",
     "path": "/third-party-app",
     "route": "third-party-app/index",
-    "parent": "open"
+    "parent": "open",
+    "permissions": ["third-party-app:read"]
   },
   {
     "type": "ROUTE",
     "path": "/third-party-app/:id/subscription",
     "route": "third-party-app/_id/subscription",
     "parent": "open",
-    "hideInMenu": true
+    "hideInMenu": true,
+    "permissions": ["subscription:audit"]
   }
 ]

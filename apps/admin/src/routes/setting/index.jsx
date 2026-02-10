@@ -2,6 +2,7 @@ import { adminApi } from '@/api';
 import { PageContainer } from '@ant-design/pro-components';
 import SchemaForm from '@rjsf/antd';
 import validator from '@rjsf/validator-ajv8';
+import { RequirePermissions } from '@zeroweb/auth';
 import { Button, Form, Input, Modal, Popconfirm, Table } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
@@ -35,12 +36,16 @@ export default function SettingPage() {
         title: t('common.action'),
         render: (_, record) => (
           <>
-            <Button type="link" onClick={() => setRecord(record)}>
-              {t('setting.editSchema')}
-            </Button>
-            <Button type="link" onClick={() => setValueRecord(record)}>
-              {t('setting.editValue')}
-            </Button>
+            <RequirePermissions required={['setting:write']}>
+              <Button type="link" onClick={() => setRecord(record)}>
+                {t('setting.editSchema')}
+              </Button>
+            </RequirePermissions>
+            <RequirePermissions required={['setting:read']}>
+              <Button type="link" onClick={() => setValueRecord(record)}>
+                {t('setting.editValue')}
+              </Button>
+            </RequirePermissions>
             <Popconfirm
               title={t('common.confirmDelete')}
               onConfirm={() =>
@@ -49,9 +54,11 @@ export default function SettingPage() {
                 })
               }
             >
-              <Button type="link" danger>
-                {t('common.delete')}
-              </Button>
+              <RequirePermissions required={['setting:write']}>
+                <Button type="link" danger>
+                  {t('common.delete')}
+                </Button>
+              </RequirePermissions>
             </Popconfirm>
           </>
         ),
@@ -104,9 +111,11 @@ export default function SettingPage() {
     <>
       <PageContainer
         extra={
-          <Button type="primary" onClick={() => setRecord({ value: {} })}>
-            {t('setting.addSetting')}
-          </Button>
+          <RequirePermissions required={['setting:write']}>
+            <Button type="primary" onClick={() => setRecord({ value: {} })}>
+              {t('setting.addSetting')}
+            </Button>
+          </RequirePermissions>
         }
       >
         <Table
