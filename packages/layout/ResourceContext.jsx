@@ -88,9 +88,13 @@ function resources2menus(resources, parent) {
   const menus = resources.filter((resource) => resource.parent == parent);
   return menus.map((menu) => {
     const children = resources.filter((resource) => resource.parent === menu.path);
+    if (menu.type === 'GROUP' && children.length == 0) {
+      // 如果分组的所有子菜单都没有权限，则不显示该分组。
+      return undefined;
+    }
     return {
       ...menu,
-      children: children.length > 0 ? resources2menus(children, menu.path) : undefined,
+      children: resources2menus(children, menu.path),
     };
   });
 }
