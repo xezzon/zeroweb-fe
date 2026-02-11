@@ -23,27 +23,33 @@
     "permissions": ["setting:read"]
   },
   {
-    "type": "GROUP",
-    "path": "app-management"
-  },
-  {
     "type": "ROUTE",
     "path": "/app",
-    "route": "app/index",
-    "parent": "app-management"
+    "route": "app/index"
   },
   {
     "type": "ROUTE",
     "path": "/app/:id/menu",
     "route": "app/_id/menu",
-    "parent": "app-management",
+    "parent": "/app",
     "hideInMenu": true
+  },
+  {
+    "type": "GROUP",
+    "path": "auth"
+  },
+  {
+    "type": "ROUTE",
+    "path": "/user",
+    "route": "user/index",
+    "parent": "auth",
+    "permissions": ["user:list"]
   },
   {
     "type": "ROUTE",
     "path": "/role",
     "route": "role/index",
-    "parent": "app-management",
+    "parent": "auth",
     "permissions": ["role:read"]
   },
   {
@@ -70,5 +76,22 @@
     "parent": "open",
     "hideInMenu": true,
     "permissions": ["subscription:audit"]
+  },
+  {
+    "type": "GROUP",
+    "path": "i18n"
+  },
+  {
+    "type": "ROUTE",
+    "path": "/language",
+    "route": "language/index",
+    "parent": "i18n"
+  },
+  {
+    "type": "ROUTE",
+    "path": "/locale",
+    "route": "locale/index",
+    "parent": "i18n",
+    "permissions": ["locale:read"]
   }
 ]
