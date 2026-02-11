@@ -48,6 +48,12 @@
       "enabled": "启用状态"
     }
   },
+  "user": {
+    "field": {
+      "username": "用户名",
+      "nickname": "昵称"
+    }
+  },
   "role": {
     "addSubRole": "添加子角色",
     "setPermission": "设置权限",
