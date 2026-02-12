@@ -45,11 +45,14 @@ export default function LanguagePage() {
             title={t('common.confirmDelete')}
             onConfirm={() => devApi.locale.deleteLanguage(record.id).then(fetchData)}
           >
-            <RequirePermissions required={['locale:write']}>
-              <Button type="link" danger disabled={!record.editable}>
-                {t('common.delete')}
-              </Button>
-            </RequirePermissions>
+            {RequirePermissions({
+              required: ['locale:write'],
+              children: (
+                <Button type="link" danger disabled={!record.editable}>
+                  {t('common.delete')}
+                </Button>
+              ),
+            })}
           </Popconfirm>
         </>
       ),

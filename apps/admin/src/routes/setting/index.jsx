@@ -54,11 +54,14 @@ export default function SettingPage() {
                 })
               }
             >
-              <RequirePermissions required={['setting:write']}>
-                <Button type="link" danger>
-                  {t('common.delete')}
-                </Button>
-              </RequirePermissions>
+              {RequirePermissions({
+                required: ['setting:write'],
+                children: (
+                  <Button type="link" danger>
+                    {t('common.delete')}
+                  </Button>
+                ),
+              })}
             </Popconfirm>
           </>
         ),

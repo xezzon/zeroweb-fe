@@ -79,11 +79,14 @@ export default function AppPage() {
               </Button>
             </RequirePermissions>
             <Popconfirm title={t('common.confirmDelete')} onConfirm={() => deleteRecord(record.id)}>
-              <RequirePermissions required={['app:write']}>
-                <Button type="link" danger>
-                  {t('common.delete')}
-                </Button>
-              </RequirePermissions>
+              {RequirePermissions({
+                required: ['app:write'],
+                children: (
+                  <Button type="link" danger>
+                    {t('common.delete')}
+                  </Button>
+                ),
+              })}
             </Popconfirm>
           </>
         ),

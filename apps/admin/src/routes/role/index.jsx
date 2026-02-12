@@ -76,11 +76,14 @@ export default function RolePage() {
                 title={t('common.confirmDelete')}
                 onConfirm={() => deleteRecord(record.id)}
               >
-                <RequirePermissions required={['role:write']}>
-                  <Button type="link" danger>
-                    {t('common.delete')}
-                  </Button>
-                </RequirePermissions>
+                {RequirePermissions({
+                  required: ['role:write'],
+                  children: (
+                    <Button type="link" danger>
+                      {t('common.delete')}
+                    </Button>
+                  ),
+                })}
               </Popconfirm>
             )}
           </>

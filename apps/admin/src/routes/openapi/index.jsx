@@ -116,11 +116,14 @@ export default function OpenapiPage() {
                     .finally(() => setLoading(false));
                 }}
               >
-                <RequirePermissions required={['openapi:write']}>
-                  <Button type="link" danger>
-                    {t('common.delete')}
-                  </Button>
-                </RequirePermissions>
+                {RequirePermissions({
+                  required: ['openapi:write'],
+                  children: (
+                    <Button type="link" danger>
+                      {t('common.delete')}
+                    </Button>
+                  ),
+                })}
               </Popconfirm>
             )}
           </>

@@ -55,11 +55,14 @@ export default function DictTagPage() {
                 })
               }
             >
-              <RequirePermissions required={['dict:write']}>
-                <Button type="link" danger disabled={!record.editable}>
-                  {t('common.delete')}
-                </Button>
-              </RequirePermissions>
+              {RequirePermissions({
+                required: ['dict:write'],
+                children: (
+                  <Button type="link" danger disabled={!record.editable}>
+                    {t('common.delete')}
+                  </Button>
+                ),
+              })}
             </Popconfirm>
           </>
         ),
@@ -305,11 +308,14 @@ function DictList({ tag, onClose }) {
               title={t('common.confirmDelete')}
               onConfirm={() => adminApi.dict.removeDict([record.id]).then(() => fetchData())}
             >
-              <RequirePermissions required={['dict:write']}>
-                <Button type="link" danger disabled={!record.editable}>
-                  {t('common.delete')}
-                </Button>
-              </RequirePermissions>
+              {RequirePermissions({
+                required: ['dict:write'],
+                children: (
+                  <Button type="link" danger disabled={!record.editable}>
+                    {t('common.delete')}
+                  </Button>
+                ),
+              })}
             </Popconfirm>
           </>
         ),
