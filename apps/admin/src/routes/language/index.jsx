@@ -1,10 +1,7 @@
 import { devApi } from '@/api/developer';
 import { PageContainer } from '@ant-design/pro-components';
 import { RequirePermissions } from '@zeroweb/auth';
-import { Form } from 'antd';
-import { Modal } from 'antd';
-import { Popconfirm } from 'antd';
-import { Button, Table } from 'antd';
+import { Button, Form, Input, InputNumber, Modal, Popconfirm, Switch, Table } from 'antd';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -34,7 +31,7 @@ export default function LanguagePage() {
     {
       dataIndex: 'enabled',
       title: t('language.field.enabled'),
-      render: (enabled) => t(`language.enabled.${enabled}`),
+      render: (enabled) => (enabled ? t('common.enabled') : t('common.disabled')),
     },
     {
       key: 'action',
@@ -87,14 +84,14 @@ export default function LanguagePage() {
           </>
         }
       >
-        <Table columns={columns} dataSource={dataSource} loading={loading} />
+        <Table columns={columns} dataSource={dataSource} loading={loading} rowKey="id" />
       </PageContainer>
       <LanguageEditor
         record={record}
         onClose={(refresh) => {
           setRecord(null);
           if (refresh) {
-            loadData();
+            fetchData();
           }
         }}
       />
@@ -108,6 +105,7 @@ export default function LanguagePage() {
  * @param {(refresh: boolean) => void} param0.onClose
  */
 function LanguageEditor({ record, onClose }) {
+  const { t } = useTranslation();
   /**
    * @type {[import('antd').FormInstance<import('@xezzon/zeroweb-sdk').Language>]}
    */
@@ -148,6 +146,7 @@ function LanguageEditor({ record, onClose }) {
       open={!!record}
       destroyOnHidden
       confirmLoading={loading}
+      onOk={handleFinish}
       onCancel={() => onClose(false)}
       modalRender={(dom) => (
         <Form
@@ -160,6 +159,36 @@ function LanguageEditor({ record, onClose }) {
           {dom}
         </Form>
       )}
-    ></Modal>
+    >
+      <Form.Item name="id" hidden />
+      <Form.Item name="languageTag" label={t('language.field.code')} rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="description"
+        label={t('language.field.description')}
+        rules={[{ required: true }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="ordinal"
+        label={t('language.field.ordinal')}
+        tooltip={t('language.tooltip.ordinal')}
+        rules={[{ required: true }]}
+        initialValue={1}
+      >
+        <InputNumber />
+      </Form.Item>
+      <Form.Item
+        name="enabled"
+        label={t('language.field.enabled')}
+        rules={[{ required: true }]}
+        valuePropName="checked"
+        initialValue={true}
+      >
+        <Switch checkedChildren={t('common.enabled')} unCheckedChildren={t('common.disabled')} />
+      </Form.Item>
+    </Modal>
   );
 }

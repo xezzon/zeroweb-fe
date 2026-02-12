@@ -116,5 +116,17 @@
       "status": "订阅状态"
     },
     "audit": "审核"
+  },
+  "language": {
+    "addLanguage": "新增语言",
+    "field": {
+      "code": "语言编码",
+      "description": "语言名称",
+      "ordinal": "顺序",
+      "enabled": "状态"
+    },
+    "tooltip": {
+      "ordinal": "顺序越小越靠前"
+    }
   }
 }
