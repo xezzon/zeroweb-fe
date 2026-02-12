@@ -1,11 +1,11 @@
 import { adminApi, openApi } from '@/api';
 import { fileApi } from '@/api/file';
+import { CloseCircleTwoTone } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { AttachmentStatus, checksum, OpenapiStatus } from '@xezzon/zeroweb-sdk';
 import { RequirePermissions } from '@zeroweb/auth';
 import { useDict } from '@zeroweb/dict';
-import { Upload } from 'antd';
-import { Button, Form, Input, Modal, Popconfirm, Select, Table } from 'antd';
+import { Button, Form, Input, Modal, Popconfirm, Select, Table, theme, Upload } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -13,6 +13,7 @@ const DOCUMENT_ATTACHMENT_KEY = 'openapi-document';
 
 export default function OpenapiPage() {
   const { t } = useTranslation();
+  const { token: designToken } = theme.useToken();
   const [record, setRecord] = useState(/** @type {import('@xezzon/zeroweb-sdk').Openapi} */ (null));
   const { mapValue: mapOpenapiStatus } = useDict(adminApi.dict, 'OpenapiStatus');
 
@@ -43,6 +44,9 @@ export default function OpenapiPage() {
            * @type {import('@xezzon/zeroweb-sdk').Attachment[]}
            */
           const attachments = record.document;
+          if (!attachments) {
+            return <CloseCircleTwoTone twoToneColor={designToken.colorError} />;
+          }
           return attachments.map((attachment) => (
             <Button
               type="link"
@@ -158,16 +162,17 @@ export default function OpenapiPage() {
         });
         return content;
       })
-      .then(async (openapiList) =>
-        Promise.all(
+      .then(async (openapiList) => {
+        setDataSource(openapiList);
+        return Promise.all(
           openapiList.map((openapi) =>
             fileApi.attachment
               .queryAttachmentByBiz(DOCUMENT_ATTACHMENT_KEY, openapi.id)
               .then((response) => response.data)
               .then((attachments) => ({ ...openapi, document: attachments })),
           ),
-        ),
-      )
+        );
+      })
       .then(setDataSource)
       .finally(() => {
         setLoading(false);
@@ -275,6 +280,7 @@ function OpenapiEditor({ record, onClose }) {
         </Form>
       )}
     >
+      <Form.Item name="id" hidden />
       <Form.Item name="code" label={t('openapi.field.code')} rules={[{ required: true }]}>
         <Input disabled={record?.status !== OpenapiStatus.DRAFT} />
       </Form.Item>

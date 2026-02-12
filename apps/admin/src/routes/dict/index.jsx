@@ -196,22 +196,19 @@ function DictEditor({ record, onClose }) {
         onOk={handleFinish}
         onCancel={handleCancel}
         modalRender={(dom) => (
-          <>
-            <Form
-              layout="vertical"
-              initialValues={record}
-              clearOnDestroy
-              onFinish={handleFinish}
-              form={form}
-            >
-              {dom}
-            </Form>
-          </>
+          <Form
+            layout="vertical"
+            initialValues={record}
+            clearOnDestroy
+            onFinish={handleFinish}
+            form={form}
+          >
+            {dom}
+          </Form>
         )}
       >
-        <Form.Item name="parentId" hidden>
-          <Input />
-        </Form.Item>
+        <Form.Item name="id" hidden />
+        <Form.Item name="parentId" hidden />
         <Form.Item name="tag" hidden>
           <Input />
         </Form.Item>
