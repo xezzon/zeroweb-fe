@@ -129,7 +129,7 @@ export interface LocaleAPI {
    * @param messageKey 国际化内容
    * @returns 语言-国际化内容
    */
-  queryTranslation: (namespace: string, messageKey: string) => PResponse<Map<string, string>>;
+  queryTranslation: (namespace: string, messageKey: string) => PResponse<object>;
   /**
    * 新增/更新国际化文本
    * @param translation 国际化文本
@@ -141,7 +141,7 @@ export interface LocaleAPI {
    * @param namespace 命名空间
    * @returns 国际化内容-国际化文本
    */
-  loadTranslation: (language: string, namespace: string) => PResponse<Map<string, string>>;
+  loadTranslation: (language: string, namespace: string) => PResponse<object>;
 }
 
 export default (client: HttpClient): LocaleAPI => ({
