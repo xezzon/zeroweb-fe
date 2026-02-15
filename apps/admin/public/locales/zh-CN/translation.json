@@ -1,5 +1,6 @@
 {
   "common": {
+    "add": "新增",
     "edit": "编辑",
     "delete": "删除",
     "confirmDelete": "确认删除",
@@ -8,7 +9,10 @@
     "disabled": "禁用",
     "enable": "启用",
     "disable": "禁用",
-    "action": "操作"
+    "action": "操作",
+    "import": "导入",
+    "export": "导出",
+    "close": "关闭"
   },
   "loading": "加载中...",
   "error": {
@@ -127,6 +131,13 @@
     },
     "tooltip": {
       "ordinal": "顺序越小越靠前"
+    }
+  },
+  "locale": {
+    "translate": "翻译",
+    "field": {
+      "namespace": "命名空间",
+      "messageKey": "消息键"
     }
   }
 }
