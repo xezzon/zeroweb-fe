@@ -80,7 +80,7 @@ export default function LanguagePage() {
         extra={
           <>
             <RequirePermissions required={['locale:write']}>
-              <Button type="primary" onClick={() => setRecord({})}>
+              <Button type="primary" onClick={() => setRecord({ ordinal: 1, enabled: true })}>
                 {t('language.addLanguage')}
               </Button>
             </RequirePermissions>
@@ -109,6 +109,7 @@ export default function LanguagePage() {
  */
 function LanguageEditor({ record, onClose }) {
   const { t } = useTranslation();
+  const { t: tErrorCode } = useTranslation('error_code');
   /**
    * @type {[import('antd').FormInstance<import('@xezzon/zeroweb-sdk').Language>]}
    */
@@ -163,7 +164,9 @@ function LanguageEditor({ record, onClose }) {
         </Form>
       )}
     >
-      <Form.Item name="id" hidden />
+      <Form.Item name="id" hidden>
+        <Input />
+      </Form.Item>
       <Form.Item name="languageTag" label={t('language.field.code')} rules={[{ required: true }]}>
         <Input />
       </Form.Item>
@@ -179,7 +182,6 @@ function LanguageEditor({ record, onClose }) {
         label={t('language.field.ordinal')}
         tooltip={t('language.tooltip.ordinal')}
         rules={[{ required: true }]}
-        initialValue={1}
       >
         <InputNumber />
       </Form.Item>
@@ -188,7 +190,6 @@ function LanguageEditor({ record, onClose }) {
         label={t('language.field.enabled')}
         rules={[{ required: true }]}
         valuePropName="checked"
-        initialValue={true}
       >
         <Switch checkedChildren={t('common.enabled')} unCheckedChildren={t('common.disabled')} />
       </Form.Item>
