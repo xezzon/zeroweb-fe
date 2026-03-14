@@ -35,6 +35,6 @@
     "@zeroweb/lint": "workspace:^",
     "@zeroweb/tsconfig": "workspace:^",
     "oxlint": "catalog:",
-    "rolldown-vite": "^7.3.0"
+    "vite": "^8.0.0"
   }
 }

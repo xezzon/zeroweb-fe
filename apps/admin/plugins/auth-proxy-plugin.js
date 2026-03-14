@@ -24,7 +24,7 @@ export default function authProxyPlugin(options = {}) {
     name: 'auth-proxy',
     /**
      *
-     * @param {import('rolldown-vite').UserConfig} config
+     * @param {import('vite').UserConfig} config
      * @returns
      */
     config(config) {
@@ -34,7 +34,7 @@ export default function authProxyPlugin(options = {}) {
       }
       Object.keys(proxies).forEach((key) => {
         /**
-         * @type {import('rolldown-vite').ProxyOptions}
+         * @type {import('vite').ProxyOptions}
          */
         const proxyConfig = proxies[key];
         if (proxyConfig.configure) {
