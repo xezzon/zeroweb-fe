@@ -12,9 +12,9 @@
   "dependencies": {
     "@ant-design/icons": "catalog:",
     "@ant-design/pro-components": "catalog:",
-    "@rjsf/antd": "^6.1.2",
-    "@rjsf/core": "^6.1.2",
-    "@rjsf/validator-ajv8": "^6.1.2",
+    "@rjsf/antd": "^6.7.0",
+    "@rjsf/core": "^6.7.0",
+    "@rjsf/validator-ajv8": "^6.7.0",
     "@xezzon/zeroweb-sdk": "workspace:^",
     "@zeroweb/auth": "workspace:^",
     "@zeroweb/dict": "workspace:^",
@@ -31,10 +31,10 @@
   "devDependencies": {
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vitejs/plugin-react": "^5.1.2",
+    "@vitejs/plugin-react": "^6.0.3",
     "@zeroweb/lint": "workspace:^",
     "@zeroweb/tsconfig": "workspace:^",
     "oxlint": "catalog:",
-    "vite": "^8.0.0"
+    "vite": "^8.1.4"
   }
 }

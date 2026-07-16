@@ -1,8 +1,9 @@
 {
   "extends": "@zeroweb/tsconfig/jsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "rootDir": "./src",
     "paths": {
+      "*": ["./*"],
       "@/*": ["./src/*"],
       "@zeroweb/*": ["node_modules/@zeroweb/*"]
     }
