@@ -15,7 +15,6 @@
     "@xezzon/zeroweb-sdk": "workspace:^",
     "@zeroweb/lint": "workspace:^",
     "@zeroweb/tsconfig": "workspace:^",
-    "axios": "catalog:",
-    "oxlint": "catalog:"
+    "axios": "catalog:"
   }
 }

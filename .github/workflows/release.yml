@@ -36,7 +36,7 @@ jobs:
   deploy-sdk:
     runs-on: ubuntu-latest
     if: github.ref_name == 'sdk'
-    permissions: 
+    permissions:
       id-token: write
       contents: read
     steps:
@@ -57,7 +57,7 @@ jobs:
         run: pnpm run build
       - name: Publish to npm
         working-directory: sdk
-        run: npm publish --access public
+        run: pnpm publish --access public --no-git-checks
   deploy-app:
     runs-on: ubuntu-latest
     if: contains(github.ref_name, 'app/')
@@ -94,8 +94,8 @@ jobs:
         run: docker compose --progress=plain build --pull ${{steps.meta.outputs.app_name}}
       - name: Tag docker image
         run: >
-          docker tag 
-          zeroweb-app-${{ steps.meta.outputs.app_name }} 
+          docker tag
+          zeroweb-app-${{ steps.meta.outputs.app_name }}
           ${{ env.REGISTRY }}/${{ steps.meta.outputs.image_name }}:${{ github.event.inputs.version }}
       - name: Push Docker image
         id: push
