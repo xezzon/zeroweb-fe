@@ -9,8 +9,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "baseUrl": "./",
+    "rootDir": "./src",
     "paths": {
+      "*": ["./*"],
       "@/*": ["./src/*"]
     }
   },

@@ -1,7 +1,8 @@
 import CryptoJS from 'crypto-js';
 import { crc32 } from 'js-crc';
 import type { HttpClient } from '@/types';
-import type { AttachmentAPI, UploadInfo } from './attachment';
+import type { Attachment, AttachmentAPI, UploadInfo } from './attachment';
+import { FileProvider } from '.';
 
 /**
  * 计算文件的校验和
@@ -110,4 +111,17 @@ export function upload(client: HttpClient, attachmentApi: AttachmentAPI) {
         ),
       )
       .then(() => attachmentApi.finishUpload(uploadInfo.id));
+}
+
+export function resolveDownloadUrl(attachmentApi: AttachmentAPI, baseURL: string = '') {
+  return async (attachment: Attachment) =>
+    attachmentApi
+      .getDownloadEndpoint(attachment.id)
+      .then((response) => response.data)
+      .then(({ endpoint, filename }) => {
+        return {
+          endpoint: attachment.provider === FileProvider.FS ? `${baseURL}${endpoint}` : endpoint,
+          filename,
+        };
+      });
 }

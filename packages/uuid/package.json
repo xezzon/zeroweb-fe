@@ -1,0 +1,13 @@
+{
+  "name": "@zeroweb/uuid",
+  "version": "1.0.0",
+  "private": "true",
+  "main": "index.js",
+  "scripts": {
+    "lint": "oxlint"
+  },
+  "devDependencies": {
+    "@zeroweb/lint": "workspace:^",
+    "@zeroweb/tsconfig": "workspace:^"
+  }
+}

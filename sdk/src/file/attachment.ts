@@ -1,5 +1,5 @@
 import type { FileProvider } from '..';
-import type { HttpClient, PResponse } from '@/types';
+import type { HttpClient, OData, Page, PResponse } from '@/types';
 import { checksum } from './upload';
 
 export enum AttachmentStatus {
@@ -101,6 +101,10 @@ export interface DownloadEndpoint {
    * 下载地址
    */
   endpoint: string;
+  /**
+   * 文件名
+   */
+  filename: string;
 }
 
 export interface AttachmentAPI {
@@ -150,6 +154,12 @@ export interface AttachmentAPI {
    */
   queryAttachmentByBiz: (bizType: string, bizId: string) => PResponse<Attachment[]>;
   /**
+   * 查询指定附件
+   * @param id 附件ID
+   * @returns 附件信息
+   */
+  queryById: (id: string) => PResponse<Attachment>;
+  /**
    * 获取下载地址
    * @param id 附件ID
    * @returns 下载地址
@@ -160,6 +170,12 @@ export interface AttachmentAPI {
    * @param id 附件ID
    */
   deleteAttachment: (id: string) => PResponse<void>;
+  /**
+   * 分页查询附件列表
+   * @param odata 查询参数
+   * @returns 附件列表（分页）
+   */
+  queryPage: (odata: OData) => PResponse<Page<Attachment>>;
 }
 
 export default (client: HttpClient): AttachmentAPI => ({
@@ -209,6 +225,11 @@ export default (client: HttpClient): AttachmentAPI => ({
       method: 'GET',
       params: { bizType, bizId },
     }),
+  queryById: (id) =>
+    client.request({
+      url: `/attachment/${id}`,
+      method: 'GET',
+    }),
   getDownloadEndpoint: (id) =>
     client.request({
       url: `/attachment/${id}/endpoint/download`,
@@ -218,5 +239,11 @@ export default (client: HttpClient): AttachmentAPI => ({
     client.request({
       url: `/attachment/${id}`,
       method: 'DELETE',
+    }),
+  queryPage: (odata) =>
+    client.request({
+      url: '/attachment/page',
+      method: 'GET',
+      params: odata,
     }),
 });

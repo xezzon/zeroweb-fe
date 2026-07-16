@@ -1,0 +1,4 @@
+{
+  "extends": "@zeroweb/tsconfig/jsconfig.json",
+  "include": ["."]
+}

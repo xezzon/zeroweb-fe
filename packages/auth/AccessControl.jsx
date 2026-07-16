@@ -62,5 +62,13 @@ export function RequirePermissions({ children, required, fallback = <></>, loadi
     return loading;
   }
 
-  return hasPermission(permissions, required) ? children : fallback;
+  if (!hasPermission(permissions, required)) {
+    return fallback;
+  }
+
+  if (!React.isValidElement(children)) {
+    return children;
+  }
+
+  return React.cloneElement(children, { 'data-perms': required.toString() });
 }
