@@ -24,8 +24,4 @@ dist-ssr
 *.sw?
 
 # AI Editor
-.roomodes
-.kilocode/
-.roo/
-.specify/
-specs/
+## 在对应的目录添加 .gitignore 文件，内容为 `*`

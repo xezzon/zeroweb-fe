@@ -8,7 +8,7 @@
   "author": "xezzon",
   "scripts": {},
   "devDependencies": {
-    "oxfmt": "^0.27.0",
+    "oxfmt": "catalog:",
     "oxlint": "catalog:"
   },
   "engines": {
