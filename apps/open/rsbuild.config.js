@@ -4,9 +4,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { authProxyPlugin } from './plugins/auth-proxy-plugin.js';
 import { metadataPlugin } from './plugins/metadata-plugin.js';
 
-const { publicVars, parsed } = loadEnv({
-  prefixes: ['PUBLIC_', 'ZEROWEB_'],
-});
+const { publicVars, parsed } = loadEnv();
 
 // Docs: https://rsbuild.rs/config/
 export default defineConfig({
@@ -31,18 +29,18 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      [parsed.ZEROWEB_ADMIN_API]: {
-        target: parsed.ADMIN_URL,
+      [parsed.PUBLIC_ADMIN_API]: {
+        target: parsed.ZEROWEB_ADMIN_API,
         changeOrigin: true,
         pathRewrite: {
-          [parsed.ZEROWEB_ADMIN_API]: '',
+          [parsed.PUBLIC_ADMIN_API]: '',
         },
       },
-      [parsed.ZEROWEB_OPEN_API]: {
-        target: parsed.OPEN_URL,
+      [parsed.PUBLIC_OPEN_API]: {
+        target: parsed.ZEROWEB_OPEN_API,
         changeOrigin: true,
         pathRewrite: {
-          [parsed.ZEROWEB_OPEN_API]: '',
+          [parsed.PUBLIC_OPEN_API]: '',
         },
       },
     },
