@@ -103,3 +103,17 @@ zeroweb-fe/
 2. **不要修改 `pnpm-workspace.yaml` 的 `catalog` 版本** 除非明确需要升级多个包共享的依赖。
 3. **新增依赖** 时优先使用 `catalog:`；如果是单个包独占依赖，再直接写版本号。
 4. **不要提交 `dist/`、`.env`、IDE/AI 编辑器缓存目录**（已加入 `.gitignore`）。
+
+## Agent skills
+
+### Issue tracker
+
+Issues 和 PRD 均存放在 GitHub Issues（`xezzon/zeroweb-fe`），使用 `gh` CLI 操作。详见 `docs/agents/issue-tracker.md`。
+
+### Triage labels
+
+Triage 使用五个标准状态标签：`needs-triage`、`needs-info`、`ready-for-agent`、`ready-for-human` 和 `wontfix`。详见 `docs/agents/triage-labels.md`。
+
+### Domain docs
+
+Multi-context 布局：根目录 `CONTEXT-MAP.md` 指向 `apps/admin/`、`apps/open/`、`packages/`、`sdk/`、`/` 五个上下文的 `CONTEXT.md`。详见 `docs/agents/domain.md`。
